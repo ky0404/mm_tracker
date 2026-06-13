@@ -1,0 +1,131 @@
+[
+  {
+    "index": 0,
+    "type": "EXIT",
+    "token": "XRP",
+    "timestamp": "2026-06-12T23:47:20.759562",
+    "signals": [
+      "signal_4_volume_spike",
+      "signal_7_new_futures",
+      "signal_11_early_warning"
+    ],
+    "signal_count": 3,
+    "score": 3.0,
+    "entry_price": 1.472,
+    "position_size": 10.0,
+    "exit_price": 1.13,
+    "pnl": -3.420000000000001,
+    "win": false,
+    "exit_reason": "STOP_LOSS",
+    "exit_timestamp": "2026-06-12T23:55:55.189402"
+  },
+  {
+    "index": 1,
+    "type": "EXIT",
+    "token": "FIL",
+    "timestamp": "2026-06-12T23:47:32.083766",
+    "signals": [
+      "signal_2_funding_turn_positive",
+      "signal_7_new_futures",
+      "signal_11_early_warning"
+    ],
+    "signal_count": 3,
+    "score": 3.94,
+    "entry_price": 1.0607,
+    "position_size": 10.0,
+    "exit_price": 0.751549,
+    "pnl": -3.0915099999999995,
+    "win": false,
+    "exit_reason": "STOP_LOSS",
+    "exit_timestamp": "2026-06-12T23:55:57.148213"
+  },
+  {
+    "index": 2,
+    "type": "ENTRY",
+    "token": "XRP",
+    "timestamp": "2026-06-12T23:56:10.406669",
+    "signals": [
+      "signal_4_volume_spike",
+      "signal_7_new_futures",
+      "signal_11_early_warning"
+    ],
+    "signal_count": 3,
+    "score": 3.0,
+    "entry_price": 1.472,
+    "position_size": 10.0,
+    "exit_price": null,
+    "pnl": null,
+    "win": null,
+    "exit_reason": null
+  },
+  {
+    "index": 3,
+    "type": "ENTRY",
+    "token": "FIL",
+    "timestamp": "2026-06-12T23:56:21.330047",
+    "signals": [
+      "signal_2_funding_turn_positive",
+      "signal_7_new_futures",
+      "signal_11_early_warning"
+    ],
+    "signal_count": 3,
+    "score": 3.94,
+    "entry_price": 1.0607,
+    "position_size": 10.0,
+    "exit_price": null,
+    "pnl": null,
+    "win": null,
+    "exit_reason": null
+  },
+  {
+    "index": 4,
+    "type": "ENTRY",
+    "token": "BTC",
+    "timestamp": "2026-06-13T10:38:31.055031",
+    "signals": [
+      "signal_7_new_futures"
+    ],
+    "signal_count": 1,
+    "score": 1.5,
+    "entry_price": 79117.2,
+    "position_size": 200.0,
+    "exit_price": null,
+    "pnl": null,
+    "win": null,
+    "exit_reason": null
+  },
+  {
+    "index": 5,
+    "type": "ENTRY",
+    "token": "ETH",
+    "timestamp": "2026-06-13T10:38:34.236628",
+    "signals": [
+      "signal_7_new_futures"
+    ],
+    "signal_count": 1,
+    "score": 1.5,
+    "entry_price": 2221.67,
+    "position_size": 200.0,
+    "exit_price": null,
+    "pnl": null,
+    "win": null,
+    "exit_reason": null
+  },
+  {
+    "index": 6,
+    "type": "ENTRY",
+    "token": "SOL",
+    "timestamp": "2026-06-13T10:38:46.235471",
+    "signals": [
+      "signal_7_new_futures"
+    ],
+    "signal_count": 1,
+    "score": 1.5,
+    "entry_price": 88.99,
+    "position_size": 200.0,
+    "exit_price": null,
+    "pnl": null,
+    "win": null,
+    "exit_reason": null
+  }
+]

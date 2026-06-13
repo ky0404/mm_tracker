@@ -1,0 +1,42 @@
+{
+  "version": "1.0",
+  "updated_at": "2026-06-12T00:00:00Z",
+  "signal_weights": {
+    "signal_1_integer_consolidation": 1.0,
+    "signal_2_funding_turn_positive": 1.2,
+    "signal_3_oi_accumulation": 1.0,
+    "signal_4_volume_spike": 1.3,
+    "signal_5_dex_buy_pressure": 1.0,
+    "signal_6_btcd_downtrend": 0.8,
+    "signal_6b_btc_relative_strength": 0.8,
+    "signal_7_new_futures": 0.9,
+    "signal_8_wash_test": 1.2,
+    "signal_10_breakout": 1.0,
+    "signal_11_early_warning": 1.1,
+    "signal_12_long_short_ratio": 1.2,
+    "signal_13_taker_volume": 1.1
+  },
+  "entry_thresholds": {
+    "min_signals": 1,
+    "min_score": 1.0,
+    "min_confidence": 1
+  },
+  "risk_management": {
+    "default_position_size": 200.0,
+    "max_position_size": 300.0,
+    "stop_loss_pct": 1000.0,
+    "take_profit_pct": 30.0,
+    "max_open_positions": 5
+  },
+  "auto_pilot": {
+    "scan_interval_seconds": 300,
+    "optimization_interval_trades": 5,
+    "max_trades_per_cycle": 3,
+    "cooldown_seconds": 60
+  },
+  "signal_stats": {
+    "total_trades": 0,
+    "win_rate_by_signal": {},
+    "last_optimization": null
+  }
+}

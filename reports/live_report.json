@@ -1,0 +1,48 @@
+{
+  "timestamp": "2026-06-12 15:50",
+  "metrics": {
+    "total_trades": 0,
+    "win_rate": 0.0,
+    "avg_pnl": 0.0,
+    "max_drawdown": 0.0,
+    "total_pnl": 0.0,
+    "win_count": 0,
+    "loss_count": 0
+  },
+  "period_7d": {
+    "period": "7d",
+    "trades": 0,
+    "win_rate": 0.0,
+    "avg_pnl": 0.0
+  },
+  "period_30d": {
+    "period": "30d",
+    "trades": 0,
+    "win_rate": 0.0,
+    "avg_pnl": 0.0
+  },
+  "calibration": {
+    "status": "insufficient_data",
+    "message": "需要至少5笔交易才能校准",
+    "total_trades": 0
+  },
+  "suggestions": {
+    "current_metrics": {
+      "total_trades": 0,
+      "win_rate": 0.0,
+      "avg_pnl": 0.0,
+      "max_drawdown": 0.0,
+      "total_pnl": 0.0,
+      "win_count": 0,
+      "loss_count": 0
+    },
+    "suggestions": [
+      {
+        "parameter": "entry_threshold",
+        "current": 1,
+        "suggested": 2,
+        "reason": "胜率过低，需要更严格的入场条件"
+      }
+    ]
+  }
+}

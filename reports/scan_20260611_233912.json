@@ -1,0 +1,370 @@
+{
+  "scan_time": "2026-06-11T23:39:12.274298",
+  "total_scanned": 349,
+  "candidates_filtered": 30,
+  "duration_seconds": 29.351391553878784,
+  "results": [
+    {
+      "symbol": "AXS",
+      "price": 0.9375,
+      "quick_score": 9.0,
+      "funding_rate": 1.25535545348e-05,
+      "triggered_count": 2,
+      "total_score": 3.0,
+      "grade": "WATCH",
+      "grade_label": "一般关注",
+      "signals_triggered": [
+        "signal_1_integer_consolidation",
+        "signal_7_new_futures"
+      ]
+    },
+    {
+      "symbol": "AERO",
+      "price": 0.3415,
+      "quick_score": 7.0,
+      "funding_rate": 2.40900878732e-05,
+      "triggered_count": 2,
+      "total_score": 3.0,
+      "grade": "WATCH",
+      "grade_label": "一般关注",
+      "signals_triggered": [
+        "signal_2_funding_turn_positive",
+        "signal_5_dex_buy_pressure"
+      ]
+    },
+    {
+      "symbol": "TRUST",
+      "price": 0.04867,
+      "quick_score": 9.0,
+      "funding_rate": 5e-05,
+      "triggered_count": 2,
+      "total_score": 2.5,
+      "grade": "WATCH",
+      "grade_label": "一般关注",
+      "signals_triggered": [
+        "signal_1_integer_consolidation",
+        "signal_5_dex_buy_pressure"
+      ]
+    },
+    {
+      "symbol": "MAGIC",
+      "price": 0.04593,
+      "quick_score": 7.0,
+      "funding_rate": 5e-05,
+      "triggered_count": 2,
+      "total_score": 2.5,
+      "grade": "WATCH",
+      "grade_label": "一般关注",
+      "signals_triggered": [
+        "signal_1_integer_consolidation",
+        "signal_5_dex_buy_pressure"
+      ]
+    },
+    {
+      "symbol": "IOTA",
+      "price": 0.04524,
+      "quick_score": 7.0,
+      "funding_rate": 0.0001,
+      "triggered_count": 1,
+      "total_score": 1.5,
+      "grade": "MONITOR",
+      "grade_label": "持续监控",
+      "signals_triggered": [
+        "signal_1_integer_consolidation"
+      ]
+    },
+    {
+      "symbol": "WCT",
+      "price": 0.04766,
+      "quick_score": 7.0,
+      "funding_rate": 5e-05,
+      "triggered_count": 1,
+      "total_score": 1.5,
+      "grade": "MONITOR",
+      "grade_label": "持续监控",
+      "signals_triggered": [
+        "signal_1_integer_consolidation"
+      ]
+    },
+    {
+      "symbol": "YB",
+      "price": 0.09107,
+      "quick_score": 7.0,
+      "funding_rate": 5e-05,
+      "triggered_count": 1,
+      "total_score": 1.5,
+      "grade": "MONITOR",
+      "grade_label": "持续监控",
+      "signals_triggered": [
+        "signal_1_integer_consolidation"
+      ]
+    },
+    {
+      "symbol": "ZRX",
+      "price": 0.08756,
+      "quick_score": 7.0,
+      "funding_rate": 5e-05,
+      "triggered_count": 1,
+      "total_score": 1.5,
+      "grade": "MONITOR",
+      "grade_label": "持续监控",
+      "signals_triggered": [
+        "signal_1_integer_consolidation"
+      ]
+    },
+    {
+      "symbol": "STX",
+      "price": 0.1836,
+      "quick_score": 7.0,
+      "funding_rate": -2.19768298649e-05,
+      "triggered_count": 1,
+      "total_score": 1.0,
+      "grade": "MONITOR",
+      "grade_label": "持续监控",
+      "signals_triggered": [
+        "signal_5_dex_buy_pressure"
+      ]
+    },
+    {
+      "symbol": "0G",
+      "price": 0.2962,
+      "quick_score": 7.0,
+      "funding_rate": 5e-05,
+      "triggered_count": 1,
+      "total_score": 1.0,
+      "grade": "MONITOR",
+      "grade_label": "持续监控",
+      "signals_triggered": [
+        "signal_5_dex_buy_pressure"
+      ]
+    },
+    {
+      "symbol": "API3",
+      "price": 0.2527,
+      "quick_score": 7.0,
+      "funding_rate": 5e-05,
+      "triggered_count": 1,
+      "total_score": 1.0,
+      "grade": "MONITOR",
+      "grade_label": "持续监控",
+      "signals_triggered": [
+        "signal_5_dex_buy_pressure"
+      ]
+    },
+    {
+      "symbol": "LQTY",
+      "price": 0.2006,
+      "quick_score": 7.0,
+      "funding_rate": 0.0001,
+      "triggered_count": 1,
+      "total_score": 1.0,
+      "grade": "MONITOR",
+      "grade_label": "持续监控",
+      "signals_triggered": [
+        "signal_5_dex_buy_pressure"
+      ]
+    },
+    {
+      "symbol": "RAY",
+      "price": 0.5803,
+      "quick_score": 7.0,
+      "funding_rate": 0.0001,
+      "triggered_count": 1,
+      "total_score": 1.0,
+      "grade": "MONITOR",
+      "grade_label": "持续监控",
+      "signals_triggered": [
+        "signal_5_dex_buy_pressure"
+      ]
+    },
+    {
+      "symbol": "AR",
+      "price": 1.859,
+      "quick_score": 7.0,
+      "funding_rate": 0.0001,
+      "triggered_count": 1,
+      "total_score": 1.0,
+      "grade": "MONITOR",
+      "grade_label": "持续监控",
+      "signals_triggered": [
+        "signal_5_dex_buy_pressure"
+      ]
+    },
+    {
+      "symbol": "BARD",
+      "price": 0.1529,
+      "quick_score": 7.0,
+      "funding_rate": 5e-05,
+      "triggered_count": 0,
+      "total_score": 0.0,
+      "grade": "IDLE",
+      "grade_label": "无明显信号",
+      "signals_triggered": []
+    },
+    {
+      "symbol": "ENSO",
+      "price": 0.5839,
+      "quick_score": 7.0,
+      "funding_rate": 5e-05,
+      "triggered_count": 0,
+      "total_score": 0.0,
+      "grade": "IDLE",
+      "grade_label": "无明显信号",
+      "signals_triggered": []
+    },
+    {
+      "symbol": "SPX",
+      "price": 0.3188,
+      "quick_score": 7.0,
+      "funding_rate": 5e-05,
+      "triggered_count": 0,
+      "total_score": 0.0,
+      "grade": "IDLE",
+      "grade_label": "无明显信号",
+      "signals_triggered": []
+    },
+    {
+      "symbol": "ACU",
+      "price": 0.07599,
+      "quick_score": 7.0,
+      "funding_rate": 5e-05,
+      "triggered_count": 0,
+      "total_score": 0.0,
+      "grade": "IDLE",
+      "grade_label": "无明显信号",
+      "signals_triggered": []
+    },
+    {
+      "symbol": "RENDER",
+      "price": 1.563,
+      "quick_score": 7.0,
+      "funding_rate": 5e-05,
+      "triggered_count": 0,
+      "total_score": 0.0,
+      "grade": "IDLE",
+      "grade_label": "无明显信号",
+      "signals_triggered": []
+    },
+    {
+      "symbol": "SAPIEN",
+      "price": 0.0818,
+      "quick_score": 7.0,
+      "funding_rate": 5e-05,
+      "triggered_count": 0,
+      "total_score": 0.0,
+      "grade": "IDLE",
+      "grade_label": "无明显信号",
+      "signals_triggered": []
+    },
+    {
+      "symbol": "BAND",
+      "price": 0.1686,
+      "quick_score": 7.0,
+      "funding_rate": 0.0001,
+      "triggered_count": 0,
+      "total_score": 0.0,
+      "grade": "IDLE",
+      "grade_label": "无明显信号",
+      "signals_triggered": []
+    },
+    {
+      "symbol": "AGLD",
+      "price": 0.1695,
+      "quick_score": 7.0,
+      "funding_rate": 0.0001,
+      "triggered_count": 0,
+      "total_score": 0.0,
+      "grade": "IDLE",
+      "grade_label": "无明显信号",
+      "signals_triggered": []
+    },
+    {
+      "symbol": "PIEVERSE",
+      "price": 0.6128,
+      "quick_score": 7.0,
+      "funding_rate": 5e-05,
+      "triggered_count": 0,
+      "total_score": 0.0,
+      "grade": "IDLE",
+      "grade_label": "无明显信号",
+      "signals_triggered": []
+    },
+    {
+      "symbol": "SYRUP",
+      "price": 0.1329,
+      "quick_score": 7.0,
+      "funding_rate": 5e-05,
+      "triggered_count": 0,
+      "total_score": 0.0,
+      "grade": "IDLE",
+      "grade_label": "无明显信号",
+      "signals_triggered": []
+    },
+    {
+      "symbol": "GLM",
+      "price": 0.1079,
+      "quick_score": 7.0,
+      "funding_rate": 5e-05,
+      "triggered_count": 0,
+      "total_score": 0.0,
+      "grade": "IDLE",
+      "grade_label": "无明显信号",
+      "signals_triggered": []
+    },
+    {
+      "symbol": "AT",
+      "price": 0.1247,
+      "quick_score": 7.0,
+      "funding_rate": 5e-05,
+      "triggered_count": 0,
+      "total_score": 0.0,
+      "grade": "IDLE",
+      "grade_label": "无明显信号",
+      "signals_triggered": []
+    },
+    {
+      "symbol": "ORDER",
+      "price": 0.0389,
+      "quick_score": 7.0,
+      "funding_rate": 5e-05,
+      "triggered_count": 0,
+      "total_score": 0.0,
+      "grade": "IDLE",
+      "grade_label": "无明显信号",
+      "signals_triggered": []
+    },
+    {
+      "symbol": "XTZ",
+      "price": 0.2334,
+      "quick_score": 7.0,
+      "funding_rate": 0.0001,
+      "triggered_count": 0,
+      "total_score": 0.0,
+      "grade": "IDLE",
+      "grade_label": "无明显信号",
+      "signals_triggered": []
+    },
+    {
+      "symbol": "MASK",
+      "price": 0.356,
+      "quick_score": 7.0,
+      "funding_rate": 0.0001,
+      "triggered_count": 0,
+      "total_score": 0.0,
+      "grade": "IDLE",
+      "grade_label": "无明显信号",
+      "signals_triggered": []
+    },
+    {
+      "symbol": "ETHW",
+      "price": 0.2283,
+      "quick_score": 7.0,
+      "funding_rate": 5e-05,
+      "triggered_count": 0,
+      "total_score": 0.0,
+      "grade": "IDLE",
+      "grade_label": "无明显信号",
+      "signals_triggered": []
+    }
+  ]
+}
