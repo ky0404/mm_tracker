@@ -1,2 +1,1 @@
-# pdd-price-monitor
-这是一个拼多多价格监控工具...
+mm_tracker
