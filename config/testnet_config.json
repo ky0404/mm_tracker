@@ -1,8 +1,8 @@
 {
   "okx_testnet": {
-    "api_key": "1eb3ee97-1aa1-48b4-bb07-b4cfdf20d256",
-    "api_secret": "A30F429CEC05AD32844746F451036CFB",
-    "passphrase": "=s6]@yrBLDb.njxKbgnh"
+    "api_key": "已有",
+    "api_secret": "已有",
+    "passphrase": "已有"
   },
   "trading": {
     "default_position_size": 10.0,
