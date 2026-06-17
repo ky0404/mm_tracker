@@ -1,0 +1,55 @@
+[
+  {
+    "token": "DOGE",
+    "status": "success",
+    "entry_price": 0.0843,
+    "quantity": 1494.661921708185,
+    "tp": 0.1011,
+    "sl": 0.0801
+  },
+  {
+    "token": "MORPHO",
+    "status": "failed",
+    "error": "All operations failed"
+  },
+  {
+    "token": "ATOM",
+    "status": "success",
+    "entry_price": 1.9,
+    "quantity": 66.31578947368422,
+    "tp": 2.29,
+    "sl": 1.81
+  },
+  {
+    "token": "ETH",
+    "status": "success",
+    "entry_price": 1626,
+    "quantity": 0.07749077490774908,
+    "tp": 1951,
+    "sl": 1544
+  },
+  {
+    "token": "OKB",
+    "status": "success",
+    "entry_price": 72.0,
+    "quantity": 1.75,
+    "tp": 86.5,
+    "sl": 68.4
+  },
+  {
+    "token": "LINK",
+    "status": "success",
+    "entry_price": 7.67,
+    "quantity": 16.427640156453716,
+    "tp": 9.2,
+    "sl": 7.29
+  },
+  {
+    "token": "LTC",
+    "status": "success",
+    "entry_price": 43.0,
+    "quantity": 2.9302325581395348,
+    "tp": 51.6,
+    "sl": 40.9
+  }
+]

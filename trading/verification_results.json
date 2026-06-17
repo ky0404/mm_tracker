@@ -1,0 +1,43 @@
+{
+  "total_pnl": 52.35985240000002,
+  "wins": 6,
+  "losses": 0,
+  "positions": [
+    {
+      "token": "DOGE",
+      "entry": 0.0843,
+      "current": 0.08769,
+      "pnl": 5.066897400000016
+    },
+    {
+      "token": "ATOM",
+      "entry": 1.9,
+      "current": 2.008,
+      "pnl": 7.162560000000013
+    },
+    {
+      "token": "ETH",
+      "entry": 1626,
+      "current": 1794.73,
+      "pnl": 13.076575000000005
+    },
+    {
+      "token": "OKB",
+      "entry": 72.0,
+      "current": 76.45,
+      "pnl": 7.787499999999994
+    },
+    {
+      "token": "LINK",
+      "entry": 7.67,
+      "current": 8.354,
+      "pnl": 11.238119999999995
+    },
+    {
+      "token": "LTC",
+      "entry": 43.0,
+      "current": 45.74,
+      "pnl": 8.028199999999998
+    }
+  ]
+}

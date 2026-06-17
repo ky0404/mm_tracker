@@ -91,6 +91,14 @@ class ParameterOptimizer:
         :param force: 是否强制优化（忽略时间间隔）
         :return: 优化结果
         """
+        # 动量模式：跳过优化，等待积累足够数据
+        auto_pilot = self.params.get("auto_pilot", {})
+        if auto_pilot.get("momentum_mode", False):
+            return {
+                "optimized": False,
+                "reason": "动量模式运行中，跳过自动优化",
+            }
+        
         # 检查交易数量是否足够
         finished = self.result_logger.get_finished_trades()
         opt_interval = self.params.get("auto_pilot", {}).get("optimization_interval_trades", 5)

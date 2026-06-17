@@ -37,6 +37,10 @@ class OKXTestnetTrader:
             self.base_url = "https://www.okx.com"
             self.is_simulation = False
         
+        # 如果是测试网但想用合约，需要把use_spot设为False
+        if not testnet:
+            self.use_spot = False  # 真实账户用合约
+        
         self.use_spot = use_spot
         self.api_key = api_key
         self.api_secret = api_secret
@@ -79,12 +83,13 @@ class OKXTestnetTrader:
         route = "/api/v5/trade/order"
         body_dict = {
             "instId": inst_id,
-            "tdMode": "cash",  # 现货模式，不需要杠杆
+            "tdMode": "cash",  # 现货模式
             "side": side,
             "sz": str(size),
-            "px": str(price) if price else None,
             "ordType": order_type,
         }
+        if price:
+            body_dict["px"] = str(price)
         body = json.dumps(body_dict)
         headers = self._get_headers("POST", route, body)
 

@@ -520,7 +520,16 @@ class AutoPilot:
         
         # 获取仓位大小 - 使用可用余额或固定888U
         available = self.trader.get_balance()
-        usdt_balance = float([d for d in available['details'] if d['ccy'] == 'USDT'][0]['availBal'])
+        usdt_balance = 888.0  # 默认固定888U
+        try:
+            if available and isinstance(available, dict):
+                details = available.get('details', [])
+                usdt_list = [d for d in details if d.get('ccy') == 'USDT']
+                if usdt_list:
+                    usdt_balance = float(usdt_list[0].get('availBal', 888.0))
+        except Exception as e:
+            logger.error(f"[余额查询] 解析失败，使用默认888U: {e}")
+        
         position_size = min(self.params.get("risk_management", {}).get("fixed_position_size", 888.0), usdt_balance)
         
         if position_size < 10:

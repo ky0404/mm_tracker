@@ -1,0 +1,167 @@
+[
+  {
+    "symbol": "DOGE",
+    "price": 0.08871,
+    "rsi": 37.66478342749526,
+    "trend_4h": "UP",
+    "score": 6,
+    "entry_limit": 0.08844387,
+    "entry_market": 0.08871,
+    "tp": 0.10645199999999999,
+    "sl": 0.08427449999999999
+  },
+  {
+    "symbol": "MORPHO",
+    "price": 2.0013,
+    "rsi": 61.32361870066793,
+    "trend_4h": "UP",
+    "score": 5,
+    "entry_limit": 1.9952961,
+    "entry_market": 2.0013,
+    "tp": 2.40156,
+    "sl": 1.901235
+  },
+  {
+    "symbol": "WCT",
+    "price": 0.04827,
+    "rsi": 45.9627329192547,
+    "trend_4h": "DOWN",
+    "score": 3,
+    "entry_limit": 0.04812519,
+    "entry_market": 0.04827,
+    "tp": 0.057923999999999996,
+    "sl": 0.0458565
+  },
+  {
+    "symbol": "OP",
+    "price": 0.11041,
+    "rsi": 48.175182481751676,
+    "trend_4h": "DOWN",
+    "score": 3,
+    "entry_limit": 0.11007876999999999,
+    "entry_market": 0.11041,
+    "tp": 0.132492,
+    "sl": 0.10488949999999998
+  },
+  {
+    "symbol": "BTC",
+    "price": 65430.1,
+    "rsi": 24.17555548763714,
+    "trend_4h": "DOWN",
+    "score": 2,
+    "entry_limit": 65233.8097,
+    "entry_market": 65430.1,
+    "tp": 78516.12,
+    "sl": 62158.594999999994
+  },
+  {
+    "symbol": "ETH",
+    "price": 1716.0,
+    "rsi": 8.209351753453845,
+    "trend_4h": "DOWN",
+    "score": 2,
+    "entry_limit": 1710.852,
+    "entry_market": 1716.0,
+    "tp": 2059.2,
+    "sl": 1630.1999999999998
+  },
+  {
+    "symbol": "SOL",
+    "price": 70.95,
+    "rsi": 8.51851851851842,
+    "trend_4h": "DOWN",
+    "score": 2,
+    "entry_limit": 70.73715,
+    "entry_market": 70.95,
+    "tp": 85.14,
+    "sl": 67.4025
+  },
+  {
+    "symbol": "XRP",
+    "price": 1.182,
+    "rsi": 5.504587155963492,
+    "trend_4h": "DOWN",
+    "score": 2,
+    "entry_limit": 1.178454,
+    "entry_market": 1.182,
+    "tp": 1.4183999999999999,
+    "sl": 1.1228999999999998
+  },
+  {
+    "symbol": "OKB",
+    "price": 75.24,
+    "rsi": 24.096385542168633,
+    "trend_4h": "DOWN",
+    "score": 2,
+    "entry_limit": 75.01428,
+    "entry_market": 75.24,
+    "tp": 90.288,
+    "sl": 71.478
+  },
+  {
+    "symbol": "NEAR",
+    "price": 2.276,
+    "rsi": 23.07692307692301,
+    "trend_4h": "DOWN",
+    "score": 2,
+    "entry_limit": 2.2691719999999997,
+    "entry_market": 2.276,
+    "tp": 2.7312,
+    "sl": 2.1622
+  },
+  {
+    "symbol": "TIA",
+    "price": 0.3543,
+    "rsi": 29.655172413793125,
+    "trend_4h": "DOWN",
+    "score": 2,
+    "entry_limit": 0.3532371,
+    "entry_market": 0.3543,
+    "tp": 0.42516,
+    "sl": 0.33658499999999997
+  },
+  {
+    "symbol": "ZRO",
+    "price": 0.9946,
+    "rsi": 23.5926855503765,
+    "trend_4h": "DOWN",
+    "score": 2,
+    "entry_limit": 0.9916162000000001,
+    "entry_market": 0.9946,
+    "tp": 1.19352,
+    "sl": 0.94487
+  },
+  {
+    "symbol": "FIL",
+    "price": 0.796,
+    "rsi": 31.627906976744,
+    "trend_4h": "DOWN",
+    "score": 1,
+    "entry_limit": 0.793612,
+    "entry_market": 0.796,
+    "tp": 0.9552,
+    "sl": 0.7562
+  },
+  {
+    "symbol": "SUI",
+    "price": 0.791,
+    "rsi": 35.508021390374296,
+    "trend_4h": "DOWN",
+    "score": 1,
+    "entry_limit": 0.7886270000000001,
+    "entry_market": 0.791,
+    "tp": 0.9492,
+    "sl": 0.75145
+  },
+  {
+    "symbol": "KAITO",
+    "price": 0.4726,
+    "rsi": 43.89140271493217,
+    "trend_4h": "DOWN",
+    "score": 1,
+    "entry_limit": 0.4711822,
+    "entry_market": 0.4726,
+    "tp": 0.56712,
+    "sl": 0.44897
+  }
+]

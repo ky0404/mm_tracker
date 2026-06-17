@@ -1,0 +1,461 @@
+{
+  "total_trades": 16,
+  "win_rate": 68.75,
+  "total_pnl": -70.88532000000001,
+  "token_stats": {
+    "XRP": {
+      "wins": 2,
+      "losses": 1,
+      "pnl": -2.3096000000000005,
+      "trades": [
+        {
+          "index": 0,
+          "type": "EXIT",
+          "token": "XRP",
+          "timestamp": "2026-06-12T23:47:20.759562",
+          "signals": [
+            "signal_4_volume_spike",
+            "signal_7_new_futures",
+            "signal_11_early_warning"
+          ],
+          "signal_count": 3,
+          "score": 3.0,
+          "entry_price": 1.472,
+          "position_size": 10.0,
+          "exit_price": 0.05547,
+          "pnl": 0.0003999999999999837,
+          "win": true,
+          "exit_reason": "\u8c03\u6574\u4ed3\u4f4d",
+          "exit_timestamp": "2026-06-13T22:56:28.205803"
+        },
+        {
+          "index": 2,
+          "type": "EXIT",
+          "token": "XRP",
+          "timestamp": "2026-06-12T23:56:10.406669",
+          "signals": [
+            "signal_4_volume_spike",
+            "signal_7_new_futures",
+            "signal_11_early_warning"
+          ],
+          "signal_count": 3,
+          "score": 3.0,
+          "entry_price": 1.472,
+          "position_size": 10.0,
+          "exit_price": 1.13,
+          "pnl": -3.420000000000001,
+          "win": false,
+          "exit_reason": "STOP_LOSS",
+          "exit_timestamp": "2026-06-13T11:09:13.851341"
+        },
+        {
+          "index": 32,
+          "type": "EXIT",
+          "token": "XRP",
+          "timestamp": "2026-06-15T07:49:36.020208",
+          "signals": [
+            "manual_sell_all"
+          ],
+          "signal_count": 1,
+          "score": 0,
+          "entry_price": 1.1526,
+          "position_size": 0,
+          "exit_price": 1.18,
+          "pnl": 1.11,
+          "win": true,
+          "exit_reason": "SELL_ALL",
+          "exit_timestamp": "2026-06-15T12:49:36.020213"
+        }
+      ]
+    },
+    "FIL": {
+      "wins": 1,
+      "losses": 2,
+      "pnl": -6.075719999999999,
+      "trades": [
+        {
+          "index": 1,
+          "type": "EXIT",
+          "token": "FIL",
+          "timestamp": "2026-06-12T23:47:32.083766",
+          "signals": [
+            "signal_2_funding_turn_positive",
+            "signal_7_new_futures",
+            "signal_11_early_warning"
+          ],
+          "signal_count": 3,
+          "score": 3.94,
+          "entry_price": 1.0607,
+          "position_size": 10.0,
+          "exit_price": 0.751549,
+          "pnl": -3.0915099999999995,
+          "win": false,
+          "exit_reason": "STOP_LOSS",
+          "exit_timestamp": "2026-06-12T23:55:57.148213"
+        },
+        {
+          "index": 3,
+          "type": "EXIT",
+          "token": "FIL",
+          "timestamp": "2026-06-12T23:56:21.330047",
+          "signals": [
+            "signal_2_funding_turn_positive",
+            "signal_7_new_futures",
+            "signal_11_early_warning"
+          ],
+          "signal_count": 3,
+          "score": 3.94,
+          "entry_price": 1.0607,
+          "position_size": 10.0,
+          "exit_price": 0.762179,
+          "pnl": -2.9852099999999995,
+          "win": false,
+          "exit_reason": "STOP_LOSS",
+          "exit_timestamp": "2026-06-13T11:10:19.316729"
+        },
+        {
+          "index": 35,
+          "type": "EXIT",
+          "token": "FIL",
+          "timestamp": "2026-06-15T04:49:36.020221",
+          "signals": [
+            "manual_sell_all"
+          ],
+          "signal_count": 1,
+          "score": 0,
+          "entry_price": 0.79435,
+          "position_size": 0,
+          "exit_price": 0.8,
+          "pnl": 0.001,
+          "win": true,
+          "exit_reason": "SELL_ALL",
+          "exit_timestamp": "2026-06-15T12:49:36.020222"
+        }
+      ]
+    },
+    "SOL": {
+      "wins": 1,
+      "losses": 1,
+      "pnl": -130.66,
+      "trades": [
+        {
+          "index": 6,
+          "type": "EXIT",
+          "token": "SOL",
+          "timestamp": "2026-06-13T10:38:46.235471",
+          "signals": [
+            "signal_7_new_futures"
+          ],
+          "signal_count": 1,
+          "score": 1.5,
+          "entry_price": 88.99,
+          "position_size": 200.0,
+          "exit_price": 66.95,
+          "pnl": -131.19,
+          "win": false,
+          "exit_reason": "MANUAL_EXIT",
+          "exit_timestamp": "2026-06-13T11:06:23.367050"
+        },
+        {
+          "index": 33,
+          "type": "EXIT",
+          "token": "SOL",
+          "timestamp": "2026-06-15T06:49:36.020215",
+          "signals": [
+            "manual_sell_all"
+          ],
+          "signal_count": 1,
+          "score": 0,
+          "entry_price": 68.258,
+          "position_size": 0,
+          "exit_price": 70.9,
+          "pnl": 0.53,
+          "win": true,
+          "exit_reason": "SELL_ALL",
+          "exit_timestamp": "2026-06-15T12:49:36.020217"
+        }
+      ]
+    },
+    "LIT": {
+      "wins": 1,
+      "losses": 0,
+      "pnl": 4.0999999999999925,
+      "trades": [
+        {
+          "index": 15,
+          "type": "EXIT",
+          "token": "LIT",
+          "timestamp": "2026-06-13T11:55:31.202216",
+          "signals": [
+            "signal_2_funding_turn_positive"
+          ],
+          "signal_count": 1,
+          "score": 1.5,
+          "entry_price": 1.5195,
+          "position_size": 50,
+          "exit_price": 1.6015,
+          "pnl": 4.0999999999999925,
+          "win": true,
+          "exit_reason": "MAX_HOLD_TIME",
+          "exit_timestamp": "2026-06-13T20:54:56.320622"
+        }
+      ]
+    },
+    "BTC": {
+      "wins": 1,
+      "losses": 0,
+      "pnl": 17.27,
+      "trades": [
+        {
+          "index": 27,
+          "type": "EXIT",
+          "token": "BTC",
+          "timestamp": "2026-06-15T12:49:36.020152",
+          "signals": [
+            "manual_sell_all"
+          ],
+          "signal_count": 1,
+          "score": 0,
+          "entry_price": 64174.9,
+          "position_size": 0,
+          "exit_price": 64174.9,
+          "pnl": 17.27,
+          "win": true,
+          "exit_reason": "SELL_ALL",
+          "exit_timestamp": "2026-06-15T12:49:36.020189"
+        }
+      ]
+    },
+    "ETH": {
+      "wins": 1,
+      "losses": 0,
+      "pnl": 4.61,
+      "trades": [
+        {
+          "index": 28,
+          "type": "EXIT",
+          "token": "ETH",
+          "timestamp": "2026-06-15T11:49:36.020194",
+          "signals": [
+            "manual_sell_all"
+          ],
+          "signal_count": 1,
+          "score": 0,
+          "entry_price": 1667.61,
+          "position_size": 0,
+          "exit_price": 1715.8,
+          "pnl": 4.61,
+          "win": true,
+          "exit_reason": "SELL_ALL",
+          "exit_timestamp": "2026-06-15T12:49:36.020197"
+        }
+      ]
+    },
+    "OKB": {
+      "wins": 1,
+      "losses": 0,
+      "pnl": 0.01,
+      "trades": [
+        {
+          "index": 29,
+          "type": "EXIT",
+          "token": "OKB",
+          "timestamp": "2026-06-15T10:49:36.020199",
+          "signals": [
+            "manual_sell_all"
+          ],
+          "signal_count": 1,
+          "score": 0,
+          "entry_price": 74.586,
+          "position_size": 0,
+          "exit_price": 75.5,
+          "pnl": 0.01,
+          "win": true,
+          "exit_reason": "SELL_ALL",
+          "exit_timestamp": "2026-06-15T12:49:36.020200"
+        }
+      ]
+    },
+    "DOGE": {
+      "wins": 1,
+      "losses": 0,
+      "pnl": 0.56,
+      "trades": [
+        {
+          "index": 30,
+          "type": "EXIT",
+          "token": "DOGE",
+          "timestamp": "2026-06-15T09:49:36.020202",
+          "signals": [
+            "manual_sell_all"
+          ],
+          "signal_count": 1,
+          "score": 0,
+          "entry_price": 0.088293,
+          "position_size": 0,
+          "exit_price": 0.0885,
+          "pnl": 0.56,
+          "win": true,
+          "exit_reason": "SELL_ALL",
+          "exit_timestamp": "2026-06-15T12:49:36.020204"
+        }
+      ]
+    },
+    "WCT": {
+      "wins": 0,
+      "losses": 1,
+      "pnl": -2.64,
+      "trades": [
+        {
+          "index": 31,
+          "type": "EXIT",
+          "token": "WCT",
+          "timestamp": "2026-06-15T08:49:36.020205",
+          "signals": [
+            "manual_sell_all"
+          ],
+          "signal_count": 1,
+          "score": 0,
+          "entry_price": 0.049138,
+          "position_size": 0,
+          "exit_price": 0.048,
+          "pnl": -2.64,
+          "win": false,
+          "exit_reason": "SELL_ALL",
+          "exit_timestamp": "2026-06-15T12:49:36.020207"
+        }
+      ]
+    },
+    "ZRO": {
+      "wins": 1,
+      "losses": 0,
+      "pnl": 1.27,
+      "trades": [
+        {
+          "index": 34,
+          "type": "EXIT",
+          "token": "ZRO",
+          "timestamp": "2026-06-15T05:49:36.020218",
+          "signals": [
+            "manual_sell_all"
+          ],
+          "signal_count": 1,
+          "score": 0,
+          "entry_price": 0.94435,
+          "position_size": 0,
+          "exit_price": 1.037,
+          "pnl": 1.27,
+          "win": true,
+          "exit_reason": "SELL_ALL",
+          "exit_timestamp": "2026-06-15T12:49:36.020219"
+        }
+      ]
+    },
+    "NEAR": {
+      "wins": 1,
+      "losses": 0,
+      "pnl": 42.98,
+      "trades": [
+        {
+          "index": 36,
+          "type": "EXIT",
+          "token": "NEAR",
+          "timestamp": "2026-06-15T03:49:36.020223",
+          "signals": [
+            "manual_sell_all"
+          ],
+          "signal_count": 1,
+          "score": 0,
+          "entry_price": 2.08,
+          "position_size": 0,
+          "exit_price": 2.24,
+          "pnl": 42.98,
+          "win": true,
+          "exit_reason": "SELL_ALL",
+          "exit_timestamp": "2026-06-15T12:49:36.020225"
+        }
+      ]
+    }
+  },
+  "exit_reasons": {
+    "\u8c03\u6574\u4ed3\u4f4d": {
+      "count": 1,
+      "pnl": 0.0003999999999999837,
+      "wins": 1
+    },
+    "STOP_LOSS": {
+      "count": 3,
+      "pnl": -9.49672,
+      "wins": 0
+    },
+    "MANUAL_EXIT": {
+      "count": 1,
+      "pnl": -131.19,
+      "wins": 0
+    },
+    "MAX_HOLD_TIME": {
+      "count": 1,
+      "pnl": 4.0999999999999925,
+      "wins": 1
+    },
+    "SELL_ALL": {
+      "count": 10,
+      "pnl": 65.701,
+      "wins": 9
+    }
+  },
+  "signal_stats": {
+    "signal_4_volume_spike": {
+      "count": 2,
+      "pnl": -3.419600000000001,
+      "wins": 1
+    },
+    "signal_7_new_futures": {
+      "count": 5,
+      "pnl": -140.68632,
+      "wins": 1
+    },
+    "signal_11_early_warning": {
+      "count": 4,
+      "pnl": -9.49632,
+      "wins": 1
+    },
+    "signal_2_funding_turn_positive": {
+      "count": 3,
+      "pnl": -1.9767200000000065,
+      "wins": 1
+    },
+    "manual_sell_all": {
+      "count": 10,
+      "pnl": 65.701,
+      "wins": 9
+    }
+  },
+  "optimization_suggestions": {
+    "signal_7": {
+      "current": 1.5,
+      "suggested": 0,
+      "reason": "\u4e8f\u635f\u4e25\u91cd"
+    },
+    "signal_11": {
+      "current": 1.0,
+      "suggested": 0,
+      "reason": "\u80dc\u7387\u4f4e"
+    },
+    "entry_threshold": {
+      "current": 3.0,
+      "suggested": 4.5,
+      "reason": "\u63d0\u9ad8\u8d28\u91cf"
+    },
+    "hold_time": {
+      "current": 1440,
+      "suggested": 480,
+      "reason": "\u7f29\u77ed\u6301\u4ed3"
+    },
+    "take_profit": {
+      "current": "\u65e0",
+      "suggested": "15%",
+      "reason": "\u9501\u5b9a\u5229\u6da6"
+    }
+  }
+}

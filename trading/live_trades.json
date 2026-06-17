@@ -13,11 +13,12 @@
     "score": 3.0,
     "entry_price": 1.472,
     "position_size": 10.0,
-    "exit_price": 1.13,
-    "pnl": -3.420000000000001,
-    "win": false,
-    "exit_reason": "STOP_LOSS",
-    "exit_timestamp": "2026-06-12T23:55:55.189402"
+    "exit_price": 0.05547,
+    "pnl": 0.0003999999999999837,
+    "win": true,
+    "exit_reason": "调整仓位",
+    "exit_timestamp": "2026-06-13T22:56:28.205803",
+    "hold_minutes": 1389
   },
   {
     "index": 1,
@@ -37,11 +38,12 @@
     "pnl": -3.0915099999999995,
     "win": false,
     "exit_reason": "STOP_LOSS",
-    "exit_timestamp": "2026-06-12T23:55:57.148213"
+    "exit_timestamp": "2026-06-12T23:55:57.148213",
+    "hold_minutes": 8
   },
   {
     "index": 2,
-    "type": "ENTRY",
+    "type": "EXIT",
     "token": "XRP",
     "timestamp": "2026-06-12T23:56:10.406669",
     "signals": [
@@ -53,14 +55,16 @@
     "score": 3.0,
     "entry_price": 1.472,
     "position_size": 10.0,
-    "exit_price": null,
-    "pnl": null,
-    "win": null,
-    "exit_reason": null
+    "exit_price": 1.13,
+    "pnl": -3.420000000000001,
+    "win": false,
+    "exit_reason": "STOP_LOSS",
+    "exit_timestamp": "2026-06-13T11:09:13.851341",
+    "hold_minutes": 673
   },
   {
     "index": 3,
-    "type": "ENTRY",
+    "type": "EXIT",
     "token": "FIL",
     "timestamp": "2026-06-12T23:56:21.330047",
     "signals": [
@@ -72,48 +76,16 @@
     "score": 3.94,
     "entry_price": 1.0607,
     "position_size": 10.0,
-    "exit_price": null,
-    "pnl": null,
-    "win": null,
-    "exit_reason": null
-  },
-  {
-    "index": 4,
-    "type": "ENTRY",
-    "token": "BTC",
-    "timestamp": "2026-06-13T10:38:31.055031",
-    "signals": [
-      "signal_7_new_futures"
-    ],
-    "signal_count": 1,
-    "score": 1.5,
-    "entry_price": 79117.2,
-    "position_size": 200.0,
-    "exit_price": null,
-    "pnl": null,
-    "win": null,
-    "exit_reason": null
-  },
-  {
-    "index": 5,
-    "type": "ENTRY",
-    "token": "ETH",
-    "timestamp": "2026-06-13T10:38:34.236628",
-    "signals": [
-      "signal_7_new_futures"
-    ],
-    "signal_count": 1,
-    "score": 1.5,
-    "entry_price": 2221.67,
-    "position_size": 200.0,
-    "exit_price": null,
-    "pnl": null,
-    "win": null,
-    "exit_reason": null
+    "exit_price": 0.762179,
+    "pnl": -2.9852099999999995,
+    "win": false,
+    "exit_reason": "STOP_LOSS",
+    "exit_timestamp": "2026-06-13T11:10:19.316729",
+    "hold_minutes": 673
   },
   {
     "index": 6,
-    "type": "ENTRY",
+    "type": "EXIT",
     "token": "SOL",
     "timestamp": "2026-06-13T10:38:46.235471",
     "signals": [
@@ -123,9 +95,1428 @@
     "score": 1.5,
     "entry_price": 88.99,
     "position_size": 200.0,
+    "exit_price": 66.95,
+    "pnl": -131.19,
+    "win": false,
+    "exit_reason": "MANUAL_EXIT",
+    "exit_timestamp": "2026-06-13T11:06:23.367050",
+    "hold_minutes": 27
+  },
+  {
+    "index": 8,
+    "type": "ABANDONED",
+    "token": "XRP",
+    "timestamp": "2026-06-13T11:10:33.876462",
+    "signals": [
+      "signal_4_volume_spike",
+      "signal_7_new_futures",
+      "signal_11_early_warning"
+    ],
+    "signal_count": 3,
+    "score": 3.0,
+    "entry_price": 1.434,
+    "position_size": 10.0,
+    "exit_price": 1.434,
+    "pnl": 0.0,
+    "win": false,
+    "exit_reason": "manual_reset"
+  },
+  {
+    "index": 9,
+    "type": "ABANDONED",
+    "token": "FIL",
+    "timestamp": "2026-06-13T11:10:46.260157",
+    "signals": [
+      "signal_2_funding_turn_positive",
+      "signal_7_new_futures",
+      "signal_11_early_warning"
+    ],
+    "signal_count": 3,
+    "score": 3.94,
+    "entry_price": 0.9955,
+    "position_size": 10.0,
+    "exit_price": 0.9955,
+    "pnl": 0.0,
+    "win": false,
+    "exit_reason": "manual_reset"
+  },
+  {
+    "index": 10,
+    "type": "ABANDONED",
+    "token": "BTC",
+    "timestamp": "2026-06-13T11:11:54.352605",
+    "signals": [
+      "signal_7_new_futures"
+    ],
+    "signal_count": 1,
+    "score": 1.5,
+    "entry_price": 63667.0,
+    "position_size": 160.0,
+    "exit_price": 63667.0,
+    "pnl": 0.0,
+    "win": false,
+    "exit_reason": "manual_reset"
+  },
+  {
+    "index": 11,
+    "type": "ABANDONED",
+    "token": "ETH",
+    "timestamp": "2026-06-13T11:11:56.929533",
+    "signals": [
+      "signal_7_new_futures"
+    ],
+    "signal_count": 1,
+    "score": 1.5,
+    "entry_price": 2221.67,
+    "position_size": 160.0,
+    "exit_price": 2221.67,
+    "pnl": 0.0,
+    "win": false,
+    "exit_reason": "manual_reset"
+  },
+  {
+    "index": 12,
+    "type": "ABANDONED",
+    "token": "SOL",
+    "timestamp": "2026-06-13T11:12:24.123155",
+    "signals": [
+      "signal_7_new_futures"
+    ],
+    "signal_count": 1,
+    "score": 1.5,
+    "entry_price": 88.99,
+    "position_size": 160.0,
+    "exit_price": 88.99,
+    "pnl": 0.0,
+    "win": false,
+    "exit_reason": "manual_reset"
+  },
+  {
+    "index": 10,
+    "type": "ABANDONED",
+    "token": "MEGA",
+    "timestamp": "2026-06-13T11:30:02.538384",
+    "signals": [
+      "momentum_volume_1h",
+      "signal_2_funding_turn_positive"
+    ],
+    "signal_count": 2,
+    "score": 3.5,
+    "entry_price": 0.05139,
+    "position_size": 81.92000000000002,
+    "exit_price": 0.05139,
+    "pnl": 0.0,
+    "win": false,
+    "exit_reason": "manual_reset"
+  },
+  {
+    "index": 11,
+    "type": "ABANDONED",
+    "token": "MEGA",
+    "timestamp": "2026-06-13T11:31:52.009557",
+    "signals": [
+      "momentum_volume_1h",
+      "signal_2_funding_turn_positive"
+    ],
+    "signal_count": 2,
+    "score": 3.5,
+    "entry_price": 1.0,
+    "position_size": 81.92000000000002,
+    "exit_price": 1.0,
+    "pnl": 0.0,
+    "win": false,
+    "exit_reason": "manual_reset"
+  },
+  {
+    "index": 12,
+    "type": "ABANDONED",
+    "token": "MERL",
+    "timestamp": "2026-06-13T11:31:56.896353",
+    "signals": [
+      "momentum_volume_1h",
+      "signal_2_funding_turn_positive"
+    ],
+    "signal_count": 2,
+    "score": 3.5,
+    "entry_price": 1.0,
+    "position_size": 81.92000000000002,
+    "exit_price": 1.0,
+    "pnl": 0.0,
+    "win": false,
+    "exit_reason": "manual_reset"
+  },
+  {
+    "index": 13,
+    "type": "ABANDONED",
+    "token": "MEGA",
+    "timestamp": "2026-06-13T11:33:59.311676",
+    "signals": [
+      "momentum_volume_1h",
+      "signal_2_funding_turn_positive"
+    ],
+    "signal_count": 2,
+    "score": 3.5,
+    "entry_price": 0.05099,
+    "position_size": 81.92000000000002,
+    "exit_price": 0.05099,
+    "pnl": 0.0,
+    "win": false,
+    "exit_reason": "manual_reset"
+  },
+  {
+    "index": 14,
+    "type": "ABANDONED",
+    "token": "MERL",
+    "timestamp": "2026-06-13T11:34:02.026079",
+    "signals": [
+      "momentum_volume_1h",
+      "signal_2_funding_turn_positive"
+    ],
+    "signal_count": 2,
+    "score": 3.5,
+    "entry_price": 0.02112,
+    "position_size": 81.92000000000002,
+    "exit_price": 0.02112,
+    "pnl": 0.0,
+    "win": false,
+    "exit_reason": "manual_reset"
+  },
+  {
+    "index": 15,
+    "type": "EXIT",
+    "token": "LIT",
+    "timestamp": "2026-06-13T11:55:31.202216",
+    "signals": [
+      "signal_2_funding_turn_positive"
+    ],
+    "signal_count": 1,
+    "score": 1.5,
+    "entry_price": 1.5195,
+    "position_size": 50,
+    "exit_price": 1.6015,
+    "pnl": 4.0999999999999925,
+    "win": true,
+    "exit_reason": "MAX_HOLD_TIME",
+    "exit_timestamp": "2026-06-13T20:54:56.320622",
+    "hold_minutes": 539
+  },
+  {
+    "index": 16,
+    "type": "ABANDONED",
+    "token": "ZKP",
+    "timestamp": "2026-06-13T21:40:41.042052",
+    "signals": [
+      "signal_2_funding_turn_positive"
+    ],
+    "signal_count": 1,
+    "score": 1.5,
+    "entry_price": 0.05546,
+    "position_size": 10.0,
+    "exit_price": 0.05546,
+    "pnl": 0.0,
+    "win": false,
+    "exit_reason": "manual_reset"
+  },
+  {
+    "index": 17,
+    "type": "ABANDONED",
+    "token": "ZKP",
+    "timestamp": "2026-06-13T22:53:11.223474",
+    "signals": [
+      "signal_2_funding_turn_positive"
+    ],
+    "signal_count": 1,
+    "score": 1.5,
+    "entry_price": 0.05539,
+    "position_size": 10.0,
+    "exit_price": 0.05539,
+    "pnl": 0.0,
+    "win": false,
+    "exit_reason": "manual_reset"
+  },
+  {
+    "index": 18,
+    "type": "ABANDONED",
+    "token": "ZKP",
+    "timestamp": "2026-06-13T22:54:52.325762",
+    "signals": [
+      "signal_2_funding_turn_positive"
+    ],
+    "signal_count": 1,
+    "score": 1.5,
+    "entry_price": 0.05543,
+    "position_size": 10.0,
+    "exit_price": 0.05543,
+    "pnl": 0.0,
+    "win": false,
+    "exit_reason": "manual_reset"
+  },
+  {
+    "index": 19,
+    "type": "ABANDONED",
+    "token": "ZKP",
+    "timestamp": "2026-06-13T22:57:07.360413",
+    "signals": [
+      "signal_2_funding_turn_positive"
+    ],
+    "signal_count": 1,
+    "score": 1.5,
+    "entry_price": 0.05547,
+    "position_size": 888,
+    "exit_price": 0.05547,
+    "pnl": 0.0,
+    "win": false,
+    "exit_reason": "manual_reset"
+  },
+  {
+    "index": 20,
+    "type": "ABANDONED",
+    "token": "ZKP",
+    "timestamp": "2026-06-13T23:13:18.627968",
+    "signals": [
+      "momentum_price_1h",
+      "momentum_volume_1h",
+      "signal_2_funding_turn_positive"
+    ],
+    "signal_count": 3,
+    "score": 6.0,
+    "entry_price": 0.05663,
+    "position_size": 888,
+    "exit_price": 0.05663,
+    "pnl": 0.0,
+    "win": false,
+    "exit_reason": "manual_reset"
+  },
+  {
+    "index": 21,
+    "type": "ABANDONED",
+    "token": "ZRO",
+    "timestamp": "2026-06-14T11:52:18.593254",
+    "signals": [
+      "整数关口收割期",
+      "动量向上"
+    ],
+    "signal_count": 2,
+    "score": 2.0,
+    "entry_price": 0.9421,
+    "position_size": 888,
+    "exit_price": 0.9421,
+    "pnl": 0.0,
+    "win": false,
+    "exit_reason": "manual_reset",
+    "exit_timestamp": ""
+  },
+  {
+    "index": 22,
+    "type": "ABANDONED",
+    "token": "ZRO",
+    "timestamp": "2026-06-14T13:49:52.710129",
+    "signals": [
+      "整数关口收割期",
+      "动量向上"
+    ],
+    "signal_count": 2,
+    "score": 2.0,
+    "entry_price": 0.933,
+    "position_size": 888,
+    "market_context": {
+      "hour_of_day": 13,
+      "funding_rate": 0,
+      "phase_detected": "整数关口收割期",
+      "signals_triggered": [
+        "整数关口收割期",
+        "动量向上"
+      ],
+      "sweep_status": "normal"
+    },
+    "exit_price": 0.933,
+    "pnl_usd": null,
+    "pnl_pct": null,
+    "win": false,
+    "exit_reason": "manual_reset",
+    "exit_timestamp": null,
+    "hold_minutes": null,
+    "peak_gain_pct": null,
+    "pnl": 0.0
+  },
+  {
+    "index": 23,
+    "type": "ABANDONED",
+    "token": "SUI",
+    "timestamp": "2026-06-14T13:49:52.710151",
+    "signals": [
+      "整数关口收割期",
+      "动量向上"
+    ],
+    "signal_count": 2,
+    "score": 2.0,
+    "entry_price": 0.7612,
+    "position_size": 888,
+    "market_context": {
+      "hour_of_day": 13,
+      "funding_rate": 0,
+      "phase_detected": "整数关口收割期",
+      "signals_triggered": [
+        "整数关口收割期",
+        "动量向上"
+      ],
+      "sweep_status": "normal"
+    },
+    "exit_price": 0.7612,
+    "pnl_usd": null,
+    "pnl_pct": null,
+    "win": false,
+    "exit_reason": "manual_reset",
+    "exit_timestamp": null,
+    "hold_minutes": null,
+    "peak_gain_pct": null,
+    "pnl": 0.0
+  },
+  {
+    "index": 24,
+    "type": "ABANDONED",
+    "token": "BTC",
+    "timestamp": "2026-06-14T14:30:17.961647",
+    "signals": [
+      "BTC型策略",
+      "整数关口$65k"
+    ],
+    "signal_count": 3,
+    "score": 3.0,
+    "entry_price": 64344.0,
+    "position_size": 600,
+    "leverage": 3,
+    "market_context": {
+      "hour_of_day": 14,
+      "funding_rate": -5.6e-05,
+      "phase_detected": "整数关口突破",
+      "signals_triggered": [
+        "BTC型策略",
+        "整数关口$65k"
+      ],
+      "sweep_status": "normal",
+      "btc_price": 64344.0
+    },
+    "exit_price": 64344.0,
+    "pnl_usd": 173.9,
+    "pnl_pct": 0.27,
+    "win": false,
+    "exit_reason": "manual_reset",
+    "exit_timestamp": null,
+    "hold_minutes": null,
+    "peak_gain_pct": null,
+    "pnl": 0.0
+  },
+  {
+    "index": 25,
+    "type": "ABANDONED",
+    "token": "ZRO",
+    "timestamp": "2026-06-14T14:32:02.242619",
+    "signals": [
+      "整数关口收割期"
+    ],
+    "signal_count": 1,
+    "score": 1.0,
+    "entry_price": 0.94435,
+    "position_size": 760.5037,
+    "market_context": {
+      "hour_of_day": 14
+    },
+    "exit_price": 0.94435,
+    "pnl_usd": -12.13,
+    "pnl_pct": -1.69,
+    "win": false,
+    "exit_reason": "manual_reset",
+    "pnl": 0.0
+  },
+  {
+    "index": 26,
+    "type": "ABANDONED",
+    "token": "SUI",
+    "timestamp": "2026-06-14T14:32:02.242667",
+    "signals": [
+      "整数关口收割期"
+    ],
+    "signal_count": 1,
+    "score": 1.0,
+    "entry_price": 0.76143,
+    "position_size": 1178.8979,
+    "market_context": {
+      "hour_of_day": 14
+    },
+    "exit_price": 0.76143,
+    "pnl_usd": -2.75,
+    "pnl_pct": -0.31,
+    "win": false,
+    "exit_reason": "manual_reset",
+    "pnl": 0.0
+  },
+  {
+    "index": 27,
+    "type": "EXIT",
+    "token": "BTC",
+    "timestamp": "2026-06-15T12:49:36.020152",
+    "signals": [
+      "manual_sell_all"
+    ],
+    "signal_count": 1,
+    "score": 0,
+    "entry_price": 64174.9,
+    "position_size": 0,
+    "exit_price": 64174.9,
+    "pnl": 17.27,
+    "win": true,
+    "exit_reason": "SELL_ALL",
+    "exit_timestamp": "2026-06-15T12:49:36.020189"
+  },
+  {
+    "index": 28,
+    "type": "EXIT",
+    "token": "ETH",
+    "timestamp": "2026-06-15T11:49:36.020194",
+    "signals": [
+      "manual_sell_all"
+    ],
+    "signal_count": 1,
+    "score": 0,
+    "entry_price": 1667.61,
+    "position_size": 0,
+    "exit_price": 1715.8,
+    "pnl": 4.61,
+    "win": true,
+    "exit_reason": "SELL_ALL",
+    "exit_timestamp": "2026-06-15T12:49:36.020197",
+    "hold_minutes": 60
+  },
+  {
+    "index": 29,
+    "type": "EXIT",
+    "token": "OKB",
+    "timestamp": "2026-06-15T10:49:36.020199",
+    "signals": [
+      "manual_sell_all"
+    ],
+    "signal_count": 1,
+    "score": 0,
+    "entry_price": 74.586,
+    "position_size": 0,
+    "exit_price": 75.5,
+    "pnl": 0.01,
+    "win": true,
+    "exit_reason": "SELL_ALL",
+    "exit_timestamp": "2026-06-15T12:49:36.020200",
+    "hold_minutes": 120
+  },
+  {
+    "index": 30,
+    "type": "EXIT",
+    "token": "DOGE",
+    "timestamp": "2026-06-15T09:49:36.020202",
+    "signals": [
+      "manual_sell_all"
+    ],
+    "signal_count": 1,
+    "score": 0,
+    "entry_price": 0.088293,
+    "position_size": 0,
+    "exit_price": 0.0885,
+    "pnl": 0.56,
+    "win": true,
+    "exit_reason": "SELL_ALL",
+    "exit_timestamp": "2026-06-15T12:49:36.020204",
+    "hold_minutes": 180
+  },
+  {
+    "index": 31,
+    "type": "EXIT",
+    "token": "WCT",
+    "timestamp": "2026-06-15T08:49:36.020205",
+    "signals": [
+      "manual_sell_all"
+    ],
+    "signal_count": 1,
+    "score": 0,
+    "entry_price": 0.049138,
+    "position_size": 0,
+    "exit_price": 0.048,
+    "pnl": -2.64,
+    "win": false,
+    "exit_reason": "SELL_ALL",
+    "exit_timestamp": "2026-06-15T12:49:36.020207",
+    "hold_minutes": 240
+  },
+  {
+    "index": 32,
+    "type": "EXIT",
+    "token": "XRP",
+    "timestamp": "2026-06-15T07:49:36.020208",
+    "signals": [
+      "manual_sell_all"
+    ],
+    "signal_count": 1,
+    "score": 0,
+    "entry_price": 1.1526,
+    "position_size": 0,
+    "exit_price": 1.18,
+    "pnl": 1.11,
+    "win": true,
+    "exit_reason": "SELL_ALL",
+    "exit_timestamp": "2026-06-15T12:49:36.020213",
+    "hold_minutes": 300
+  },
+  {
+    "index": 33,
+    "type": "EXIT",
+    "token": "SOL",
+    "timestamp": "2026-06-15T06:49:36.020215",
+    "signals": [
+      "manual_sell_all"
+    ],
+    "signal_count": 1,
+    "score": 0,
+    "entry_price": 68.258,
+    "position_size": 0,
+    "exit_price": 70.9,
+    "pnl": 0.53,
+    "win": true,
+    "exit_reason": "SELL_ALL",
+    "exit_timestamp": "2026-06-15T12:49:36.020217",
+    "hold_minutes": 360
+  },
+  {
+    "index": 34,
+    "type": "EXIT",
+    "token": "ZRO",
+    "timestamp": "2026-06-15T05:49:36.020218",
+    "signals": [
+      "manual_sell_all"
+    ],
+    "signal_count": 1,
+    "score": 0,
+    "entry_price": 0.94435,
+    "position_size": 0,
+    "exit_price": 1.037,
+    "pnl": 1.27,
+    "win": true,
+    "exit_reason": "SELL_ALL",
+    "exit_timestamp": "2026-06-15T12:49:36.020219",
+    "hold_minutes": 420
+  },
+  {
+    "index": 35,
+    "type": "EXIT",
+    "token": "FIL",
+    "timestamp": "2026-06-15T04:49:36.020221",
+    "signals": [
+      "manual_sell_all"
+    ],
+    "signal_count": 1,
+    "score": 0,
+    "entry_price": 0.79435,
+    "position_size": 0,
+    "exit_price": 0.8,
+    "pnl": 0.001,
+    "win": true,
+    "exit_reason": "SELL_ALL",
+    "exit_timestamp": "2026-06-15T12:49:36.020222",
+    "hold_minutes": 480
+  },
+  {
+    "index": 36,
+    "type": "EXIT",
+    "token": "NEAR",
+    "timestamp": "2026-06-15T03:49:36.020223",
+    "signals": [
+      "manual_sell_all"
+    ],
+    "signal_count": 1,
+    "score": 0,
+    "entry_price": 2.08,
+    "position_size": 0,
+    "exit_price": 2.24,
+    "pnl": 42.98,
+    "win": true,
+    "exit_reason": "SELL_ALL",
+    "exit_timestamp": "2026-06-15T12:49:36.020225",
+    "hold_minutes": 540
+  },
+  {
+    "type": "ABANDONED",
+    "token": "DOGE",
+    "signals": [
+      "4H_EMA_down_RSI_recovering_golden_cross"
+    ],
+    "signal_count": 1,
+    "score": 0.5,
+    "entry_price": 0.0888,
+    "position_size": 1123.62,
+    "leverage": 3,
+    "market_context": {
+      "entry_reason": "4H向下但RSI回升中+金叉，可能反转",
+      "4h_status": "EMA趋势↓, RSI 65 回升中, 金叉是"
+    },
+    "index": 37,
+    "timestamp": "2026-06-15T13:19:27.315101",
+    "exit_reason": "manual_reset",
+    "exit_price": 0.0888,
+    "pnl": 0.0,
+    "win": false
+  },
+  {
+    "type": "ABANDONED",
+    "token": "OKB",
+    "signals": [
+      "4H_EMA_down_RSI_recovering"
+    ],
+    "signal_count": 1,
+    "score": 0.5,
+    "entry_price": 75.27,
+    "position_size": 7570.18,
+    "leverage": 3,
+    "market_context": {
+      "entry_reason": "4H向下但RSI回升中",
+      "4h_status": "EMA趋势↓, RSI 64 回升中"
+    },
+    "index": 38,
+    "timestamp": "2026-06-15T13:19:27.315124",
+    "exit_reason": "manual_reset",
+    "exit_price": 75.27,
+    "pnl": 0.0,
+    "win": false
+  },
+  {
+    "type": "ABANDONED",
+    "token": "WCT",
+    "signals": [
+      "4H_EMA_down_RSI_recovering_golden_cross"
+    ],
+    "signal_count": 1,
+    "score": 0.5,
+    "entry_price": 0.04811,
+    "position_size": 238.2,
+    "leverage": 3,
+    "market_context": {
+      "entry_reason": "4H向下但RSI回升中+金叉，可能反转",
+      "4h_status": "EMA趋势↓, RSI 61 回升中, 金叉是"
+    },
+    "index": 39,
+    "timestamp": "2026-06-15T13:19:27.315126",
+    "exit_reason": "manual_reset",
+    "exit_price": 0.04811,
+    "pnl": 0.0,
+    "win": false
+  },
+  {
+    "type": "ABANDONED",
+    "token": "SHIB",
+    "signals": [
+      "4H_EMA_down_RSI_recovering_golden_cross"
+    ],
+    "signal_count": 1,
+    "score": 0.5,
+    "entry_price": 2.7e-05,
+    "position_size": 2664,
+    "leverage": 3,
+    "market_context": {
+      "entry_reason": "4H向下但RSI回升中+金叉，可能反转",
+      "4h_status": "EMA趋势↓, RSI 63 回升中, 金叉是"
+    },
+    "index": 40,
+    "timestamp": "2026-06-15T13:19:27.315127",
+    "exit_reason": "manual_reset",
+    "exit_price": 2.7e-05,
+    "pnl": 0.0,
+    "win": false
+  },
+  {
+    "index": 41,
+    "type": "ABANDONED",
+    "token": "ZRO",
+    "timestamp": "2026-06-15T18:09:26.202657",
+    "signals": [
+      "4H_aligned",
+      "multi_tf_aligned"
+    ],
+    "signal_count": 2,
+    "score": 5.0,
+    "entry_price": 1.0669,
+    "position_size": 888,
+    "leverage": 1,
+    "market_context": {
+      "entry_reason": "4H+1H+15M多时间框架全部对齐",
+      "4h_status": "aligned"
+    },
+    "exit_reason": "manual_reset",
+    "exit_price": 1.0669,
+    "pnl": 0.0,
+    "win": false
+  },
+  {
+    "index": 42,
+    "type": "ABANDONED",
+    "token": "BTC",
+    "timestamp": "2026-06-14T00:33:37.871612",
+    "signals": [
+      "okx_history_sync"
+    ],
+    "signal_count": 1,
+    "score": 0,
+    "entry_price": 65717.115,
+    "position_size": 131434.23,
+    "leverage": 1,
+    "market_context": {
+      "source": "okx_history_sync",
+      "pnl": "+11.37"
+    },
+    "exit_reason": "manual_reset",
+    "exit_price": 65717.115,
+    "pnl": 0.0,
+    "win": false
+  },
+  {
+    "index": 43,
+    "type": "ABANDONED",
+    "token": "OKB",
+    "timestamp": "2026-06-13T23:33:37.871612",
+    "signals": [
+      "okx_history_sync"
+    ],
+    "signal_count": 1,
+    "score": 0,
+    "entry_price": 75.542438,
+    "position_size": 15184.03,
+    "leverage": 1,
+    "market_context": {
+      "source": "okx_history_sync",
+      "pnl": "-0.49"
+    },
+    "exit_reason": "manual_reset",
+    "exit_price": 75.542438,
+    "pnl": 0.0,
+    "win": false
+  },
+  {
+    "index": 44,
+    "type": "ABANDONED",
+    "token": "ETH",
+    "timestamp": "2026-06-13T22:33:37.871612",
+    "signals": [
+      "okx_history_sync"
+    ],
+    "signal_count": 1,
+    "score": 0,
+    "entry_price": 1724.975,
+    "position_size": 3449.95,
+    "leverage": 1,
+    "market_context": {
+      "source": "okx_history_sync",
+      "pnl": "+0.03"
+    },
+    "exit_reason": "manual_reset",
+    "exit_price": 1724.975,
+    "pnl": 0.0,
+    "win": false
+  },
+  {
+    "index": 45,
+    "type": "ABANDONED",
+    "token": "WCT",
+    "timestamp": "2026-06-13T21:33:37.871612",
+    "signals": [
+      "okx_history_sync"
+    ],
+    "signal_count": 1,
+    "score": 0,
+    "entry_price": 0.048246,
+    "position_size": 477.73,
+    "leverage": 1,
+    "market_context": {
+      "source": "okx_history_sync",
+      "pnl": "-1.25"
+    },
+    "exit_reason": "manual_reset",
+    "exit_price": 0.048246,
+    "pnl": 0.0,
+    "win": false
+  },
+  {
+    "index": 46,
+    "type": "ABANDONED",
+    "token": "OP",
+    "timestamp": "2026-06-15T20:28:06.495590",
+    "signals": [
+      "4H_UPTREND",
+      "1h_RSI_38_LOW",
+      "1h_BB_LOWER"
+    ],
+    "signal_count": 3,
+    "score": 3.5,
+    "entry_price": 0.1074,
+    "position_size": 888,
+    "leverage": 1,
+    "market_context": {
+      "source": "auto_scan",
+      "rsi": 25,
+      "note": "智能限价单挂单，分3批",
+      "order_type": "limit",
+      "entry_offset_pct": 0.5
+    },
+    "exit_reason": "manual_reset",
+    "exit_price": 0.1074,
+    "pnl": 0.0,
+    "win": false
+  },
+  {
+    "index": 47,
+    "type": "ABANDONED",
+    "token": "KAITO",
+    "timestamp": "2026-06-16T18:25:30.899675",
+    "signals": [
+      "4h_rsi_recovering",
+      "4h_golden_cross",
+      "signal_2_funding_turn_positive"
+    ],
+    "signal_count": 3,
+    "score": 4.5,
+    "entry_price": 0.488,
+    "position_size": 888,
+    "market_context": {
+      "hour_of_day": 18,
+      "funding_rate": 5e-05,
+      "oi_change_1h_pct": 0,
+      "price_change_1h_pct": -0.2,
+      "volume_ratio_1h": 0.25,
+      "days_listed": 0,
+      "phase_detected": "整数关口收割期",
+      "signals_triggered": [
+        "4h_rsi_recovering",
+        "4h_golden_cross",
+        "signal_2_funding_turn_positive"
+      ],
+      "sweep_status": "normal",
+      "btc_price": 0,
+      "btc_dominance": 0,
+      "dynamic_sl_pct": 3.0,
+      "4h_aligned": false,
+      "4h_rsi": 69.3,
+      "entry_price_optimized": 0.48507,
+      "order_type": "limit",
+      "offset_pct": 0.6
+    },
+    "exit_price": 0.488,
+    "pnl_usd": null,
+    "pnl_pct": null,
+    "win": false,
+    "exit_reason": "manual_reset",
+    "exit_timestamp": null,
+    "hold_minutes": null,
+    "peak_gain_pct": null,
+    "pnl": 0.0
+  },
+  {
+    "index": 48,
+    "type": "ABANDONED",
+    "token": "KAITO",
+    "timestamp": "2026-06-16T18:32:36.193619",
+    "signals": [
+      "4h_rsi_recovering",
+      "4h_golden_cross",
+      "signal_2_funding_turn_positive",
+      "1h_rsi_not_overbought"
+    ],
+    "signal_count": 4,
+    "score": 6.0,
+    "entry_price": 0.4873,
+    "position_size": 888,
+    "market_context": {
+      "hour_of_day": 18,
+      "funding_rate": 5e-05,
+      "oi_change_1h_pct": 0,
+      "price_change_1h_pct": -0.25,
+      "volume_ratio_1h": 0.28,
+      "days_listed": 0,
+      "phase_detected": "整数关口收割期",
+      "signals_triggered": [
+        "4h_rsi_recovering",
+        "4h_golden_cross",
+        "signal_2_funding_turn_positive",
+        "1h_rsi_not_overbought"
+      ],
+      "sweep_status": "normal",
+      "btc_price": 0,
+      "btc_dominance": 0,
+      "dynamic_sl_pct": 3.0,
+      "4h_aligned": false,
+      "4h_rsi": 68.9,
+      "entry_price_optimized": 0.48438,
+      "order_type": "limit",
+      "offset_pct": 0.6
+    },
+    "exit_price": 0.4873,
+    "pnl_usd": null,
+    "pnl_pct": null,
+    "win": false,
+    "exit_reason": "manual_reset",
+    "exit_timestamp": null,
+    "hold_minutes": null,
+    "peak_gain_pct": null,
+    "pnl": 0.0
+  },
+  {
+    "index": 49,
+    "type": "ABANDONED",
+    "token": "KAITO",
+    "timestamp": "2026-06-16T19:56:29.490049",
+    "signals": [
+      "4h_rsi_recovering",
+      "4h_golden_cross",
+      "signal_2_funding_turn_positive",
+      "1h_rsi_not_overbought"
+    ],
+    "signal_count": 4,
+    "score": 6.0,
+    "entry_price": 0.4865,
+    "position_size": 888,
+    "market_context": {
+      "hour_of_day": 19,
+      "funding_rate": 5e-05,
+      "oi_change_1h_pct": 0,
+      "price_change_1h_pct": -0.61,
+      "volume_ratio_1h": 0.82,
+      "days_listed": 0,
+      "phase_detected": "整数关口收割期",
+      "signals_triggered": [
+        "4h_rsi_recovering",
+        "4h_golden_cross",
+        "signal_2_funding_turn_positive",
+        "1h_rsi_not_overbought"
+      ],
+      "sweep_status": "normal",
+      "btc_price": 0,
+      "btc_dominance": 0,
+      "dynamic_sl_pct": 3.0,
+      "4h_aligned": false,
+      "4h_rsi": 68.5,
+      "entry_price_optimized": 0.48358,
+      "order_type": "limit",
+      "offset_pct": 0.6
+    },
+    "exit_price": 0.4865,
+    "pnl_usd": null,
+    "pnl_pct": null,
+    "win": false,
+    "exit_reason": "manual_reset",
+    "exit_timestamp": null,
+    "hold_minutes": null,
+    "peak_gain_pct": null,
+    "pnl": 0.0
+  },
+  {
+    "index": 50,
+    "type": "ABANDONED",
+    "token": "KAITO",
+    "timestamp": "2026-06-16T23:03:24.149481",
+    "signals": [
+      "4h_rsi_recovering",
+      "4h_golden_cross",
+      "signal_2_funding_turn_positive",
+      "1h_rsi_not_overbought"
+    ],
+    "signal_count": 4,
+    "score": 6.0,
+    "entry_price": 0.4855,
+    "position_size": 888,
+    "market_context": {
+      "hour_of_day": 23,
+      "funding_rate": 5e-05,
+      "oi_change_1h_pct": 0,
+      "price_change_1h_pct": -0.23,
+      "volume_ratio_1h": 0.05,
+      "days_listed": 0,
+      "phase_detected": "整数关口收割期",
+      "signals_triggered": [
+        "4h_rsi_recovering",
+        "4h_golden_cross",
+        "signal_2_funding_turn_positive",
+        "1h_rsi_not_overbought"
+      ],
+      "sweep_status": "normal",
+      "btc_price": 0,
+      "btc_dominance": 0,
+      "dynamic_sl_pct": 3.0,
+      "4h_aligned": false,
+      "4h_rsi": 62.8,
+      "entry_price_optimized": 0.48259,
+      "order_type": "limit",
+      "offset_pct": 0.6
+    },
+    "exit_price": 0.4855,
+    "pnl_usd": null,
+    "pnl_pct": null,
+    "win": false,
+    "exit_reason": "manual_reset",
+    "exit_timestamp": null,
+    "hold_minutes": null,
+    "peak_gain_pct": null,
+    "pnl": 0.0
+  },
+  {
+    "index": 51,
+    "type": "ABANDONED",
+    "token": "KAITO",
+    "timestamp": "2026-06-16T23:05:46.133882",
+    "signals": [
+      "4h_rsi_recovering",
+      "4h_golden_cross",
+      "signal_2_funding_turn_positive",
+      "1h_rsi_not_overbought"
+    ],
+    "signal_count": 4,
+    "score": 6.0,
+    "entry_price": 0.4856,
+    "position_size": 888,
+    "market_context": {
+      "hour_of_day": 23,
+      "funding_rate": 5e-05,
+      "oi_change_1h_pct": 0,
+      "price_change_1h_pct": -0.21,
+      "volume_ratio_1h": 0.12,
+      "days_listed": 0,
+      "phase_detected": "整数关口收割期",
+      "signals_triggered": [
+        "4h_rsi_recovering",
+        "4h_golden_cross",
+        "signal_2_funding_turn_positive",
+        "1h_rsi_not_overbought"
+      ],
+      "sweep_status": "normal",
+      "btc_price": 0,
+      "btc_dominance": 0,
+      "dynamic_sl_pct": 3.0,
+      "4h_aligned": false,
+      "4h_rsi": 63.0,
+      "entry_price_optimized": 0.48269,
+      "order_type": "limit",
+      "offset_pct": 0.6
+    },
+    "exit_price": null,
+    "pnl_usd": null,
+    "pnl_pct": null,
+    "win": null,
+    "exit_reason": "auto_reset_on_startup",
+    "exit_timestamp": "2026-06-17T13:15:48.011179",
+    "hold_minutes": null,
+    "peak_gain_pct": null
+  },
+  {
+    "index": 52,
+    "type": "EXIT",
+    "token": "BTC",
+    "timestamp": "2026-06-16T23:30:00.000000",
+    "signals": [
+      "manual_sell_all",
+      "spot_position"
+    ],
+    "signal_count": 2,
+    "score": 0,
+    "entry_price": 65416.61,
+    "position_size": 1.0,
+    "exit_price": 65693.4,
+    "pnl": 276.7899999999936,
+    "win": true,
+    "exit_reason": "SPOT_CLOSED",
+    "exit_timestamp": "2026-06-16T23:30:00.000000",
+    "source": "okx_spot_closed"
+  },
+  {
+    "index": 53,
+    "type": "EXIT",
+    "token": "OKB",
+    "timestamp": "2026-06-16T23:30:00.000000",
+    "signals": [
+      "manual_sell_all",
+      "spot_position"
+    ],
+    "signal_count": 2,
+    "score": 0,
+    "entry_price": 75.3483,
+    "position_size": 100.5736,
+    "exit_price": 74.86994598980249,
+    "pnl": -48.10978488000001,
+    "win": false,
+    "exit_reason": "SPOT_CLOSED",
+    "exit_timestamp": "2026-06-16T23:30:00.000000",
+    "source": "okx_spot_closed"
+  },
+  {
+    "index": 54,
+    "type": "EXIT",
+    "token": "ETH",
+    "timestamp": "2026-06-16T23:30:00.000000",
+    "signals": [
+      "manual_sell_all",
+      "spot_position"
+    ],
+    "signal_count": 2,
+    "score": 0,
+    "entry_price": 1717.25,
+    "position_size": 1.0,
+    "exit_price": 1782.46,
+    "pnl": 65.21000000000004,
+    "win": true,
+    "exit_reason": "SPOT_CLOSED",
+    "exit_timestamp": "2026-06-16T23:30:00.000000",
+    "source": "okx_spot_closed"
+  },
+  {
+    "index": 55,
+    "type": "EXIT",
+    "token": "WCT",
+    "timestamp": "2026-06-16T23:30:00.000000",
+    "signals": [
+      "manual_sell_all",
+      "spot_position"
+    ],
+    "signal_count": 2,
+    "score": 0,
+    "entry_price": 0.048374,
+    "position_size": 4951.2213,
+    "exit_price": 0.046960130826711376,
+    "pnl": -7.00037916620002,
+    "win": false,
+    "exit_reason": "SPOT_CLOSED",
+    "exit_timestamp": "2026-06-16T23:30:00.000000",
+    "source": "okx_spot_closed"
+  },
+  {
+    "index": 56,
+    "type": "EXIT",
+    "token": "ZRO",
+    "timestamp": "2026-06-16T23:30:00.000000",
+    "signals": [
+      "manual_sell_all",
+      "spot_position"
+    ],
+    "signal_count": 2,
+    "score": 0,
+    "entry_price": 1.0693,
+    "position_size": 128.9439,
+    "exit_price": 1.1389449210082834,
+    "pnl": 8.980287730000015,
+    "win": true,
+    "exit_reason": "SPOT_CLOSED",
+    "exit_timestamp": "2026-06-16T23:30:00.000000",
+    "source": "okx_spot_closed"
+  },
+  {
+    "index": 57,
+    "type": "EXIT",
+    "token": "OP",
+    "timestamp": "2026-06-16T23:30:00.000000",
+    "signals": [
+      "manual_sell_all",
+      "spot_position"
+    ],
+    "signal_count": 2,
+    "score": 0,
+    "entry_price": 0.1095,
+    "position_size": 25196.3315,
+    "exit_price": 0.10599995479500657,
+    "pnl": -88.18829925,
+    "win": false,
+    "exit_reason": "SPOT_CLOSED",
+    "exit_timestamp": "2026-06-16T23:30:00.000000",
+    "source": "okx_spot_closed"
+  },
+  {
+    "index": 58,
+    "type": "EXIT",
+    "token": "KAITO",
+    "timestamp": "2026-06-16T23:30:00.000000",
+    "signals": [
+      "manual_sell_all",
+      "spot_position"
+    ],
+    "signal_count": 2,
+    "score": 0,
+    "entry_price": 0.48461,
+    "position_size": 887.2896,
+    "exit_price": 0.4862899328471787,
+    "pnl": 1.4905869440000288,
+    "win": true,
+    "exit_reason": "SPOT_CLOSED",
+    "exit_timestamp": "2026-06-16T23:30:00.000000",
+    "source": "okx_spot_closed"
+  },
+  {
+    "index": 59,
+    "type": "ABANDONED",
+    "token": "OP",
+    "timestamp": "2026-06-17T13:40:28.074503",
+    "entry_time": "2026-06-17T13:40:28.074503",
+    "signals": [
+      "manual_buy_5tokens"
+    ],
+    "signal_count": 1,
+    "score": 5.0,
+    "entry_price": 0.10931,
+    "position_size": 888.0,
+    "market_context": {
+      "source": "market_scan",
+      "mode": "spot"
+    },
     "exit_price": null,
     "pnl": null,
+    "pnl_pct": null,
+    "hold_minutes": null,
     "win": null,
-    "exit_reason": null
+    "exit_reason": "auto_reset_on_startup",
+    "exit_timestamp": "2026-06-17T15:31:53.146973"
+  },
+  {
+    "index": 60,
+    "type": "ABANDONED",
+    "token": "NEAR",
+    "timestamp": "2026-06-17T13:40:28.917813",
+    "entry_time": "2026-06-17T13:40:28.917813",
+    "signals": [
+      "manual_buy_5tokens"
+    ],
+    "signal_count": 1,
+    "score": 5.0,
+    "entry_price": 2.327,
+    "position_size": 888.0,
+    "market_context": {
+      "source": "market_scan",
+      "mode": "spot"
+    },
+    "exit_price": null,
+    "pnl": null,
+    "pnl_pct": null,
+    "hold_minutes": null,
+    "win": null,
+    "exit_reason": "auto_reset_on_startup",
+    "exit_timestamp": "2026-06-17T15:31:53.146981"
+  },
+  {
+    "index": 61,
+    "type": "ABANDONED",
+    "token": "SOL",
+    "timestamp": "2026-06-17T13:40:29.745499",
+    "entry_time": "2026-06-17T13:40:29.745499",
+    "signals": [
+      "manual_buy_5tokens"
+    ],
+    "signal_count": 1,
+    "score": 5.0,
+    "entry_price": 73.78,
+    "position_size": 888.0,
+    "market_context": {
+      "source": "market_scan",
+      "mode": "spot"
+    },
+    "exit_price": null,
+    "pnl": null,
+    "pnl_pct": null,
+    "hold_minutes": null,
+    "win": null,
+    "exit_reason": "auto_reset_on_startup",
+    "exit_timestamp": "2026-06-17T15:31:53.146983"
+  },
+  {
+    "index": 62,
+    "type": "ABANDONED",
+    "token": "BTC",
+    "timestamp": "2026-06-17T13:40:30.589500",
+    "entry_time": "2026-06-17T13:40:30.589500",
+    "signals": [
+      "manual_buy_5tokens"
+    ],
+    "signal_count": 1,
+    "score": 5.0,
+    "entry_price": 65876.8,
+    "position_size": 888.0,
+    "market_context": {
+      "source": "market_scan",
+      "mode": "spot"
+    },
+    "exit_price": null,
+    "pnl": null,
+    "pnl_pct": null,
+    "hold_minutes": null,
+    "win": null,
+    "exit_reason": "auto_reset_on_startup",
+    "exit_timestamp": "2026-06-17T15:31:53.146984"
+  },
+  {
+    "index": 63,
+    "type": "ABANDONED",
+    "token": "OKB",
+    "timestamp": "2026-06-17T13:40:31.426148",
+    "entry_time": "2026-06-17T13:40:31.426148",
+    "signals": [
+      "manual_buy_5tokens"
+    ],
+    "signal_count": 1,
+    "score": 5.0,
+    "entry_price": 75.98,
+    "position_size": 888.0,
+    "market_context": {
+      "source": "market_scan",
+      "mode": "spot"
+    },
+    "exit_price": null,
+    "pnl": null,
+    "pnl_pct": null,
+    "hold_minutes": null,
+    "win": null,
+    "exit_reason": "auto_reset_on_startup",
+    "exit_timestamp": "2026-06-17T15:31:53.146985"
+  },
+  {
+    "index": 64,
+    "type": "ABANDONED",
+    "token": "PROS",
+    "timestamp": "2026-06-17T15:32:35.626889",
+    "entry_time": "2026-06-17T15:32:35.626889",
+    "signals": [
+      "4h_rsi_recovering",
+      "signal_2_funding_turn_positive",
+      "1h_rsi_not_overbought"
+    ],
+    "signal_count": 3,
+    "score": 4.5,
+    "entry_price": 0.549,
+    "position_size": 888,
+    "market_context": {
+      "hour_of_day": 15,
+      "funding_rate": 5e-05,
+      "oi_change_1h_pct": 0,
+      "price_change_1h_pct": -1.37,
+      "volume_ratio_1h": 1.39,
+      "days_listed": 0,
+      "phase_detected": "整数关口收割期",
+      "signals_triggered": [
+        "4h_rsi_recovering",
+        "signal_2_funding_turn_positive",
+        "1h_rsi_not_overbought"
+      ],
+      "sweep_status": "normal",
+      "btc_price": 0,
+      "btc_dominance": 0,
+      "dynamic_sl_pct": 3.0,
+      "4h_aligned": true,
+      "4h_rsi": 33.0,
+      "entry_price_optimized": 0.54570874,
+      "order_type": "limit",
+      "offset_pct": 0.6
+    },
+    "exit_price": null,
+    "pnl": null,
+    "pnl_pct": null,
+    "hold_minutes": null,
+    "win": null,
+    "exit_reason": "auto_reset_on_startup",
+    "exit_timestamp": "2026-06-17T23:19:10.664651"
   }
 ]

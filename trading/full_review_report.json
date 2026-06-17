@@ -1,0 +1,72 @@
+{
+  "total_trades": 23,
+  "win_rate": 65.21739130434783,
+  "total_pnl": 138.28709137779364,
+  "signal_stats": {
+    "signal_4_volume_spike": {
+      "count": 2,
+      "pnl": -3.419600000000001,
+      "win_rate": 50.0
+    },
+    "signal_7_new_futures": {
+      "count": 5,
+      "pnl": -140.68632,
+      "win_rate": 20.0
+    },
+    "signal_11_early_warning": {
+      "count": 4,
+      "pnl": -9.49632,
+      "win_rate": 25.0
+    },
+    "signal_2_funding_turn_positive": {
+      "count": 3,
+      "pnl": -1.9767200000000065,
+      "win_rate": 33.33333333333333
+    },
+    "manual_sell_all": {
+      "count": 17,
+      "pnl": 274.8734113777937,
+      "win_rate": 76.47058823529412
+    },
+    "spot_position": {
+      "count": 7,
+      "pnl": 209.17241137779365,
+      "win_rate": 57.14285714285714
+    }
+  },
+  "optimization": {
+    "signal_7": {
+      "action": "disable",
+      "weight": 0
+    },
+    "signal_11": {
+      "action": "disable",
+      "weight": 0
+    },
+    "signal_2": {
+      "action": "decrease",
+      "weight": 0.5
+    },
+    "manual_sell": {
+      "action": "increase",
+      "weight": 1.5
+    },
+    "entry_threshold": {
+      "action": "increase",
+      "value": 4.5
+    },
+    "hold_time": {
+      "action": "decrease",
+      "value": 480
+    },
+    "take_profit": {
+      "action": "add",
+      "value": "15%"
+    },
+    "stop_loss": {
+      "action": "add",
+      "value": "5%"
+    }
+  },
+  "expected_value": 6.012482233817117
+}
