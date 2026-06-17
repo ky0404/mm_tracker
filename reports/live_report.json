@@ -1,40 +1,74 @@
 {
-  "timestamp": "2026-06-12 15:50",
+  "timestamp": "2026-06-14 13:51",
   "metrics": {
-    "total_trades": 0,
-    "win_rate": 0.0,
-    "avg_pnl": 0.0,
-    "max_drawdown": 0.0,
-    "total_pnl": 0.0,
-    "win_count": 0,
-    "loss_count": 0
+    "total_trades": 6,
+    "win_count": 2,
+    "loss_count": 4,
+    "win_rate": 0.3333333333333333,
+    "avg_pnl": -22.764386666666667,
+    "total_pnl": -136.58632,
+    "max_drawdown": 140.68672
   },
   "period_7d": {
     "period": "7d",
-    "trades": 0,
-    "win_rate": 0.0,
-    "avg_pnl": 0.0
+    "trades": 6,
+    "win_rate": 0.3333333333333333,
+    "avg_pnl": -22.764386666666667,
+    "total_pnl": -136.58632
   },
   "period_30d": {
     "period": "30d",
-    "trades": 0,
-    "win_rate": 0.0,
-    "avg_pnl": 0.0
+    "trades": 6,
+    "win_rate": 0.3333333333333333,
+    "avg_pnl": -22.764386666666667,
+    "total_pnl": -136.58632
   },
   "calibration": {
-    "status": "insufficient_data",
-    "message": "需要至少5笔交易才能校准",
-    "total_trades": 0
+    "status": "success",
+    "best_threshold": 1,
+    "best_score": 8.45515733333333,
+    "current_metrics": {
+      "total_trades": 6,
+      "win_count": 2,
+      "loss_count": 4,
+      "win_rate": 0.3333333333333333,
+      "avg_pnl": -22.764386666666667,
+      "total_pnl": -136.58632,
+      "max_drawdown": 140.68672
+    },
+    "all_results": [
+      {
+        "threshold": 1,
+        "win_rate": 0.3333333333333333,
+        "avg_pnl": -22.764386666666667,
+        "total_pnl": -136.58632,
+        "score": 8.45515733333333
+      },
+      {
+        "threshold": 2,
+        "win_rate": 0.3333333333333333,
+        "avg_pnl": -22.764386666666667,
+        "total_pnl": -136.58632,
+        "score": 8.45515733333333
+      },
+      {
+        "threshold": 3,
+        "win_rate": 0.3333333333333333,
+        "avg_pnl": -22.764386666666667,
+        "total_pnl": -136.58632,
+        "score": 8.45515733333333
+      }
+    ]
   },
   "suggestions": {
     "current_metrics": {
-      "total_trades": 0,
-      "win_rate": 0.0,
-      "avg_pnl": 0.0,
-      "max_drawdown": 0.0,
-      "total_pnl": 0.0,
-      "win_count": 0,
-      "loss_count": 0
+      "total_trades": 6,
+      "win_count": 2,
+      "loss_count": 4,
+      "win_rate": 0.3333333333333333,
+      "avg_pnl": -22.764386666666667,
+      "total_pnl": -136.58632,
+      "max_drawdown": 140.68672
     },
     "suggestions": [
       {
@@ -42,6 +76,12 @@
         "current": 1,
         "suggested": 2,
         "reason": "胜率过低，需要更严格的入场条件"
+      },
+      {
+        "parameter": "max_position_size",
+        "current": "100%",
+        "suggested": "50%",
+        "reason": "回撤过大，需控制单笔风险"
       }
     ]
   }

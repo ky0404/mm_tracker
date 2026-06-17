@@ -1,0 +1,49 @@
+[
+  {
+    "ccy": "BTC",
+    "status": "success",
+    "balance": 1.0,
+    "usd_eq": 65637.0
+  },
+  {
+    "ccy": "OKB",
+    "status": "success",
+    "balance": 100.573606819,
+    "usd_eq": 7528.236191222607
+  },
+  {
+    "ccy": "OP",
+    "status": "success",
+    "balance": 25196.33158468,
+    "usd_eq": 2670.81114797608
+  },
+  {
+    "ccy": "ETH",
+    "status": "success",
+    "balance": 1.0,
+    "usd_eq": 1779.98
+  },
+  {
+    "ccy": "KAITO",
+    "status": "success",
+    "balance": 887.2896,
+    "usd_eq": 431.57766144
+  },
+  {
+    "ccy": "WCT",
+    "status": "success",
+    "balance": 4951.2213225,
+    "usd_eq": 232.5189091617524
+  },
+  {
+    "ccy": "ZRO",
+    "status": "success",
+    "balance": 128.943927,
+    "usd_eq": 146.22241321799999
+  },
+  {
+    "ccy": "DOGE",
+    "status": "failed",
+    "error": "All operations failed"
+  }
+]

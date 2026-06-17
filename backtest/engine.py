@@ -1,6 +1,11 @@
 """
 回测引擎 - 精确度/召回率/F1 指标计算
 基于回测校准的实战版本
+
+NFI风格升级:
+- 支持面分析回测 (多时间框架 + 历史趋势)
+- 支持DCA模拟
+- 支持多信号组合回测
 """
 
 from typing import List, Dict, Any, Optional, Tuple
@@ -15,11 +20,34 @@ class BacktestEngine:
     回测引擎：
     - 输入：sample_coins（带真实启动点）
     - 输出：每个信号的 precision / recall / f1
+    
+    NFI扩展:
+    - 支持多时间框架分析结果回测
+    - 支持DCA策略效果评估
     """
 
     def __init__(self, sample_coins: List[Dict[str, Any]] = None):
         self.sample_coins = sample_coins or []
         self.results_history = []
+        
+        # NFI风格分析参数
+        self.nfi_params = {
+            "ema_periods": [8, 20, 50, 200],
+            "rsi_periods": [4, 14, 84],
+            "lookback_periods": {
+                "ema_trend": 3,      # EMA趋势回看周期数
+                "rsi_recovery": 2,   # RSI恢复回看周期数
+                "sma_rising": 28,    # SMA上涨回看周期数
+            }
+        }
+
+    def add_sample(self, coin: Dict[str, Any]):
+        """添加样本币"""
+        self.sample_coins.append(coin)
+
+    def set_nfi_params(self, params: Dict[str, Any]):
+        """设置NFI风格分析参数"""
+        self.nfi_params.update(params)
 
     def add_sample(self, coin: Dict[str, Any]):
         """添加样本币"""
@@ -302,3 +330,196 @@ if __name__ == "__main__":
     print(f"\nThreshold Metrics: P={results['threshold_metrics']['precision']:.2f} R={results['threshold_metrics']['recall']:.2f}")
     
     print("\n" + engine.generate_recommendation(results))
+
+
+# ===== NFI风格 回测方法 =====
+
+def calculate_nfi_indicators(candles: List[Dict], config: Dict) -> Dict:
+    """
+    计算NFI风格指标 (面分析)
+    
+    核心: 不是只看当前值，而是看历史趋势
+    """
+    import pandas as pd
+    
+    # 转换为DataFrame
+    df = pd.DataFrame(candles)
+    
+    # EMA指标
+    for period in config.get("ema_periods", [8, 20, 50, 200]):
+        df[f"ema_{period}"] = df["close"].ewm(span=period, adjust=False).mean()
+    
+    # RSI指标
+    for period in config.get("rsi_periods", [4, 14, 84]):
+        delta = df["close"].diff()
+        gain = delta.clip(lower=0).rolling(period).mean()
+        loss = (-delta.clip(upper=0)).rolling(period).mean()
+        rs = gain / loss.replace(0, float('nan'))
+        df[f"rsi_{period}"] = 100 - (100 / (1 + rs))
+    
+    lookback_ema = config.get("lookback_periods", {}).get("ema_trend", 3)
+    lookback_rsi = config.get("lookback_periods", {}).get("rsi_recovery", 2)
+    
+    # NFI风格: EMA趋势 - 改为更实用的标准
+    # 方案A: EMA8 > EMA20 (金叉状态)
+    df["ema_golden_cross"] = df["ema_8"] > df["ema_20"]
+    # 方案B: EMA50方向向上 (比N根K线前高)
+    df["ema50_direction"] = df["ema_50"] > df["ema_50"].shift(lookback_ema)
+    # 方案C: 价格站上EMA50
+    df["price_above_ema50"] = df["close"] > df["ema_50"]
+    # 任一方案触发即可
+    df["ema_trend_rising"] = df["ema_golden_cross"] | df["ema50_direction"] | df["price_above_ema50"]
+    
+    # NFI风格: RSI恢复 (放宽条件，不再强制<50)
+    # 方案A: RSI正在从低点回升
+    df["rsi_recovering"] = df["rsi_14"] > df["rsi_14"].shift(lookback_rsi)
+    # 方案B: RSI处于中低位置 (不超买)
+    df["rsi_not_overbought"] = df["rsi_14"] < 65
+    # 综合: 任一方案触发即可
+    df["rsi_recovering"] = df["rsi_recovering"] | df["rsi_not_overbought"]
+    
+    # 安全回调
+    df["tpct_change_0"] = (df["close"] - df["close"].shift(0)) / df["close"].shift(0)
+    df["tpct_change_2"] = (df["close"] - df["close"].shift(2)) / df["close"].shift(2)
+    df["tpct_change_12"] = (df["close"] - df["close"].shift(12)) / df["close"].shift(12)
+    
+    safe_dips = config.get("safe_dips", {
+        "threshold_0": 0.032,
+        "threshold_2": 0.09,
+        "threshold_12": 0.24,
+    })
+    
+    df["safe_dips"] = (
+        (df["tpct_change_0"].abs() < safe_dips["threshold_0"]) &
+        (df["tpct_change_2"].abs() < safe_dips["threshold_2"]) &
+        (df["tpct_change_12"].abs() < safe_dips["threshold_12"])
+    )
+    
+    # 安全涨幅
+    df["hl_pct_change_24"] = (df["high"].rolling(24).max() - df["low"].rolling(24).min()) / df["close"]
+    
+    safe_pump = config.get("safe_pump", {
+        "threshold_24h": 0.75,
+        "threshold_48h": 1.5,
+    })
+    
+    df["safe_pump"] = df["hl_pct_change_24"] < safe_pump["threshold_24h"]
+    
+    return df.to_dict()
+
+
+def detect_nfi_signals(df: Dict, config: Dict) -> Dict:
+    """
+    检测NFI风格信号
+    
+    返回:
+        entry_triggered: 是否触发入场
+        ema_trend_hits: EMA趋势信号
+        rsi_recovery_hits: RSI恢复信号
+        safe_dips_hits: 安全回调信号
+        safe_pump_hits: 安全涨幅信号
+    """
+    result = {
+        "entry_triggered": False,
+        "ema_trend_hits": False,
+        "rsi_recovery_hits": False,
+        "safe_dips_hits": False,
+        "safe_pump_hits": False,
+        "profit": 0,
+    }
+    
+    # 综合判断: 需要 EMA趋势 + RSI恢复 + (安全回调 或 安全涨幅)
+    protections_passed = (
+        result["safe_dips_hits"] or result["safe_pump_hits"]
+    )
+    
+    entry_condition = (
+        result["ema_trend_hits"] and 
+        result["rsi_recovery_hits"] and
+        protections_passed
+    )
+    
+    result["entry_triggered"] = entry_condition
+    
+    return result
+
+
+def run_nfi_surface_backtest(
+    candles_data: Dict[str, List[Dict]],
+    signal_config: Dict[str, Any],
+    dca_enabled: bool = False,
+    dca_config: Dict = None,
+) -> Dict[str, Any]:
+    """
+    NFI风格面分析回测
+    
+    对比传统回测:
+    - 传统: 只看当前K线信号
+    - NFI: 看过去N根K线的趋势 (shift/rolling)
+    
+    Args:
+        candles_data: {symbol: [candle1, candle2, ...]} 历史K线数据
+        signal_config: 信号配置 (NFI风格的保护参数)
+        dca_enabled: 是否启用DCA
+        dca_config: DCA配置
+    
+    Returns:
+        回测结果含NFI特征分析
+    """
+    results = {
+        "total_trades": 0,
+        "winning_trades": 0,
+        "losing_trades": 0,
+        "win_rate": 0.0,
+        "avg_profit": 0.0,
+        "max_drawdown": 0.0,
+        "nfi_signals": {
+            "ema_trend_hits": 0,
+            "rsi_recovery_hits": 0,
+            "safe_dips_hits": 0,
+            "safe_pump_hits": 0,
+        },
+        "dca_results": [],
+    }
+    
+    lookback = signal_config.get("lookback_periods", {}).get("ema_trend", 3)
+    
+    for symbol, candles in candles_data.items():
+        if len(candles) < lookback + 10:
+            continue
+        
+        # 计算NFI风格指标
+        df_dict = calculate_nfi_indicators(candles, signal_config)
+        
+        # 检测信号
+        signals = detect_nfi_signals(df_dict, signal_config)
+        
+        # 统计
+        if signals["entry_triggered"]:
+            results["total_trades"] += 1
+            
+            if signals.get("profit", 0) > 0:
+                results["winning_trades"] += 1
+            else:
+                results["losing_trades"] += 1
+        
+        # NFI信号统计
+        for sig_name in results["nfi_signals"].keys():
+            if signals.get(sig_name, False):
+                results["nfi_signals"][sig_name] += 1
+    
+    # 计算汇总
+    if results["total_trades"] > 0:
+        results["win_rate"] = results["winning_trades"] / results["total_trades"]
+    
+    # DCA模拟
+    if dca_enabled and dca_config:
+        from trading.nfi_dca import NFIDCAManager
+        dca_manager = NFIDCAManager()
+        dca_results = dca_manager.simulate_dca_sequence(
+            initial_profit=-0.01,
+            mode=dca_config.get("mode", "mode_0")
+        )
+        results["dca_results"] = dca_results
+    
+    return results

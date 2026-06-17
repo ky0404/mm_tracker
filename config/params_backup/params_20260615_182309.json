@@ -9,12 +9,11 @@
     "signal_5_dex_buy_pressure": 1.0,
     "signal_6_btcd_downtrend": 1.0,
     "signal_6b_btc_relative_strength": 1.2,
-    "signal_7_new_futures": 0.0,
+    "signal_7_new_futures": 0.5,
     "signal_8_wash_test": 1.5,
     "signal_9_social_sentiment": 0.5,
     "signal_10_breakout": 2.0,
-    "signal_11_early_warning": 0.0,
-    "manual_sell_all": 1.2000000000000002
+    "signal_11_early_warning": 0.0
   },
   "entry_thresholds": {
     "min_signals": 3,
@@ -25,10 +24,10 @@
     "stop_loss_pct": 0.0,
     "take_profit_pct": 20.0,
     "trailing_stop_pct": 0.0,
-    "max_hold_minutes": 1440,
+    "max_hold_minutes": 240,
     "default_position_size_pct": 1.0,
     "fixed_position_size": 888,
-    "max_open_positions": 99,
+    "max_open_positions": 3,
     "max_trades_per_day": 3,
     "funding_warning_pct": 0.15,
     "funding_reduce_pct": 0.5,
@@ -43,8 +42,7 @@
     "cooldown_seconds": 300,
     "momentum_mode": false,
     "use_7conditions": true,
-    "use_stage_judgment": true,
-    "max_hold_minutes": 1440
+    "use_stage_judgment": true
   },
   "momentum_signals": {
     "min_price_change_1h_pct": 2.0,
@@ -87,12 +85,5 @@
       "entry_allowed": false,
       "action": "清仓"
     }
-  },
-  "learning_stats": {
-    "last_optimized": "2026-06-15T20:18:13.982959",
-    "total_trades_analyzed": 16,
-    "current_win_rate": 0.688,
-    "current_expected_value": 0.0,
-    "optimization_count": 4
   }
 }

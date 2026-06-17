@@ -1,0 +1,23 @@
+{
+  "entry_threshold": 1,
+  "threshold_low": 1,
+  "threshold_high": 3,
+  "high_weight_threshold": 2.0,
+  "signal_weights": {
+    "signal_1_integer_consolidation": 1.5,
+    "signal_2_funding_turn_positive": 1.8,
+    "signal_3_oi_accumulation": 1.5,
+    "signal_4_volume_spike": 1.5,
+    "signal_5_dex_buy_pressure": 1.0,
+    "signal_6_btcd_downtrend": 1.0,
+    "signal_6b_btc_relative_strength": 1.0,
+    "signal_7_new_futures": 0.0,  # 已禁用：历史亏损$140.69，胜率20%
+    "signal_8_wash_test": 1.5,
+    "signal_9_social_sentiment": 0.5,
+    "signal_10_breakout": 2.0,
+    "signal_11_early_warning": 1.0,
+    "signal_12_long_short_ratio": 2.5,
+    "signal_13_taker_volume": 1.2
+  },
+  "optimization_note": "S12\u9608\u503c\u63d0\u9ad8\u5230100%, S4\u9608\u503c\u964d\u4f4e\u52302x, \u9608\u503c1\u6700\u4f18"
+}

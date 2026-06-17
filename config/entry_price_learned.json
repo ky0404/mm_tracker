@@ -1,0 +1,12 @@
+{
+  "OP": {
+    "total_orders": 1,
+    "limit_filled": 0,
+    "market_filled": 1,
+    "avg_limit_offset": 0,
+    "winning_trades": 1,
+    "losing_trades": 1,
+    "avg_winning_offset": 0.5,
+    "avg_losing_offset": 0.3
+  }
+}
