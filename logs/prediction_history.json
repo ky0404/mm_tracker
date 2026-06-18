@@ -1,0 +1,93 @@
+[
+  {
+    "timestamp": "2026-06-18T03:57:21.931882+00:00",
+    "candidates": [
+      {
+        "rank": 1,
+        "symbol": "ENJ",
+        "tech_score": 13,
+        "change_24h_pct": 7.2,
+        "price": 0.03542,
+        "reasons": [
+          "EMA多头排列",
+          "1H EMA金叉",
+          "RSI适中 64"
+        ],
+        "recommendation": "🚀 强烈推荐"
+      },
+      {
+        "rank": 2,
+        "symbol": "BIO",
+        "tech_score": 11,
+        "change_24h_pct": 9.6,
+        "price": 0.03584,
+        "reasons": [
+          "EMA多头排列",
+          "1H EMA金叉",
+          "RSI适中 63"
+        ],
+        "recommendation": "🚀 强烈推荐"
+      },
+      {
+        "rank": 3,
+        "symbol": "ENA",
+        "tech_score": 11,
+        "change_24h_pct": 9.6,
+        "price": 0.0953,
+        "reasons": [
+          "EMA多头排列",
+          "1H EMA金叉"
+        ],
+        "recommendation": "🚀 强烈推荐"
+      },
+      {
+        "rank": 4,
+        "symbol": "ID",
+        "tech_score": 11,
+        "change_24h_pct": 7.8,
+        "price": 0.03357,
+        "reasons": [
+          "EMA多头排列",
+          "1H EMA金叉"
+        ],
+        "recommendation": "🚀 强烈推荐"
+      },
+      {
+        "rank": 5,
+        "symbol": "MEGA",
+        "tech_score": 10,
+        "change_24h_pct": 11.7,
+        "price": 0.06471,
+        "reasons": [
+          "EMA多头排列",
+          "接近阻力"
+        ],
+        "recommendation": "🚀 强烈推荐"
+      },
+      {
+        "rank": 6,
+        "symbol": "ETHFI",
+        "tech_score": 9,
+        "change_24h_pct": 8.6,
+        "price": 0.3716,
+        "reasons": [
+          "1H EMA金叉",
+          "RSI超卖 29"
+        ],
+        "recommendation": "📈 推荐"
+      },
+      {
+        "rank": 7,
+        "symbol": "XPL",
+        "tech_score": 8,
+        "change_24h_pct": 14.0,
+        "price": 0.10821,
+        "reasons": [
+          "1H EMA金叉",
+          "RSI接近超卖"
+        ],
+        "recommendation": "📈 推荐"
+      }
+    ]
+  }
+]
