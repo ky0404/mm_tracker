@@ -274,7 +274,7 @@ class FreqtradeStyleExit:
         current_price: float, 
         current_time: datetime = None,
         rsi: float = None,
-        sar reversal: bool = False
+        sar_reversal: bool = False
     ) -> Tuple[bool, str]:
         """
         判断是否应该出场

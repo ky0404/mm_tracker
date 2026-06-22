@@ -208,8 +208,10 @@ class EnhancedExitManager:
         if not self.use_custom_exit:
             return None
         
-        trade_entry_time = trade_data.get("entry_time")
-        hold_minutes = (current_time - trade_entry_time).total_seconds() / 60 if trade_entry_time else 0
+        from trading.position_monitor import parse_entry_timestamp
+        entry_time_str = trade_data.get("entry_time") or trade_data.get("timestamp", "")
+        entry_time = parse_entry_timestamp(entry_time_str) if entry_time_str else current_time
+        hold_minutes = (current_time - entry_time).total_seconds() / 60
         
         # 条件1: RSI 超买
         rsi = trade_data.get("rsi", 50)
@@ -224,8 +226,19 @@ class EnhancedExitManager:
         
         # 条件3: 时间based出场
         max_hold = self.custom_exit_conditions.get("time_based_exit", 240)
-        if hold_minutes >= max_hold:
-            return f"time_exit_{int(hold_minutes)}min"
+        # 类型安全的比较
+        if isinstance(hold_minutes, (int, float)) and isinstance(max_hold, (int, float)):
+            if hold_minutes >= max_hold:
+                return f"time_exit_{int(hold_minutes)}min"
+        else:
+            # 尝试转换类型
+            try:
+                hm = float(hold_minutes) if hold_minutes else 0
+                mh = float(max_hold) if max_hold else 240
+                if hm >= mh:
+                    return f"time_exit_{int(hm)}min"
+            except:
+                pass
         
         return None
     
@@ -239,10 +252,12 @@ class EnhancedExitManager:
         """
         综合判断是否应该退出
         """
+        from trading.position_monitor import parse_entry_timestamp
         entry_price = trade_data.get("entry_price", current_price)
-        trade_entry_time = trade_data.get("entry_time")
+        entry_time_str = trade_data.get("entry_time") or trade_data.get("timestamp", "")
+        entry_time = parse_entry_timestamp(entry_time_str) if entry_time_str else current_time
         
-        hold_minutes = (current_time - trade_entry_time).total_seconds() / 60 if trade_entry_time else 0
+        hold_minutes = (current_time - entry_time).total_seconds() / 60
         current_profit_pct = (current_price - entry_price) / entry_price
         
         # 1. Custom Exit

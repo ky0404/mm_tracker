@@ -25,6 +25,7 @@ class ResultLogger:
         entry_signals_count: int,
         position_size: float = 10.0,
         market_context: Dict[str, Any] = None,
+        trade_db_id: int = None,
     ) -> int:
         now = datetime.now()
         trade = {
@@ -39,6 +40,7 @@ class ResultLogger:
             "entry_price": entry_price,
             "position_size": position_size,
             "market_context": market_context or {},
+            "trade_db_id": trade_db_id,  # 添加 trade_db_id 字段
             "exit_price": None,
             "pnl": None,
             "pnl_pct": None,
@@ -85,24 +87,29 @@ class ResultLogger:
         trade["hold_minutes"] = hold_minutes
         trade["win"] = pnl > 0
         trade["type"] = "EXIT"
+        trade["status"] = "closed"  # 标记为已关闭
         trade["exit_timestamp"] = datetime.now().isoformat()
         trade["exit_reason"] = exit_reason
         self.save()
 
-    def log_partial_close(self, trade_index: int, close_pct: float, exit_price: float, reason: str):
+    def log_partial_close(self, trade_index: int, close_size: float, remaining_size: float, exit_price: float, pnl: float, exit_reason: str):
         """部分平仓记录"""
         if trade_index >= len(self.trades):
             return
         trade = self.trades[trade_index]
         partial = trade.get("partial_closes", [])
         entry_price = trade.get("entry_price", exit_price)
-        pnl_pct = (exit_price - entry_price) / entry_price * 100 if entry_price > 0 else 0
+        close_pct = close_size / (close_size + remaining_size) if (close_size + remaining_size) > 0 else 0
+        pnl_pct = (pnl / (close_size * entry_price) * 100) if entry_price > 0 and close_size > 0 else 0
         partial.append({
             "timestamp": datetime.now().isoformat(),
-            "close_pct": close_pct,
+            "close_pct": round(close_pct * 100, 2),
+            "close_size": close_size,
+            "remaining_size": remaining_size,
             "exit_price": exit_price,
+            "pnl": pnl,
             "pnl_pct": round(pnl_pct, 4),
-            "reason": reason,
+            "reason": exit_reason,
         })
         trade["partial_closes"] = partial
         self.save()

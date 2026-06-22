@@ -28,11 +28,14 @@ def load_config() -> dict:
         if os.path.exists(f):
             with open(f, 'r') as fp:
                 data = json.load(fp)
-                # 处理嵌套的okx配置
+                # 处理嵌套的okx配置 - 优先使用
                 if "okx" in data:
-                    config["api_key"] = data["okx"].get("api_key", "")
-                    config["api_secret"] = data["okx"].get("api_secret", "")
-                    config["passphrase"] = data["okx"].get("passphrase", "")
+                    if data["okx"].get("api_key"):
+                        config["api_key"] = data["okx"].get("api_key", "")
+                    if data["okx"].get("api_secret"):
+                        config["api_secret"] = data["okx"].get("api_secret", "")
+                    if data["okx"].get("passphrase"):
+                        config["passphrase"] = data["okx"].get("passphrase", "")
                 # 处理trading配置
                 if "trading" in data:
                     config["default_position_size"] = data["trading"].get("default_position_size", 10.0)
@@ -763,16 +766,16 @@ def main():
             bot_parser.print_help()
     
     elif args.command == "walkforward":
-        from scripts.walk_forward_validator import WalkForwardValidator, run_walk_forward_test
+        from scripts.walk_forward_validator import WalkForwardValidator, run_enhanced_walk_forward
         
         print(f"\n{'='*60}")
         print("🔬 Walk-Forward 验证 (防过拟合)")
         print(f"{'='*60}")
         
         symbol = args.symbol if hasattr(args, 'symbol') else "BTC"
-        result = run_walk_forward_test(symbol=symbol)
+        result = run_enhanced_walk_forward(symbol=symbol)
         
-        if result.get('is_overfitting'):
+        if hasattr(result, 'is_overfitting') and result.is_overfitting:
             print(f"\n⚠️ 过拟合警告: 请降低信号复杂度或增加验证数据")
         else:
             print(f"\n✅ 验证通过: 信号具有一定的泛化能力")

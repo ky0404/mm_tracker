@@ -17,13 +17,23 @@ class TechnicalAnalyzer:
     完整技术分析引擎
     整合所有技术指标进行综合评分
     """
-    
+
     def __init__(self, symbol: str):
         self.symbol = symbol.upper()
         self.data = {}
         self.indicators = {}
         self.score = 0
         self.signals = []
+        # 获取代理配置
+        self.proxies = self._get_proxies()
+
+    def _get_proxies(self):
+        """获取代理配置"""
+        try:
+            from scanner.universe import get_scanner_proxies
+            return get_scanner_proxies()
+        except:
+            return None
     
     def fetch_all_data(self) -> bool:
         """获取所有需要的数据"""
@@ -55,7 +65,7 @@ class TechnicalAnalyzer:
         params = {"instId": f"{self.symbol}-USDT", "bar": "15m", "limit": 100}
         
         try:
-            resp = requests.get(url, params=params, timeout=10)
+            resp = requests.get(url, params=params, timeout=10, proxies=self.proxies)
             data = resp.json()
             
             if data.get('code') != '0' or not data.get('data'):
@@ -146,7 +156,7 @@ class TechnicalAnalyzer:
         params = {"instId": f"{self.symbol}-USDT", "bar": "1H", "limit": 50}
         
         try:
-            resp = requests.get(url, params=params, timeout=10)
+            resp = requests.get(url, params=params, timeout=10, proxies=self.proxies)
             data = resp.json()
             
             if data.get('code') == '0' and data.get('data'):
@@ -172,7 +182,7 @@ class TechnicalAnalyzer:
         params = {"instId": f"{self.symbol}-USDT-SWAP"}
         
         try:
-            resp = requests.get(url, params=params, timeout=5)
+            resp = requests.get(url, params=params, timeout=5, proxies=self.proxies)
             data = resp.json()
             
             if data.get('code') == '0' and data.get('data'):
@@ -196,7 +206,7 @@ class TechnicalAnalyzer:
         params = {"instId": f"{self.symbol}-USDT-SWAP"}
         
         try:
-            resp = requests.get(url, params=params, timeout=5)
+            resp = requests.get(url, params=params, timeout=5, proxies=self.proxies)
             data = resp.json()
             
             if data.get('code') == '0' and data.get('data'):
@@ -221,7 +231,7 @@ class TechnicalAnalyzer:
         params = {"instId": f"{self.symbol}-USDT-SWAP"}
         
         try:
-            resp = requests.get(url, params=params, timeout=5)
+            resp = requests.get(url, params=params, timeout=5, proxies=self.proxies)
             data = resp.json()
             
             if data.get('code') == '0' and data.get('data'):
@@ -357,6 +367,7 @@ class TechnicalAnalyzer:
             'symbol': self.symbol,
             'price': price,
             'score': score,
+            'total_score': score,
             'max_score': 20,
             'reasons': reasons,
             'signals': self.signals,

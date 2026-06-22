@@ -87,20 +87,14 @@ class ParameterOptimizer:
 
     def optimize(self, force: bool = False) -> Dict[str, Any]:
         """
-        执行参数优化
+        执行参数优化 - 修复: 启用日内杠杆模式优化
         :param force: 是否强制优化（忽略时间间隔）
         :return: 优化结果
         """
-        # 动量模式：跳过优化，等待积累足够数据
-        auto_pilot = self.params.get("auto_pilot", {})
-        if auto_pilot.get("momentum_mode", False):
-            return {
-                "optimized": False,
-                "reason": "动量模式运行中，跳过自动优化",
-            }
-        
-        # 检查交易数量是否足够
+        # 检查交易数量是否足够 (修复: 不再禁用日内/动量模式)
         finished = self.result_logger.get_finished_trades()
+        
+        # 从 config 获取优化间隔 (默认5笔触发优化)
         opt_interval = self.params.get("auto_pilot", {}).get("optimization_interval_trades", 5)
         
         if len(finished) < opt_interval and not force:
@@ -161,6 +155,33 @@ class ParameterOptimizer:
         # 保存更新
         self.params["signal_weights"] = signal_weights
         self.params["risk_management"] = risk_mgmt
+        
+        # ========== 保护关键参数不被优化器随意改变 ==========
+        # 设置参数边界，防止优化器做出不合理的改动
+        protected_params = self.params.get("protected_params", {})
+        
+        # max_open_positions: 保持在 2-5 之间，不允许太低
+        if "max_open_positions" not in protected_params:
+            protected_params["max_open_positions"] = {"min": 2, "max": 5, "default": 3}
+        
+        # 应用保护边界
+        if "max_open_positions" in self.params:
+            bounds = protected_params["max_open_positions"]
+            self.params["max_open_positions"] = max(bounds["min"], min(self.params["max_open_positions"], bounds["max"]))
+            logger.info(f"[参数保护] max_open_positions 限制在 {bounds['min']}-{bounds['max']} 之间: {self.params['max_open_positions']}")
+        
+        # max_hold_minutes: 保持在 60-240 分钟之间
+        if "max_hold_minutes" not in protected_params:
+            protected_params["max_hold_minutes"] = {"min": 60, "max": 240, "default": 120}
+        
+        if "max_hold_minutes" in self.params:
+            bounds = protected_params["max_hold_minutes"]
+            self.params["max_hold_minutes"] = max(bounds["min"], min(self.params["max_hold_minutes"], bounds["max"]))
+            logger.info(f"[参数保护] max_hold_minutes 限制在 {bounds['min']}-{bounds['max']} 之间: {self.params['max_hold_minutes']}")
+        
+        self.params["protected_params"] = protected_params
+        # ========== 参数保护结束 ==========
+        
         self.params["signal_stats"]["total_trades"] = len(finished)
         self.params["signal_stats"]["win_rate_by_signal"] = signal_stats
         self.params["signal_stats"]["last_optimization"] = datetime.now().isoformat()

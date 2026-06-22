@@ -6,11 +6,41 @@ MMTracker Scanner - 快速画像过滤器
 
 import requests
 import logging
-from typing import List, Dict, Any
+import os
+from typing import List, Dict, Any, Optional
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
 
 logger = logging.getLogger(__name__)
+
+
+def get_scanner_proxies() -> Optional[Dict]:
+    """获取代理配置 - 自动发现可用代理"""
+    import os
+    # 优先使用环境变量中的代理
+    proxy = os.getenv("ALL_PROXY") or os.getenv("HTTPS_PROXY") or os.getenv("https_proxy") or os.getenv("http_proxy") or os.getenv("HTTP_PROXY")
+    if proxy:
+        return {'http': proxy, 'https': proxy}
+    
+    # 候选代理列表 - 同时尝试 HTTP 和 SOCKS5
+    proxy_candidates = [
+        'http://172.18.48.1:10810', 
+        'http://172.18.144.1:10810',
+        'socks5://172.18.48.1:10810',
+        'socks5://172.18.144.1:10810',
+    ]
+    
+    session = requests.Session()
+    for p in proxy_candidates:
+        try:
+            proxies_dict = {'http': p, 'https': p}
+            resp = session.get("https://api.ipify.org?format=json", proxies=proxies_dict, timeout=3)
+            if resp.status_code == 200:
+                logger.info(f"[FastFilter] 自动发现可用代理: {p}")
+                return proxies_dict
+        except:
+            continue
+    return None
 
 
 class GainTracker:
@@ -20,10 +50,14 @@ class GainTracker:
     """
     
     GAIN_THRESHOLDS = {
-        'hot': 10.0,      # 暴涨: 10%+
-        'strong': 5.0,   # 强势: 5%+
-        'moderate': 3.0, # 温和: 3%+
+        'hot': 12.0,      # 暴涨: 12%+
+        'strong': 8.0,   # 强势: 8%+
+        'moderate': 5.0, # 温和: 5%+ (原3%)
     }
+    
+    MIN_VOLUME_USD = 500000  # 最小日成交量 $50万
+    
+    # 移除超买过滤，让技术分析决定是否买入
     
     @staticmethod
     def fetch_all_token_24h_change() -> Dict[str, Dict]:
@@ -35,7 +69,11 @@ class GainTracker:
         params = {"instType": "SPOT"}
         
         try:
-            resp = requests.get(url, params=params, timeout=10)
+            proxies = get_scanner_proxies()
+            resp = requests.get(url, params=params, timeout=10, proxies=proxies)
+            if resp.status_code != 200:
+                print(f"[GainTracker] HTTP错误: {resp.status_code}")
+                return {}
             data = resp.json()
             
             if data.get('code') != '0':
@@ -48,9 +86,12 @@ class GainTracker:
                     continue
                 
                 symbol = inst.replace('-USDT', '')
-                last = float(t.get('last', 0))
-                open_24h = float(t.get('open24h', 0))
-                vol24h = float(t.get('vol24h', 0))
+                try:
+                    last = float(t.get('last') or 0)
+                    open_24h = float(t.get('open24h') or 0)
+                    vol24h = float(t.get('vol24h') or 0)
+                except (ValueError, TypeError):
+                    continue
                 
                 if open_24h > 0:
                     pct_change = (last - open_24h) / open_24h * 100
@@ -76,13 +117,24 @@ class GainTracker:
         """
         获取24h涨幅超过threshold的代币
         这是"涨幅漏斗"的核心功能
+        过滤: 成交量>$50万
         """
         all_tokens = GainTracker.fetch_all_token_24h_change()
         
         gainers = []
         for symbol, info in all_tokens.items():
-            if info['change_24h_pct'] >= threshold:
-                gainers.append(info)
+            change = info['change_24h_pct']
+            volume = info.get('volume_usd_24h', 0)
+            
+            # 过滤1: 涨幅>=阈值
+            if change < threshold:
+                continue
+                
+            # 过滤2: 成交量>=50万
+            if volume < GainTracker.MIN_VOLUME_USD:
+                continue
+                
+            gainers.append(info)
         
         # 按涨幅排序
         gainers.sort(key=lambda x: x['change_24h_pct'], reverse=True)
@@ -469,18 +521,23 @@ def batch_fetch_funding_rates(symbols: List[str]) -> Dict[str, float]:
     
     def fetch_one(symbol: str) -> tuple:
         try:
+            from scanner.universe import get_scanner_proxies
+            proxies = get_scanner_proxies()
+            
             url = "https://www.okx.com/api/v5/public/funding-rate"
             params = {"instId": f"{symbol.upper()}-USDT-SWAP"}
             
-            resp = requests.get(url, params=params, timeout=5)
+            resp = requests.get(url, params=params, timeout=5, proxies=proxies)
             
             if resp.status_code == 200:
                 data = resp.json()
                 if data.get("code") == "0" and data.get("data"):
                     rate = float(data["data"][0].get("fundingRate", "0"))
                     return (symbol, rate)
-        except:
-            pass
+        except requests.exceptions.RequestException as e:
+            logging.warning(f"资金费率获取失败 {symbol}: {e}")
+        except (ValueError, TypeError) as e:
+            logging.warning(f"资金费率解析失败 {symbol}: {e}")
         return (symbol, 0.0)
     
     print(f"[Funding] 批量获取 {len(symbols)} 个代币资金费率...")
@@ -494,8 +551,8 @@ def batch_fetch_funding_rates(symbols: List[str]) -> Dict[str, float]:
                 results[symbol] = rate
                 if rate != 0.0:
                     success_count += 1
-            except:
-                pass
+            except Exception as e:
+                logging.warning(f"资金费率线程异常: {e}")
     
     print(f"[Funding] 完成 {success_count}/{len(symbols)}")
     
@@ -505,144 +562,55 @@ def batch_fetch_funding_rates(symbols: List[str]) -> Dict[str, float]:
 def run_fast_filter(universe: List[Dict], enable_gain_tracker: bool = True, enable_technical: bool = True) -> List[Dict]:
     """
     一键执行：过滤 → 涨幅漏斗 → 技术分析 → 返回Top30
-    
-    【完整版】整合所有量化因子:
-    - 涨幅漏斗: 24h涨幅>5%
-    - 趋势分析: 72h/7d趋势
-    - 技术分析: EMA/RSI/成交量/资金费率/多空比/支撑阻力
-    
-    流程：
-    1. ProfileFilter().filter(universe) → 基础过滤
-    2. 涨幅漏斗: 补充24h涨幅>5%的代币
-    3. 趋势分析: 补充72h涨幅>10%的代币
-    4. 技术分析: 对所有候选进行完整技术评分
-    5. 综合排序返回Top30
     """
-    pf = ProfileFilter()
+    result = []
     
-    # 1. 基础过滤
-    filtered = pf.filter(universe)
-    
-    if not filtered:
-        print("[Filter] 警告：无候选通过过滤")
-        filtered = []
-    
-    # ========== 2. 涨幅漏斗 ==========
+    # ========== 1. 涨幅漏斗筛选 ==========
     if enable_gain_tracker:
-        print("\n[GainTracker] 启动涨幅漏斗...")
+        print("[GainTracker] 启动涨幅漏斗...")
         gainers = GainTracker.get_gainers(threshold=5.0)
-        
-        print(f"[GainTracker] 发现 {len(gainers)} 个24h涨幅>5%的代币")
-        
-        existing_symbols = {c['symbol'] for c in filtered}
-        gainer_count = 0
+        print(f"[GainTracker] 发现 {len(gainers)} 个24h涨幅>5%且成交量>$50万的代币")
         
         for g in gainers:
-            symbol = g['symbol']
-            if symbol not in existing_symbols:
-                g['source'] = 'gain_tracker'
-                g['quick_score'] = 8.0
-                g['is_gainer'] = True
-                g['gain_level'] = 'hot' if g['change_24h_pct'] >= 10 else 'strong'
-                filtered.append(g)
-                gainer_count += 1
-                existing_symbols.add(symbol)
+            g['source'] = 'gain_tracker'
+            g['quick_score'] = min(10, 5 + g.get('change_24h_pct', 0))
+            g['is_gainer'] = True
         
-        # 补充72h趋势强劲但24h涨幅不够的代币
-        print("\n[GainTracker] 检查72h趋势强劲但24h涨幅不足的代币...")
+        result = gainers[:30]
+    
+    # ========== 2. 技术分析 (如果启用) ==========
+    if enable_technical and result:
+        print(f"[Technical] 对 {len(result)} 个候选进行技术分析...")
+        from scanner.technical_analyzer import TechnicalAnalyzer
         
-        all_tokens = GainTracker.fetch_all_token_24h_change()
-        
-        for symbol, info in all_tokens.items():
-            if symbol in existing_symbols:
+        analyzed = []
+        for coin in result:
+            symbol = coin.get('symbol', '')
+            if not symbol:
                 continue
-            trend = TrendAnalyzer.get_trend_data(symbol)
-            if trend and trend.get('pct_72h', 0) > 10:
-                info['source'] = 'trend_strong'
-                info['quick_score'] = 7.0
-                info['is_gainer'] = False
-                info['trend_data'] = trend
-                filtered.append(info)
-                gainer_count += 1
-                existing_symbols.add(symbol)
-                print(f"  ➕ 添加 {symbol}: 72h+{trend.get('pct_72h'):.1f}%")
-        
-        print(f"[GainTracker] 添加了 {gainer_count} 个涨幅/趋势代币")
-    
-    if not filtered:
-        print("[Filter] 警告：过滤后无候选")
-        return []
-    
-    # ========== 3. 完整技术分析 ==========
-    if enable_technical:
-        print("\n[TechnicalAnalyzer] 执行完整技术分析...")
-        
-        try:
-            from scanner.technical_analyzer import TechnicalAnalyzer
             
-            tech_scores = {}
-            symbols_to_analyze = [c['symbol'] for c in filtered[:30]]  # 限制API调用
+            try:
+                analyzer = TechnicalAnalyzer(symbol)
+                if analyzer.fetch_all_data():
+                    tech_result = analyzer.analyze()
+                    coin['tech_score'] = tech_result.get('total_score', 0)
+                    coin['tech_details'] = tech_result
+                    print(f"  {symbol}: 技术评分 {coin['tech_score']}/20")
+                else:
+                    coin['tech_score'] = 0
+                    print(f"  {symbol}: 技术分析数据获取失败")
+            except Exception as e:
+                coin['tech_score'] = 0
+                print(f"  {symbol}: 技术分析异常 - {e}")
             
-            for symbol in symbols_to_analyze:
-                try:
-                    analyzer = TechnicalAnalyzer(symbol)
-                    if analyzer.fetch_all_data():
-                        result = analyzer.analyze()
-                        tech_scores[symbol] = result
-                        print(f"  ✅ {symbol}: 技术评分 {result.get('score', 0)}/20")
-                    else:
-                        print(f"  ❌ {symbol}: 数据获取失败")
-                except Exception as e:
-                    print(f"  ❌ {symbol}: {str(e)[:30]}")
-            
-            # 把技术分加到候选
-            for cand in filtered:
-                symbol = cand['symbol']
-                if symbol in tech_scores:
-                    cand['tech_score'] = tech_scores[symbol].get('score', 0)
-                    cand['tech_data'] = tech_scores[symbol]
-            
-            print(f"[TechnicalAnalyzer] 完成 {len(tech_scores)} 个代币的技术分析")
-            
-        except ImportError as e:
-            print(f"[TechnicalAnalyzer] 模块未找到，跳过技术分析: {e}")
-    
-    # ========== 4. 综合评分排序 ==========
-    for cand in filtered:
-        quick = cand.get('quick_score', 0)
-        trend = cand.get('trend_score', 0)
-        tech = cand.get('tech_score', 0)
+            analyzed.append(coin)
         
-        # 加权: 技术分权重最高
-        cand['combined_score'] = quick * 0.2 + trend * 0.3 + tech * 0.5
+        # 按技术评分排序
+        result = sorted(analyzed, key=lambda x: x.get('tech_score', 0), reverse=True)
     
-    # 按综合分排序
-    filtered.sort(key=lambda x: x.get('combined_score', 0), reverse=True)
+    print(f"[Filter] 快速筛选完成: {len(result)} 个候选")
     
-    top30 = filtered[:30]
-    
-    print(f"\n[Filter] ✅ 扫描完成，返回 {len(top30)} 个候选")
-    
-    # 打印Top10
-    print(f"\n{'='*60}")
-    print("📊 Top 10 候选 (技术分析+涨幅漏斗)")
-    print("="*60)
-    for i, c in enumerate(top10 := top30[:10], 1):
-        symbol = c['symbol']
-        tech_score = c.get('tech_score', 0)
-        change_24h = c.get('change_24h_pct', 0)
-        combined = c.get('combined_score', 0)
-        
-        # 技术分析详情
-        tech_data = c.get('tech_data', {})
-        reasons = tech_data.get('reasons', [])[:3]
-        
-        emoji = '🚀' if tech_score >= 10 else '📈' if tech_score >= 6 else '⚠️'
-        print(f"{i:2}. {emoji} {symbol:8} 技术分:{tech_score:2}/20  24h:{change_24h:+.1f}%  综合:{combined:.1f}")
-        if reasons:
-            print(f"     → {', '.join(reasons)}")
-    
-    return top30
+    return result
 
 
 if __name__ == "__main__":

@@ -1,651 +1,5 @@
 [
   {
-    "index": 0,
-    "type": "EXIT",
-    "token": "XRP",
-    "timestamp": "2026-06-12T23:47:20.759562",
-    "signals": [
-      "signal_4_volume_spike",
-      "signal_7_new_futures",
-      "signal_11_early_warning"
-    ],
-    "signal_count": 3,
-    "score": 3.0,
-    "entry_price": 1.472,
-    "position_size": 10.0,
-    "exit_price": 0.05547,
-    "pnl": 0.0003999999999999837,
-    "win": true,
-    "exit_reason": "调整仓位",
-    "exit_timestamp": "2026-06-13T22:56:28.205803",
-    "hold_minutes": 1389
-  },
-  {
-    "index": 1,
-    "type": "EXIT",
-    "token": "FIL",
-    "timestamp": "2026-06-12T23:47:32.083766",
-    "signals": [
-      "signal_2_funding_turn_positive",
-      "signal_7_new_futures",
-      "signal_11_early_warning"
-    ],
-    "signal_count": 3,
-    "score": 3.94,
-    "entry_price": 1.0607,
-    "position_size": 10.0,
-    "exit_price": 0.751549,
-    "pnl": -3.0915099999999995,
-    "win": false,
-    "exit_reason": "STOP_LOSS",
-    "exit_timestamp": "2026-06-12T23:55:57.148213",
-    "hold_minutes": 8
-  },
-  {
-    "index": 2,
-    "type": "EXIT",
-    "token": "XRP",
-    "timestamp": "2026-06-12T23:56:10.406669",
-    "signals": [
-      "signal_4_volume_spike",
-      "signal_7_new_futures",
-      "signal_11_early_warning"
-    ],
-    "signal_count": 3,
-    "score": 3.0,
-    "entry_price": 1.472,
-    "position_size": 10.0,
-    "exit_price": 1.13,
-    "pnl": -3.420000000000001,
-    "win": false,
-    "exit_reason": "STOP_LOSS",
-    "exit_timestamp": "2026-06-13T11:09:13.851341",
-    "hold_minutes": 673
-  },
-  {
-    "index": 3,
-    "type": "EXIT",
-    "token": "FIL",
-    "timestamp": "2026-06-12T23:56:21.330047",
-    "signals": [
-      "signal_2_funding_turn_positive",
-      "signal_7_new_futures",
-      "signal_11_early_warning"
-    ],
-    "signal_count": 3,
-    "score": 3.94,
-    "entry_price": 1.0607,
-    "position_size": 10.0,
-    "exit_price": 0.762179,
-    "pnl": -2.9852099999999995,
-    "win": false,
-    "exit_reason": "STOP_LOSS",
-    "exit_timestamp": "2026-06-13T11:10:19.316729",
-    "hold_minutes": 673
-  },
-  {
-    "index": 6,
-    "type": "EXIT",
-    "token": "SOL",
-    "timestamp": "2026-06-13T10:38:46.235471",
-    "signals": [
-      "signal_7_new_futures"
-    ],
-    "signal_count": 1,
-    "score": 1.5,
-    "entry_price": 88.99,
-    "position_size": 200.0,
-    "exit_price": 66.95,
-    "pnl": -131.19,
-    "win": false,
-    "exit_reason": "MANUAL_EXIT",
-    "exit_timestamp": "2026-06-13T11:06:23.367050",
-    "hold_minutes": 27
-  },
-  {
-    "index": 8,
-    "type": "ABANDONED",
-    "token": "XRP",
-    "timestamp": "2026-06-13T11:10:33.876462",
-    "signals": [
-      "signal_4_volume_spike",
-      "signal_7_new_futures",
-      "signal_11_early_warning"
-    ],
-    "signal_count": 3,
-    "score": 3.0,
-    "entry_price": 1.434,
-    "position_size": 10.0,
-    "exit_price": 1.434,
-    "pnl": 0.0,
-    "win": false,
-    "exit_reason": "manual_reset"
-  },
-  {
-    "index": 9,
-    "type": "ABANDONED",
-    "token": "FIL",
-    "timestamp": "2026-06-13T11:10:46.260157",
-    "signals": [
-      "signal_2_funding_turn_positive",
-      "signal_7_new_futures",
-      "signal_11_early_warning"
-    ],
-    "signal_count": 3,
-    "score": 3.94,
-    "entry_price": 0.9955,
-    "position_size": 10.0,
-    "exit_price": 0.9955,
-    "pnl": 0.0,
-    "win": false,
-    "exit_reason": "manual_reset"
-  },
-  {
-    "index": 10,
-    "type": "ABANDONED",
-    "token": "BTC",
-    "timestamp": "2026-06-13T11:11:54.352605",
-    "signals": [
-      "signal_7_new_futures"
-    ],
-    "signal_count": 1,
-    "score": 1.5,
-    "entry_price": 63667.0,
-    "position_size": 160.0,
-    "exit_price": 63667.0,
-    "pnl": 0.0,
-    "win": false,
-    "exit_reason": "manual_reset"
-  },
-  {
-    "index": 11,
-    "type": "ABANDONED",
-    "token": "ETH",
-    "timestamp": "2026-06-13T11:11:56.929533",
-    "signals": [
-      "signal_7_new_futures"
-    ],
-    "signal_count": 1,
-    "score": 1.5,
-    "entry_price": 2221.67,
-    "position_size": 160.0,
-    "exit_price": 2221.67,
-    "pnl": 0.0,
-    "win": false,
-    "exit_reason": "manual_reset"
-  },
-  {
-    "index": 12,
-    "type": "ABANDONED",
-    "token": "SOL",
-    "timestamp": "2026-06-13T11:12:24.123155",
-    "signals": [
-      "signal_7_new_futures"
-    ],
-    "signal_count": 1,
-    "score": 1.5,
-    "entry_price": 88.99,
-    "position_size": 160.0,
-    "exit_price": 88.99,
-    "pnl": 0.0,
-    "win": false,
-    "exit_reason": "manual_reset"
-  },
-  {
-    "index": 10,
-    "type": "ABANDONED",
-    "token": "MEGA",
-    "timestamp": "2026-06-13T11:30:02.538384",
-    "signals": [
-      "momentum_volume_1h",
-      "signal_2_funding_turn_positive"
-    ],
-    "signal_count": 2,
-    "score": 3.5,
-    "entry_price": 0.05139,
-    "position_size": 81.92000000000002,
-    "exit_price": 0.05139,
-    "pnl": 0.0,
-    "win": false,
-    "exit_reason": "manual_reset"
-  },
-  {
-    "index": 11,
-    "type": "ABANDONED",
-    "token": "MEGA",
-    "timestamp": "2026-06-13T11:31:52.009557",
-    "signals": [
-      "momentum_volume_1h",
-      "signal_2_funding_turn_positive"
-    ],
-    "signal_count": 2,
-    "score": 3.5,
-    "entry_price": 1.0,
-    "position_size": 81.92000000000002,
-    "exit_price": 1.0,
-    "pnl": 0.0,
-    "win": false,
-    "exit_reason": "manual_reset"
-  },
-  {
-    "index": 12,
-    "type": "ABANDONED",
-    "token": "MERL",
-    "timestamp": "2026-06-13T11:31:56.896353",
-    "signals": [
-      "momentum_volume_1h",
-      "signal_2_funding_turn_positive"
-    ],
-    "signal_count": 2,
-    "score": 3.5,
-    "entry_price": 1.0,
-    "position_size": 81.92000000000002,
-    "exit_price": 1.0,
-    "pnl": 0.0,
-    "win": false,
-    "exit_reason": "manual_reset"
-  },
-  {
-    "index": 13,
-    "type": "ABANDONED",
-    "token": "MEGA",
-    "timestamp": "2026-06-13T11:33:59.311676",
-    "signals": [
-      "momentum_volume_1h",
-      "signal_2_funding_turn_positive"
-    ],
-    "signal_count": 2,
-    "score": 3.5,
-    "entry_price": 0.05099,
-    "position_size": 81.92000000000002,
-    "exit_price": 0.05099,
-    "pnl": 0.0,
-    "win": false,
-    "exit_reason": "manual_reset"
-  },
-  {
-    "index": 14,
-    "type": "ABANDONED",
-    "token": "MERL",
-    "timestamp": "2026-06-13T11:34:02.026079",
-    "signals": [
-      "momentum_volume_1h",
-      "signal_2_funding_turn_positive"
-    ],
-    "signal_count": 2,
-    "score": 3.5,
-    "entry_price": 0.02112,
-    "position_size": 81.92000000000002,
-    "exit_price": 0.02112,
-    "pnl": 0.0,
-    "win": false,
-    "exit_reason": "manual_reset"
-  },
-  {
-    "index": 15,
-    "type": "EXIT",
-    "token": "LIT",
-    "timestamp": "2026-06-13T11:55:31.202216",
-    "signals": [
-      "signal_2_funding_turn_positive"
-    ],
-    "signal_count": 1,
-    "score": 1.5,
-    "entry_price": 1.5195,
-    "position_size": 50,
-    "exit_price": 1.6015,
-    "pnl": 4.0999999999999925,
-    "win": true,
-    "exit_reason": "MAX_HOLD_TIME",
-    "exit_timestamp": "2026-06-13T20:54:56.320622",
-    "hold_minutes": 539
-  },
-  {
-    "index": 16,
-    "type": "ABANDONED",
-    "token": "ZKP",
-    "timestamp": "2026-06-13T21:40:41.042052",
-    "signals": [
-      "signal_2_funding_turn_positive"
-    ],
-    "signal_count": 1,
-    "score": 1.5,
-    "entry_price": 0.05546,
-    "position_size": 10.0,
-    "exit_price": 0.05546,
-    "pnl": 0.0,
-    "win": false,
-    "exit_reason": "manual_reset"
-  },
-  {
-    "index": 17,
-    "type": "ABANDONED",
-    "token": "ZKP",
-    "timestamp": "2026-06-13T22:53:11.223474",
-    "signals": [
-      "signal_2_funding_turn_positive"
-    ],
-    "signal_count": 1,
-    "score": 1.5,
-    "entry_price": 0.05539,
-    "position_size": 10.0,
-    "exit_price": 0.05539,
-    "pnl": 0.0,
-    "win": false,
-    "exit_reason": "manual_reset"
-  },
-  {
-    "index": 18,
-    "type": "ABANDONED",
-    "token": "ZKP",
-    "timestamp": "2026-06-13T22:54:52.325762",
-    "signals": [
-      "signal_2_funding_turn_positive"
-    ],
-    "signal_count": 1,
-    "score": 1.5,
-    "entry_price": 0.05543,
-    "position_size": 10.0,
-    "exit_price": 0.05543,
-    "pnl": 0.0,
-    "win": false,
-    "exit_reason": "manual_reset"
-  },
-  {
-    "index": 19,
-    "type": "ABANDONED",
-    "token": "ZKP",
-    "timestamp": "2026-06-13T22:57:07.360413",
-    "signals": [
-      "signal_2_funding_turn_positive"
-    ],
-    "signal_count": 1,
-    "score": 1.5,
-    "entry_price": 0.05547,
-    "position_size": 888,
-    "exit_price": 0.05547,
-    "pnl": 0.0,
-    "win": false,
-    "exit_reason": "manual_reset"
-  },
-  {
-    "index": 20,
-    "type": "ABANDONED",
-    "token": "ZKP",
-    "timestamp": "2026-06-13T23:13:18.627968",
-    "signals": [
-      "momentum_price_1h",
-      "momentum_volume_1h",
-      "signal_2_funding_turn_positive"
-    ],
-    "signal_count": 3,
-    "score": 6.0,
-    "entry_price": 0.05663,
-    "position_size": 888,
-    "exit_price": 0.05663,
-    "pnl": 0.0,
-    "win": false,
-    "exit_reason": "manual_reset"
-  },
-  {
-    "index": 21,
-    "type": "ABANDONED",
-    "token": "ZRO",
-    "timestamp": "2026-06-14T11:52:18.593254",
-    "signals": [
-      "整数关口收割期",
-      "动量向上"
-    ],
-    "signal_count": 2,
-    "score": 2.0,
-    "entry_price": 0.9421,
-    "position_size": 888,
-    "exit_price": 0.9421,
-    "pnl": 0.0,
-    "win": false,
-    "exit_reason": "manual_reset",
-    "exit_timestamp": ""
-  },
-  {
-    "index": 22,
-    "type": "ABANDONED",
-    "token": "ZRO",
-    "timestamp": "2026-06-14T13:49:52.710129",
-    "signals": [
-      "整数关口收割期",
-      "动量向上"
-    ],
-    "signal_count": 2,
-    "score": 2.0,
-    "entry_price": 0.933,
-    "position_size": 888,
-    "market_context": {
-      "hour_of_day": 13,
-      "funding_rate": 0,
-      "phase_detected": "整数关口收割期",
-      "signals_triggered": [
-        "整数关口收割期",
-        "动量向上"
-      ],
-      "sweep_status": "normal"
-    },
-    "exit_price": 0.933,
-    "pnl_usd": null,
-    "pnl_pct": null,
-    "win": false,
-    "exit_reason": "manual_reset",
-    "exit_timestamp": null,
-    "hold_minutes": null,
-    "peak_gain_pct": null,
-    "pnl": 0.0
-  },
-  {
-    "index": 23,
-    "type": "ABANDONED",
-    "token": "SUI",
-    "timestamp": "2026-06-14T13:49:52.710151",
-    "signals": [
-      "整数关口收割期",
-      "动量向上"
-    ],
-    "signal_count": 2,
-    "score": 2.0,
-    "entry_price": 0.7612,
-    "position_size": 888,
-    "market_context": {
-      "hour_of_day": 13,
-      "funding_rate": 0,
-      "phase_detected": "整数关口收割期",
-      "signals_triggered": [
-        "整数关口收割期",
-        "动量向上"
-      ],
-      "sweep_status": "normal"
-    },
-    "exit_price": 0.7612,
-    "pnl_usd": null,
-    "pnl_pct": null,
-    "win": false,
-    "exit_reason": "manual_reset",
-    "exit_timestamp": null,
-    "hold_minutes": null,
-    "peak_gain_pct": null,
-    "pnl": 0.0
-  },
-  {
-    "index": 24,
-    "type": "ABANDONED",
-    "token": "BTC",
-    "timestamp": "2026-06-14T14:30:17.961647",
-    "signals": [
-      "BTC型策略",
-      "整数关口$65k"
-    ],
-    "signal_count": 3,
-    "score": 3.0,
-    "entry_price": 64344.0,
-    "position_size": 600,
-    "leverage": 3,
-    "market_context": {
-      "hour_of_day": 14,
-      "funding_rate": -5.6e-05,
-      "phase_detected": "整数关口突破",
-      "signals_triggered": [
-        "BTC型策略",
-        "整数关口$65k"
-      ],
-      "sweep_status": "normal",
-      "btc_price": 64344.0
-    },
-    "exit_price": 64344.0,
-    "pnl_usd": 173.9,
-    "pnl_pct": 0.27,
-    "win": false,
-    "exit_reason": "manual_reset",
-    "exit_timestamp": null,
-    "hold_minutes": null,
-    "peak_gain_pct": null,
-    "pnl": 0.0
-  },
-  {
-    "index": 25,
-    "type": "ABANDONED",
-    "token": "ZRO",
-    "timestamp": "2026-06-14T14:32:02.242619",
-    "signals": [
-      "整数关口收割期"
-    ],
-    "signal_count": 1,
-    "score": 1.0,
-    "entry_price": 0.94435,
-    "position_size": 760.5037,
-    "market_context": {
-      "hour_of_day": 14
-    },
-    "exit_price": 0.94435,
-    "pnl_usd": -12.13,
-    "pnl_pct": -1.69,
-    "win": false,
-    "exit_reason": "manual_reset",
-    "pnl": 0.0
-  },
-  {
-    "index": 26,
-    "type": "ABANDONED",
-    "token": "SUI",
-    "timestamp": "2026-06-14T14:32:02.242667",
-    "signals": [
-      "整数关口收割期"
-    ],
-    "signal_count": 1,
-    "score": 1.0,
-    "entry_price": 0.76143,
-    "position_size": 1178.8979,
-    "market_context": {
-      "hour_of_day": 14
-    },
-    "exit_price": 0.76143,
-    "pnl_usd": -2.75,
-    "pnl_pct": -0.31,
-    "win": false,
-    "exit_reason": "manual_reset",
-    "pnl": 0.0
-  },
-  {
-    "index": 27,
-    "type": "EXIT",
-    "token": "BTC",
-    "timestamp": "2026-06-15T12:49:36.020152",
-    "signals": [
-      "manual_sell_all"
-    ],
-    "signal_count": 1,
-    "score": 0,
-    "entry_price": 64174.9,
-    "position_size": 0,
-    "exit_price": 64174.9,
-    "pnl": 17.27,
-    "win": true,
-    "exit_reason": "SELL_ALL",
-    "exit_timestamp": "2026-06-15T12:49:36.020189"
-  },
-  {
-    "index": 28,
-    "type": "EXIT",
-    "token": "ETH",
-    "timestamp": "2026-06-15T11:49:36.020194",
-    "signals": [
-      "manual_sell_all"
-    ],
-    "signal_count": 1,
-    "score": 0,
-    "entry_price": 1667.61,
-    "position_size": 0,
-    "exit_price": 1715.8,
-    "pnl": 4.61,
-    "win": true,
-    "exit_reason": "SELL_ALL",
-    "exit_timestamp": "2026-06-15T12:49:36.020197",
-    "hold_minutes": 60
-  },
-  {
-    "index": 29,
-    "type": "EXIT",
-    "token": "OKB",
-    "timestamp": "2026-06-15T10:49:36.020199",
-    "signals": [
-      "manual_sell_all"
-    ],
-    "signal_count": 1,
-    "score": 0,
-    "entry_price": 74.586,
-    "position_size": 0,
-    "exit_price": 75.5,
-    "pnl": 0.01,
-    "win": true,
-    "exit_reason": "SELL_ALL",
-    "exit_timestamp": "2026-06-15T12:49:36.020200",
-    "hold_minutes": 120
-  },
-  {
-    "index": 30,
-    "type": "EXIT",
-    "token": "DOGE",
-    "timestamp": "2026-06-15T09:49:36.020202",
-    "signals": [
-      "manual_sell_all"
-    ],
-    "signal_count": 1,
-    "score": 0,
-    "entry_price": 0.088293,
-    "position_size": 0,
-    "exit_price": 0.0885,
-    "pnl": 0.56,
-    "win": true,
-    "exit_reason": "SELL_ALL",
-    "exit_timestamp": "2026-06-15T12:49:36.020204",
-    "hold_minutes": 180
-  },
-  {
-    "index": 31,
-    "type": "EXIT",
-    "token": "WCT",
-    "timestamp": "2026-06-15T08:49:36.020205",
-    "signals": [
-      "manual_sell_all"
-    ],
-    "signal_count": 1,
-    "score": 0,
-    "entry_price": 0.049138,
-    "position_size": 0,
-    "exit_price": 0.048,
-    "pnl": -2.64,
-    "win": false,
-    "exit_reason": "SELL_ALL",
-    "exit_timestamp": "2026-06-15T12:49:36.020207",
-    "hold_minutes": 240
-  },
-  {
     "index": 32,
     "type": "EXIT",
     "token": "XRP",
@@ -663,44 +17,6 @@
     "exit_reason": "SELL_ALL",
     "exit_timestamp": "2026-06-15T12:49:36.020213",
     "hold_minutes": 300
-  },
-  {
-    "index": 33,
-    "type": "EXIT",
-    "token": "SOL",
-    "timestamp": "2026-06-15T06:49:36.020215",
-    "signals": [
-      "manual_sell_all"
-    ],
-    "signal_count": 1,
-    "score": 0,
-    "entry_price": 68.258,
-    "position_size": 0,
-    "exit_price": 70.9,
-    "pnl": 0.53,
-    "win": true,
-    "exit_reason": "SELL_ALL",
-    "exit_timestamp": "2026-06-15T12:49:36.020217",
-    "hold_minutes": 360
-  },
-  {
-    "index": 34,
-    "type": "EXIT",
-    "token": "ZRO",
-    "timestamp": "2026-06-15T05:49:36.020218",
-    "signals": [
-      "manual_sell_all"
-    ],
-    "signal_count": 1,
-    "score": 0,
-    "entry_price": 0.94435,
-    "position_size": 0,
-    "exit_price": 1.037,
-    "pnl": 1.27,
-    "win": true,
-    "exit_reason": "SELL_ALL",
-    "exit_timestamp": "2026-06-15T12:49:36.020219",
-    "hold_minutes": 420
   },
   {
     "index": 35,
@@ -722,491 +38,42 @@
     "hold_minutes": 480
   },
   {
-    "index": 36,
+    "index": 33,
     "type": "EXIT",
-    "token": "NEAR",
-    "timestamp": "2026-06-15T03:49:36.020223",
+    "token": "SOL",
+    "timestamp": "2026-06-15T06:49:36.020215",
     "signals": [
       "manual_sell_all"
     ],
     "signal_count": 1,
     "score": 0,
-    "entry_price": 2.08,
+    "entry_price": 68.258,
     "position_size": 0,
-    "exit_price": 2.24,
-    "pnl": 42.98,
+    "exit_price": 70.9,
+    "pnl": 0.53,
     "win": true,
     "exit_reason": "SELL_ALL",
-    "exit_timestamp": "2026-06-15T12:49:36.020225",
-    "hold_minutes": 540
+    "exit_timestamp": "2026-06-15T12:49:36.020217",
+    "hold_minutes": 360
   },
   {
-    "type": "ABANDONED",
-    "token": "DOGE",
+    "index": 15,
+    "type": "EXIT",
+    "token": "LIT",
+    "timestamp": "2026-06-13T11:55:31.202216",
     "signals": [
-      "4H_EMA_down_RSI_recovering_golden_cross"
-    ],
-    "signal_count": 1,
-    "score": 0.5,
-    "entry_price": 0.0888,
-    "position_size": 1123.62,
-    "leverage": 3,
-    "market_context": {
-      "entry_reason": "4H向下但RSI回升中+金叉，可能反转",
-      "4h_status": "EMA趋势↓, RSI 65 回升中, 金叉是"
-    },
-    "index": 37,
-    "timestamp": "2026-06-15T13:19:27.315101",
-    "exit_reason": "manual_reset",
-    "exit_price": 0.0888,
-    "pnl": 0.0,
-    "win": false
-  },
-  {
-    "type": "ABANDONED",
-    "token": "OKB",
-    "signals": [
-      "4H_EMA_down_RSI_recovering"
-    ],
-    "signal_count": 1,
-    "score": 0.5,
-    "entry_price": 75.27,
-    "position_size": 7570.18,
-    "leverage": 3,
-    "market_context": {
-      "entry_reason": "4H向下但RSI回升中",
-      "4h_status": "EMA趋势↓, RSI 64 回升中"
-    },
-    "index": 38,
-    "timestamp": "2026-06-15T13:19:27.315124",
-    "exit_reason": "manual_reset",
-    "exit_price": 75.27,
-    "pnl": 0.0,
-    "win": false
-  },
-  {
-    "type": "ABANDONED",
-    "token": "WCT",
-    "signals": [
-      "4H_EMA_down_RSI_recovering_golden_cross"
-    ],
-    "signal_count": 1,
-    "score": 0.5,
-    "entry_price": 0.04811,
-    "position_size": 238.2,
-    "leverage": 3,
-    "market_context": {
-      "entry_reason": "4H向下但RSI回升中+金叉，可能反转",
-      "4h_status": "EMA趋势↓, RSI 61 回升中, 金叉是"
-    },
-    "index": 39,
-    "timestamp": "2026-06-15T13:19:27.315126",
-    "exit_reason": "manual_reset",
-    "exit_price": 0.04811,
-    "pnl": 0.0,
-    "win": false
-  },
-  {
-    "type": "ABANDONED",
-    "token": "SHIB",
-    "signals": [
-      "4H_EMA_down_RSI_recovering_golden_cross"
-    ],
-    "signal_count": 1,
-    "score": 0.5,
-    "entry_price": 2.7e-05,
-    "position_size": 2664,
-    "leverage": 3,
-    "market_context": {
-      "entry_reason": "4H向下但RSI回升中+金叉，可能反转",
-      "4h_status": "EMA趋势↓, RSI 63 回升中, 金叉是"
-    },
-    "index": 40,
-    "timestamp": "2026-06-15T13:19:27.315127",
-    "exit_reason": "manual_reset",
-    "exit_price": 2.7e-05,
-    "pnl": 0.0,
-    "win": false
-  },
-  {
-    "index": 41,
-    "type": "ABANDONED",
-    "token": "ZRO",
-    "timestamp": "2026-06-15T18:09:26.202657",
-    "signals": [
-      "4H_aligned",
-      "multi_tf_aligned"
-    ],
-    "signal_count": 2,
-    "score": 5.0,
-    "entry_price": 1.0669,
-    "position_size": 888,
-    "leverage": 1,
-    "market_context": {
-      "entry_reason": "4H+1H+15M多时间框架全部对齐",
-      "4h_status": "aligned"
-    },
-    "exit_reason": "manual_reset",
-    "exit_price": 1.0669,
-    "pnl": 0.0,
-    "win": false
-  },
-  {
-    "index": 42,
-    "type": "ABANDONED",
-    "token": "BTC",
-    "timestamp": "2026-06-14T00:33:37.871612",
-    "signals": [
-      "okx_history_sync"
-    ],
-    "signal_count": 1,
-    "score": 0,
-    "entry_price": 65717.115,
-    "position_size": 131434.23,
-    "leverage": 1,
-    "market_context": {
-      "source": "okx_history_sync",
-      "pnl": "+11.37"
-    },
-    "exit_reason": "manual_reset",
-    "exit_price": 65717.115,
-    "pnl": 0.0,
-    "win": false
-  },
-  {
-    "index": 43,
-    "type": "ABANDONED",
-    "token": "OKB",
-    "timestamp": "2026-06-13T23:33:37.871612",
-    "signals": [
-      "okx_history_sync"
-    ],
-    "signal_count": 1,
-    "score": 0,
-    "entry_price": 75.542438,
-    "position_size": 15184.03,
-    "leverage": 1,
-    "market_context": {
-      "source": "okx_history_sync",
-      "pnl": "-0.49"
-    },
-    "exit_reason": "manual_reset",
-    "exit_price": 75.542438,
-    "pnl": 0.0,
-    "win": false
-  },
-  {
-    "index": 44,
-    "type": "ABANDONED",
-    "token": "ETH",
-    "timestamp": "2026-06-13T22:33:37.871612",
-    "signals": [
-      "okx_history_sync"
-    ],
-    "signal_count": 1,
-    "score": 0,
-    "entry_price": 1724.975,
-    "position_size": 3449.95,
-    "leverage": 1,
-    "market_context": {
-      "source": "okx_history_sync",
-      "pnl": "+0.03"
-    },
-    "exit_reason": "manual_reset",
-    "exit_price": 1724.975,
-    "pnl": 0.0,
-    "win": false
-  },
-  {
-    "index": 45,
-    "type": "ABANDONED",
-    "token": "WCT",
-    "timestamp": "2026-06-13T21:33:37.871612",
-    "signals": [
-      "okx_history_sync"
-    ],
-    "signal_count": 1,
-    "score": 0,
-    "entry_price": 0.048246,
-    "position_size": 477.73,
-    "leverage": 1,
-    "market_context": {
-      "source": "okx_history_sync",
-      "pnl": "-1.25"
-    },
-    "exit_reason": "manual_reset",
-    "exit_price": 0.048246,
-    "pnl": 0.0,
-    "win": false
-  },
-  {
-    "index": 46,
-    "type": "ABANDONED",
-    "token": "OP",
-    "timestamp": "2026-06-15T20:28:06.495590",
-    "signals": [
-      "4H_UPTREND",
-      "1h_RSI_38_LOW",
-      "1h_BB_LOWER"
-    ],
-    "signal_count": 3,
-    "score": 3.5,
-    "entry_price": 0.1074,
-    "position_size": 888,
-    "leverage": 1,
-    "market_context": {
-      "source": "auto_scan",
-      "rsi": 25,
-      "note": "智能限价单挂单，分3批",
-      "order_type": "limit",
-      "entry_offset_pct": 0.5
-    },
-    "exit_reason": "manual_reset",
-    "exit_price": 0.1074,
-    "pnl": 0.0,
-    "win": false
-  },
-  {
-    "index": 47,
-    "type": "ABANDONED",
-    "token": "KAITO",
-    "timestamp": "2026-06-16T18:25:30.899675",
-    "signals": [
-      "4h_rsi_recovering",
-      "4h_golden_cross",
       "signal_2_funding_turn_positive"
     ],
-    "signal_count": 3,
-    "score": 4.5,
-    "entry_price": 0.488,
-    "position_size": 888,
-    "market_context": {
-      "hour_of_day": 18,
-      "funding_rate": 5e-05,
-      "oi_change_1h_pct": 0,
-      "price_change_1h_pct": -0.2,
-      "volume_ratio_1h": 0.25,
-      "days_listed": 0,
-      "phase_detected": "整数关口收割期",
-      "signals_triggered": [
-        "4h_rsi_recovering",
-        "4h_golden_cross",
-        "signal_2_funding_turn_positive"
-      ],
-      "sweep_status": "normal",
-      "btc_price": 0,
-      "btc_dominance": 0,
-      "dynamic_sl_pct": 3.0,
-      "4h_aligned": false,
-      "4h_rsi": 69.3,
-      "entry_price_optimized": 0.48507,
-      "order_type": "limit",
-      "offset_pct": 0.6
-    },
-    "exit_price": 0.488,
-    "pnl_usd": null,
-    "pnl_pct": null,
-    "win": false,
-    "exit_reason": "manual_reset",
-    "exit_timestamp": null,
-    "hold_minutes": null,
-    "peak_gain_pct": null,
-    "pnl": 0.0
-  },
-  {
-    "index": 48,
-    "type": "ABANDONED",
-    "token": "KAITO",
-    "timestamp": "2026-06-16T18:32:36.193619",
-    "signals": [
-      "4h_rsi_recovering",
-      "4h_golden_cross",
-      "signal_2_funding_turn_positive",
-      "1h_rsi_not_overbought"
-    ],
-    "signal_count": 4,
-    "score": 6.0,
-    "entry_price": 0.4873,
-    "position_size": 888,
-    "market_context": {
-      "hour_of_day": 18,
-      "funding_rate": 5e-05,
-      "oi_change_1h_pct": 0,
-      "price_change_1h_pct": -0.25,
-      "volume_ratio_1h": 0.28,
-      "days_listed": 0,
-      "phase_detected": "整数关口收割期",
-      "signals_triggered": [
-        "4h_rsi_recovering",
-        "4h_golden_cross",
-        "signal_2_funding_turn_positive",
-        "1h_rsi_not_overbought"
-      ],
-      "sweep_status": "normal",
-      "btc_price": 0,
-      "btc_dominance": 0,
-      "dynamic_sl_pct": 3.0,
-      "4h_aligned": false,
-      "4h_rsi": 68.9,
-      "entry_price_optimized": 0.48438,
-      "order_type": "limit",
-      "offset_pct": 0.6
-    },
-    "exit_price": 0.4873,
-    "pnl_usd": null,
-    "pnl_pct": null,
-    "win": false,
-    "exit_reason": "manual_reset",
-    "exit_timestamp": null,
-    "hold_minutes": null,
-    "peak_gain_pct": null,
-    "pnl": 0.0
-  },
-  {
-    "index": 49,
-    "type": "ABANDONED",
-    "token": "KAITO",
-    "timestamp": "2026-06-16T19:56:29.490049",
-    "signals": [
-      "4h_rsi_recovering",
-      "4h_golden_cross",
-      "signal_2_funding_turn_positive",
-      "1h_rsi_not_overbought"
-    ],
-    "signal_count": 4,
-    "score": 6.0,
-    "entry_price": 0.4865,
-    "position_size": 888,
-    "market_context": {
-      "hour_of_day": 19,
-      "funding_rate": 5e-05,
-      "oi_change_1h_pct": 0,
-      "price_change_1h_pct": -0.61,
-      "volume_ratio_1h": 0.82,
-      "days_listed": 0,
-      "phase_detected": "整数关口收割期",
-      "signals_triggered": [
-        "4h_rsi_recovering",
-        "4h_golden_cross",
-        "signal_2_funding_turn_positive",
-        "1h_rsi_not_overbought"
-      ],
-      "sweep_status": "normal",
-      "btc_price": 0,
-      "btc_dominance": 0,
-      "dynamic_sl_pct": 3.0,
-      "4h_aligned": false,
-      "4h_rsi": 68.5,
-      "entry_price_optimized": 0.48358,
-      "order_type": "limit",
-      "offset_pct": 0.6
-    },
-    "exit_price": 0.4865,
-    "pnl_usd": null,
-    "pnl_pct": null,
-    "win": false,
-    "exit_reason": "manual_reset",
-    "exit_timestamp": null,
-    "hold_minutes": null,
-    "peak_gain_pct": null,
-    "pnl": 0.0
-  },
-  {
-    "index": 50,
-    "type": "ABANDONED",
-    "token": "KAITO",
-    "timestamp": "2026-06-16T23:03:24.149481",
-    "signals": [
-      "4h_rsi_recovering",
-      "4h_golden_cross",
-      "signal_2_funding_turn_positive",
-      "1h_rsi_not_overbought"
-    ],
-    "signal_count": 4,
-    "score": 6.0,
-    "entry_price": 0.4855,
-    "position_size": 888,
-    "market_context": {
-      "hour_of_day": 23,
-      "funding_rate": 5e-05,
-      "oi_change_1h_pct": 0,
-      "price_change_1h_pct": -0.23,
-      "volume_ratio_1h": 0.05,
-      "days_listed": 0,
-      "phase_detected": "整数关口收割期",
-      "signals_triggered": [
-        "4h_rsi_recovering",
-        "4h_golden_cross",
-        "signal_2_funding_turn_positive",
-        "1h_rsi_not_overbought"
-      ],
-      "sweep_status": "normal",
-      "btc_price": 0,
-      "btc_dominance": 0,
-      "dynamic_sl_pct": 3.0,
-      "4h_aligned": false,
-      "4h_rsi": 62.8,
-      "entry_price_optimized": 0.48259,
-      "order_type": "limit",
-      "offset_pct": 0.6
-    },
-    "exit_price": 0.4855,
-    "pnl_usd": null,
-    "pnl_pct": null,
-    "win": false,
-    "exit_reason": "manual_reset",
-    "exit_timestamp": null,
-    "hold_minutes": null,
-    "peak_gain_pct": null,
-    "pnl": 0.0
-  },
-  {
-    "index": 51,
-    "type": "ABANDONED",
-    "token": "KAITO",
-    "timestamp": "2026-06-16T23:05:46.133882",
-    "signals": [
-      "4h_rsi_recovering",
-      "4h_golden_cross",
-      "signal_2_funding_turn_positive",
-      "1h_rsi_not_overbought"
-    ],
-    "signal_count": 4,
-    "score": 6.0,
-    "entry_price": 0.4856,
-    "position_size": 888,
-    "market_context": {
-      "hour_of_day": 23,
-      "funding_rate": 5e-05,
-      "oi_change_1h_pct": 0,
-      "price_change_1h_pct": -0.21,
-      "volume_ratio_1h": 0.12,
-      "days_listed": 0,
-      "phase_detected": "整数关口收割期",
-      "signals_triggered": [
-        "4h_rsi_recovering",
-        "4h_golden_cross",
-        "signal_2_funding_turn_positive",
-        "1h_rsi_not_overbought"
-      ],
-      "sweep_status": "normal",
-      "btc_price": 0,
-      "btc_dominance": 0,
-      "dynamic_sl_pct": 3.0,
-      "4h_aligned": false,
-      "4h_rsi": 63.0,
-      "entry_price_optimized": 0.48269,
-      "order_type": "limit",
-      "offset_pct": 0.6
-    },
-    "exit_price": null,
-    "pnl_usd": null,
-    "pnl_pct": null,
-    "win": null,
-    "exit_reason": "auto_reset_on_startup",
-    "exit_timestamp": "2026-06-17T13:15:48.011179",
-    "hold_minutes": null,
-    "peak_gain_pct": null
+    "signal_count": 1,
+    "score": 1.5,
+    "entry_price": 1.5195,
+    "position_size": 50,
+    "exit_price": 1.6015,
+    "pnl": 4.0999999999999925,
+    "win": true,
+    "exit_reason": "MAX_HOLD_TIME",
+    "exit_timestamp": "2026-06-13T20:54:56.320622",
+    "hold_minutes": 539
   },
   {
     "index": 52,
@@ -1220,9 +87,30 @@
     "signal_count": 2,
     "score": 0,
     "entry_price": 65416.61,
-    "position_size": 1.0,
+    "position_size": 0.01346651001,
     "exit_price": 65693.4,
     "pnl": 276.7899999999936,
+    "win": true,
+    "exit_reason": "SPOT_CLOSED",
+    "exit_timestamp": "2026-06-16T23:30:00.000000",
+    "source": "okx_spot_closed",
+    "status": "closed"
+  },
+  {
+    "index": 54,
+    "type": "EXIT",
+    "token": "ETH",
+    "timestamp": "2026-06-16T23:30:00.000000",
+    "signals": [
+      "manual_sell_all",
+      "spot_position"
+    ],
+    "signal_count": 2,
+    "score": 0,
+    "entry_price": 1717.25,
+    "position_size": 1.0,
+    "exit_price": 1782.46,
+    "pnl": 65.21000000000004,
     "win": true,
     "exit_reason": "SPOT_CLOSED",
     "exit_timestamp": "2026-06-16T23:30:00.000000",
@@ -1249,24 +137,24 @@
     "source": "okx_spot_closed"
   },
   {
-    "index": 54,
+    "index": 30,
     "type": "EXIT",
-    "token": "ETH",
-    "timestamp": "2026-06-16T23:30:00.000000",
+    "token": "DOGE",
+    "timestamp": "2026-06-15T09:49:36.020202",
     "signals": [
-      "manual_sell_all",
-      "spot_position"
+      "manual_sell_all"
     ],
-    "signal_count": 2,
+    "signal_count": 1,
     "score": 0,
-    "entry_price": 1717.25,
-    "position_size": 1.0,
-    "exit_price": 1782.46,
-    "pnl": 65.21000000000004,
+    "entry_price": 0.088293,
+    "position_size": 178.428363539,
+    "exit_price": 0.0885,
+    "pnl": 0.56,
     "win": true,
-    "exit_reason": "SPOT_CLOSED",
-    "exit_timestamp": "2026-06-16T23:30:00.000000",
-    "source": "okx_spot_closed"
+    "exit_reason": "SELL_ALL",
+    "exit_timestamp": "2026-06-15T12:49:36.020204",
+    "hold_minutes": 180,
+    "status": "closed"
   },
   {
     "index": 55,
@@ -1280,13 +168,14 @@
     "signal_count": 2,
     "score": 0,
     "entry_price": 0.048374,
-    "position_size": 4951.2213,
+    "position_size": 887.2896225,
     "exit_price": 0.046960130826711376,
     "pnl": -7.00037916620002,
     "win": false,
     "exit_reason": "SPOT_CLOSED",
     "exit_timestamp": "2026-06-16T23:30:00.000000",
-    "source": "okx_spot_closed"
+    "source": "okx_spot_closed",
+    "status": "closed"
   },
   {
     "index": 56,
@@ -1309,24 +198,41 @@
     "source": "okx_spot_closed"
   },
   {
-    "index": 57,
+    "index": 36,
     "type": "EXIT",
-    "token": "OP",
-    "timestamp": "2026-06-16T23:30:00.000000",
+    "token": "NEAR",
+    "timestamp": "2026-06-15T03:49:36.020223",
     "signals": [
-      "manual_sell_all",
-      "spot_position"
+      "manual_sell_all"
     ],
-    "signal_count": 2,
+    "signal_count": 1,
     "score": 0,
-    "entry_price": 0.1095,
-    "position_size": 25196.3315,
-    "exit_price": 0.10599995479500657,
-    "pnl": -88.18829925,
+    "entry_price": 2.08,
+    "position_size": 0,
+    "exit_price": 2.24,
+    "pnl": 42.98,
+    "win": true,
+    "exit_reason": "SELL_ALL",
+    "exit_timestamp": "2026-06-15T12:49:36.020225",
+    "hold_minutes": 540
+  },
+  {
+    "index": 37,
+    "type": "ENTRY",
+    "token": "OP",
+    "entry_price": 0.109659107435373,
+    "position_size": 33362.02721518,
+    "timestamp": "2026-06-20T16:43:33.828962",
+    "entry_price_original": 0.109659107435373,
+    "source": "DB",
+    "exit_price": 0.1031,
+    "pnl": -1995.5033912269148,
+    "pnl_pct": -5.9814,
+    "hold_minutes": 0,
     "win": false,
-    "exit_reason": "SPOT_CLOSED",
-    "exit_timestamp": "2026-06-16T23:30:00.000000",
-    "source": "okx_spot_closed"
+    "exit_timestamp": "2026-06-20T16:43:40.054679",
+    "exit_reason": "STOP_LOSS",
+    "status": "closed"
   },
   {
     "index": 58,
@@ -1340,183 +246,1764 @@
     "signal_count": 2,
     "score": 0,
     "entry_price": 0.48461,
-    "position_size": 887.2896,
+    "position_size": 1774.5798,
     "exit_price": 0.4862899328471787,
     "pnl": 1.4905869440000288,
     "win": true,
     "exit_reason": "SPOT_CLOSED",
     "exit_timestamp": "2026-06-16T23:30:00.000000",
-    "source": "okx_spot_closed"
+    "source": "okx_spot_closed",
+    "status": "closed"
   },
   {
-    "index": 59,
-    "type": "ABANDONED",
-    "token": "OP",
-    "timestamp": "2026-06-17T13:40:28.074503",
-    "entry_time": "2026-06-17T13:40:28.074503",
-    "signals": [
-      "manual_buy_5tokens"
-    ],
-    "signal_count": 1,
-    "score": 5.0,
-    "entry_price": 0.10931,
+    "index": 99,
+    "type": "EXIT",
+    "token": "XLM",
+    "entry_price": 0.24065,
     "position_size": 888.0,
-    "market_context": {
-      "source": "market_scan",
-      "mode": "spot"
-    },
-    "exit_price": null,
-    "pnl": null,
-    "pnl_pct": null,
-    "hold_minutes": null,
-    "win": null,
-    "exit_reason": "auto_reset_on_startup",
-    "exit_timestamp": "2026-06-17T15:31:53.146973"
+    "timestamp": "2026-06-18 12:27:29",
+    "entry_price_original": 0.24065,
+    "exit_price": 0.24065,
+    "pnl": 0.0,
+    "pnl_pct": 0.0,
+    "hold_minutes": 3043,
+    "win": false,
+    "exit_timestamp": "2026-06-20T15:11:24.654852",
+    "exit_reason": "MAX_HOLD_TIME"
   },
   {
-    "index": 60,
-    "type": "ABANDONED",
-    "token": "NEAR",
-    "timestamp": "2026-06-17T13:40:28.917813",
-    "entry_time": "2026-06-17T13:40:28.917813",
-    "signals": [
-      "manual_buy_5tokens"
-    ],
-    "signal_count": 1,
-    "score": 5.0,
-    "entry_price": 2.327,
+    "index": 100,
+    "type": "EXIT",
+    "token": "MEGA",
+    "entry_price": 0.06486,
     "position_size": 888.0,
-    "market_context": {
-      "source": "market_scan",
-      "mode": "spot"
-    },
-    "exit_price": null,
-    "pnl": null,
-    "pnl_pct": null,
-    "hold_minutes": null,
-    "win": null,
-    "exit_reason": "auto_reset_on_startup",
-    "exit_timestamp": "2026-06-17T15:31:53.146981"
+    "timestamp": "2026-06-18 14:34:01",
+    "entry_price_original": 0.06486,
+    "exit_price": 0.06486,
+    "pnl": 0.0,
+    "pnl_pct": 0.0,
+    "hold_minutes": 2917,
+    "win": false,
+    "exit_timestamp": "2026-06-20T15:11:25.667383",
+    "exit_reason": "MAX_HOLD_TIME"
   },
   {
-    "index": 61,
-    "type": "ABANDONED",
-    "token": "SOL",
-    "timestamp": "2026-06-17T13:40:29.745499",
-    "entry_time": "2026-06-17T13:40:29.745499",
-    "signals": [
-      "manual_buy_5tokens"
-    ],
-    "signal_count": 1,
-    "score": 5.0,
-    "entry_price": 73.78,
-    "position_size": 888.0,
-    "market_context": {
-      "source": "market_scan",
-      "mode": "spot"
-    },
-    "exit_price": null,
-    "pnl": null,
-    "pnl_pct": null,
-    "hold_minutes": null,
-    "win": null,
-    "exit_reason": "auto_reset_on_startup",
-    "exit_timestamp": "2026-06-17T15:31:53.146983"
-  },
-  {
-    "index": 62,
-    "type": "ABANDONED",
-    "token": "BTC",
-    "timestamp": "2026-06-17T13:40:30.589500",
-    "entry_time": "2026-06-17T13:40:30.589500",
-    "signals": [
-      "manual_buy_5tokens"
-    ],
-    "signal_count": 1,
-    "score": 5.0,
-    "entry_price": 65876.8,
-    "position_size": 888.0,
-    "market_context": {
-      "source": "market_scan",
-      "mode": "spot"
-    },
-    "exit_price": null,
-    "pnl": null,
-    "pnl_pct": null,
-    "hold_minutes": null,
-    "win": null,
-    "exit_reason": "auto_reset_on_startup",
-    "exit_timestamp": "2026-06-17T15:31:53.146984"
-  },
-  {
-    "index": 63,
-    "type": "ABANDONED",
-    "token": "OKB",
-    "timestamp": "2026-06-17T13:40:31.426148",
-    "entry_time": "2026-06-17T13:40:31.426148",
-    "signals": [
-      "manual_buy_5tokens"
-    ],
-    "signal_count": 1,
-    "score": 5.0,
-    "entry_price": 75.98,
-    "position_size": 888.0,
-    "market_context": {
-      "source": "market_scan",
-      "mode": "spot"
-    },
-    "exit_price": null,
-    "pnl": null,
-    "pnl_pct": null,
-    "hold_minutes": null,
-    "win": null,
-    "exit_reason": "auto_reset_on_startup",
-    "exit_timestamp": "2026-06-17T15:31:53.146985"
-  },
-  {
-    "index": 64,
-    "type": "ABANDONED",
+    "index": 101,
+    "type": "EXIT",
     "token": "PROS",
-    "timestamp": "2026-06-17T15:32:35.626889",
-    "entry_time": "2026-06-17T15:32:35.626889",
+    "entry_price": 0.6124,
+    "position_size": 888.0,
+    "timestamp": "2026-06-18 14:39:06",
+    "entry_price_original": 0.6124,
+    "exit_price": 0.6124,
+    "pnl": 0.0,
+    "pnl_pct": 0.0,
+    "hold_minutes": 2912,
+    "win": false,
+    "exit_timestamp": "2026-06-20T15:11:26.679758",
+    "exit_reason": "MAX_HOLD_TIME"
+  },
+  {
+    "index": 33,
+    "type": "EXIT",
+    "token": "ENJ",
+    "entry_price": 0.0366028511609287,
+    "position_size": 4436.448,
+    "timestamp": "2026-06-20T16:13:56.581845",
+    "entry_price_original": 0.0366028511609287,
+    "source": "OKX_API",
+    "exit_price": 0.0342,
+    "pnl": -291.2375372161946,
+    "pnl_pct": -6.5647,
+    "hold_minutes": 29,
+    "win": false,
+    "exit_timestamp": "2026-06-20T16:43:38.570350",
+    "exit_reason": "STOP_LOSS"
+  },
+  {
+    "index": 20,
+    "type": "ENTRY",
+    "token": "MANA",
+    "timestamp": "2026-06-20T16:57:38.594138",
+    "entry_time": "2026-06-20T16:57:38.594138",
     "signals": [
       "4h_rsi_recovering",
+      "4h_golden_cross",
       "signal_2_funding_turn_positive",
-      "1h_rsi_not_overbought"
+      "15m_ema_trend_up",
+      "15m_vol_surge"
     ],
-    "signal_count": 3,
-    "score": 4.5,
-    "entry_price": 0.549,
-    "position_size": 888,
+    "signal_count": 5,
+    "score": 7.5,
+    "entry_price": 0.0717856285028022,
+    "position_size": 0.0096,
     "market_context": {
-      "hour_of_day": 15,
-      "funding_rate": 5e-05,
+      "hour_of_day": 16,
+      "funding_rate": 6.08838069945e-05,
       "oi_change_1h_pct": 0,
-      "price_change_1h_pct": -1.37,
-      "volume_ratio_1h": 1.39,
+      "price_change_1h_pct": 2.72,
+      "volume_ratio_1h": 0.86,
       "days_listed": 0,
-      "phase_detected": "整数关口收割期",
+      "phase_detected": "拉升启动期",
       "signals_triggered": [
         "4h_rsi_recovering",
+        "4h_golden_cross",
         "signal_2_funding_turn_positive",
-        "1h_rsi_not_overbought"
+        "15m_ema_trend_up",
+        "15m_vol_surge"
       ],
       "sweep_status": "normal",
       "btc_price": 0,
       "btc_dominance": 0,
       "dynamic_sl_pct": 3.0,
       "4h_aligned": true,
-      "4h_rsi": 33.0,
-      "entry_price_optimized": 0.54570874,
+      "4h_rsi": 63.6,
+      "entry_price_optimized": 0.0718,
       "order_type": "limit",
       "offset_pct": 0.6
     },
-    "exit_price": null,
-    "pnl": null,
-    "pnl_pct": null,
-    "hold_minutes": null,
-    "win": null,
-    "exit_reason": "auto_reset_on_startup",
-    "exit_timestamp": "2026-06-17T23:19:10.664651"
+    "exit_price": 0.0717856285028022,
+    "pnl": 0.0,
+    "pnl_pct": 0.0,
+    "hold_minutes": 1254,
+    "win": false,
+    "exit_reason": "MAX_HOLD_TIME",
+    "exit_timestamp": "2026-06-21T13:52:03.809696",
+    "status": "closed"
+  },
+  {
+    "index": 97,
+    "type": "ENTRY",
+    "token": "AXS",
+    "entry_price": 1.13041265707788,
+    "position_size": 2671.6832,
+    "timestamp": "2026-06-20 06:02:42",
+    "entry_price_original": 1.14,
+    "exit_reason": "stuck_position_cleanup",
+    "exit_timestamp": "2026-06-20T22:13:52.225557",
+    "status": "closed"
+  },
+  {
+    "index": 34,
+    "type": "ENTRY",
+    "token": "2Z",
+    "entry_price": 0.0742,
+    "position_size": 0.0096,
+    "timestamp": "2026-06-20T16:13:56.897564",
+    "entry_price_original": 0.0742025730584468,
+    "source": "OKX_API",
+    "exit_reason": "stuck_position_cleanup",
+    "exit_timestamp": "2026-06-20T22:13:52.225584",
+    "status": "closed"
+  },
+  {
+    "index": 36,
+    "type": "EXIT",
+    "token": "CELO",
+    "entry_price": 0.0658881285028022,
+    "position_size": 887.2896,
+    "timestamp": "2026-06-20 06:21:48",
+    "entry_price_original": 0.06633,
+    "source": "DB",
+    "exit_reason": "MAX_HOLD_TIME",
+    "exit_timestamp": "2026-06-22T12:39:03.087752",
+    "status": "closed",
+    "exit_price": 0.07233,
+    "pnl": 7.279961856006968e-05,
+    "pnl_pct": 9.777,
+    "hold_minutes": 3257,
+    "win": true,
+    "partial_closes": [
+      {
+        "timestamp": "2026-06-21T14:04:02.511189",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075476,
+        "pnl": 0.00024675946364191743,
+        "pnl_pct": 78.0235,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T14:04:25.944907",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075476,
+        "pnl": 0.00024675946364191743,
+        "pnl_pct": 78.0235,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T14:04:58.751247",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075476,
+        "pnl": 0.00024675946364191743,
+        "pnl_pct": 78.0235,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T14:08:08.334202",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075384,
+        "pnl": 0.0002406078144997394,
+        "pnl_pct": 76.0784,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T14:08:32.300011",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075384,
+        "pnl": 0.0002406078144997394,
+        "pnl_pct": 76.0784,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T14:09:04.753775",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075384,
+        "pnl": 0.0002406078144997394,
+        "pnl_pct": 76.0784,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T14:09:35.923528",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075378,
+        "pnl": 0.0002402066199904665,
+        "pnl_pct": 75.9515,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T14:10:04.911223",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075378,
+        "pnl": 0.0002402066199904665,
+        "pnl_pct": 75.9515,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T14:10:34.930740",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075378,
+        "pnl": 0.0002402066199904665,
+        "pnl_pct": 75.9515,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T14:40:18.779520",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.07541,
+        "pnl": 0.00024234632403992011,
+        "pnl_pct": 76.6281,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T14:40:45.382051",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.07541,
+        "pnl": 0.00024234632403992011,
+        "pnl_pct": 76.6281,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T14:41:15.181743",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.07541,
+        "pnl": 0.00024234632403992011,
+        "pnl_pct": 76.6281,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T14:41:45.863540",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.07555,
+        "pnl": 0.0002517075292562786,
+        "pnl_pct": 79.588,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T14:42:14.876595",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.07555,
+        "pnl": 0.0002517075292562786,
+        "pnl_pct": 79.588,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T14:42:42.609104",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.07555,
+        "pnl": 0.0002517075292562786,
+        "pnl_pct": 79.588,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T14:43:15.797484",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075614,
+        "pnl": 0.000255986937355185,
+        "pnl_pct": 80.9412,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T14:43:44.782623",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075614,
+        "pnl": 0.000255986937355185,
+        "pnl_pct": 80.9412,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T14:44:14.779029",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075614,
+        "pnl": 0.000255986937355185,
+        "pnl_pct": 80.9412,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T14:44:45.846259",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075642,
+        "pnl": 0.00025785917839845664,
+        "pnl_pct": 81.5331,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T14:51:21.745634",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075591,
+        "pnl": 0.00025444902506964066,
+        "pnl_pct": 80.4549,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T14:51:45.996897",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075591,
+        "pnl": 0.00025444902506964066,
+        "pnl_pct": 80.4549,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T14:52:15.506732",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075591,
+        "pnl": 0.00025444902506964066,
+        "pnl_pct": 80.4549,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T14:52:46.266690",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075568,
+        "pnl": 0.00025291111278409546,
+        "pnl_pct": 79.9686,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T14:53:15.740014",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075568,
+        "pnl": 0.00025291111278409546,
+        "pnl_pct": 79.9686,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T14:53:45.760849",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075568,
+        "pnl": 0.00025291111278409546,
+        "pnl_pct": 79.9686,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T14:54:16.946412",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.07551,
+        "pnl": 0.0002490328991944611,
+        "pnl_pct": 78.7423,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T14:54:43.495347",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.07551,
+        "pnl": 0.0002490328991944611,
+        "pnl_pct": 78.7423,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T14:55:15.699509",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.07551,
+        "pnl": 0.0002490328991944611,
+        "pnl_pct": 78.7423,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T14:55:46.994400",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075519,
+        "pnl": 0.0002496346909583705,
+        "pnl_pct": 78.9326,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T14:59:54.088835",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075546,
+        "pnl": 0.0002514400662500967,
+        "pnl_pct": 79.5035,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T15:00:20.164302",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075546,
+        "pnl": 0.0002514400662500967,
+        "pnl_pct": 79.5035,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T15:00:50.161500",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075546,
+        "pnl": 0.0002514400662500967,
+        "pnl_pct": 79.5035,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T15:01:21.159630",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075552,
+        "pnl": 0.0002518412607593687,
+        "pnl_pct": 79.6303,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T15:01:50.173817",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075552,
+        "pnl": 0.0002518412607593687,
+        "pnl_pct": 79.6303,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T15:02:20.178624",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075552,
+        "pnl": 0.0002518412607593687,
+        "pnl_pct": 79.6303,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T15:02:51.238173",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075527,
+        "pnl": 0.0002501696169707334,
+        "pnl_pct": 79.1018,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T15:03:18.060318",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075527,
+        "pnl": 0.0002501696169707334,
+        "pnl_pct": 79.1018,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T15:03:50.171685",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075527,
+        "pnl": 0.0002501696169707334,
+        "pnl_pct": 79.1018,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T15:04:22.068942",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075573,
+        "pnl": 0.0002532454415418229,
+        "pnl_pct": 80.0743,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T16:55:15.287594",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.07559,
+        "pnl": 0.0002543821593180952,
+        "pnl_pct": 80.4337,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T16:55:42.433155",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.07559,
+        "pnl": 0.0002543821593180952,
+        "pnl_pct": 80.4337,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T16:56:09.827542",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.07559,
+        "pnl": 0.0002543821593180952,
+        "pnl_pct": 80.4337,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T16:56:43.912216",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075604,
+        "pnl": 0.00025531827983973107,
+        "pnl_pct": 80.7297,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T16:57:12.107699",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075604,
+        "pnl": 0.00025531827983973107,
+        "pnl_pct": 80.7297,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T16:57:41.967775",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075604,
+        "pnl": 0.00025531827983973107,
+        "pnl_pct": 80.7297,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T16:58:12.972903",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075627,
+        "pnl": 0.00025685619212527535,
+        "pnl_pct": 81.216,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T16:58:39.555720",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075627,
+        "pnl": 0.00025685619212527535,
+        "pnl_pct": 81.216,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T16:59:12.002620",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075627,
+        "pnl": 0.00025685619212527535,
+        "pnl_pct": 81.216,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T16:59:43.071578",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075621,
+        "pnl": 0.00025645499761600243,
+        "pnl_pct": 81.0892,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T16:59:43.777613",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075621,
+        "pnl": 0.00025645499761600243,
+        "pnl_pct": 81.0892,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T16:59:46.210426",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075621,
+        "pnl": 0.00025645499761600243,
+        "pnl_pct": 81.0892,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:00:12.277346",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075621,
+        "pnl": 0.00025645499761600243,
+        "pnl_pct": 81.0892,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:00:42.541553",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075621,
+        "pnl": 0.00025645499761600243,
+        "pnl_pct": 81.0892,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:01:13.215315",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075649,
+        "pnl": 0.00025832723865927413,
+        "pnl_pct": 81.6811,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:03:05.734936",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075649,
+        "pnl": 0.00025832723865927413,
+        "pnl_pct": 81.6811,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:03:06.672454",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075649,
+        "pnl": 0.00025832723865927413,
+        "pnl_pct": 81.6811,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:03:31.024980",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075668,
+        "pnl": 0.0002595976879386374,
+        "pnl_pct": 82.0828,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:04:00.592825",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075668,
+        "pnl": 0.0002595976879386374,
+        "pnl_pct": 82.0828,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:04:28.317868",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075668,
+        "pnl": 0.0002595976879386374,
+        "pnl_pct": 82.0828,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:06:27.678360",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.07553,
+        "pnl": 0.00025037021422536984,
+        "pnl_pct": 79.1652,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:06:49.245115",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.07552,
+        "pnl": 0.000249701556709916,
+        "pnl_pct": 78.9538,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:07:20.886225",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.07552,
+        "pnl": 0.000249701556709916,
+        "pnl_pct": 78.9538,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:07:50.520858",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.07552,
+        "pnl": 0.000249701556709916,
+        "pnl_pct": 78.9538,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:08:20.065229",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.07552,
+        "pnl": 0.000249701556709916,
+        "pnl_pct": 78.9538,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:08:48.135561",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.07552,
+        "pnl": 0.000249701556709916,
+        "pnl_pct": 78.9538,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:09:20.674649",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075537,
+        "pnl": 0.00025083827448618825,
+        "pnl_pct": 79.3132,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:09:49.857582",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075537,
+        "pnl": 0.00025083827448618825,
+        "pnl_pct": 79.3132,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:13:50.087223",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075465,
+        "pnl": 0.00024602394037491807,
+        "pnl_pct": 77.7909,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:14:16.002466",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075465,
+        "pnl": 0.00024602394037491807,
+        "pnl_pct": 77.7909,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:14:46.330654",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075465,
+        "pnl": 0.00024602394037491807,
+        "pnl_pct": 77.7909,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:15:15.409425",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075481,
+        "pnl": 0.00024709379239964486,
+        "pnl_pct": 78.1292,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:15:46.358873",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075481,
+        "pnl": 0.00024709379239964486,
+        "pnl_pct": 78.1292,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:16:48.073981",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075479,
+        "pnl": 0.00024696006089655387,
+        "pnl_pct": 78.0869,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:17:36.062823",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075479,
+        "pnl": 0.00024696006089655387,
+        "pnl_pct": 78.0869,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:18:17.759505",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075491,
+        "pnl": 0.0002477624499150988,
+        "pnl_pct": 78.3406,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:18:23.849880",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075491,
+        "pnl": 0.0002477624499150988,
+        "pnl_pct": 78.3406,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:18:24.263194",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075493,
+        "pnl": 0.0002478961814181897,
+        "pnl_pct": 78.3829,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:18:46.703378",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075493,
+        "pnl": 0.0002478961814181897,
+        "pnl_pct": 78.3829,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:19:14.335932",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075493,
+        "pnl": 0.0002478961814181897,
+        "pnl_pct": 78.3829,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:19:47.622686",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075533,
+        "pnl": 0.00025057081148000633,
+        "pnl_pct": 79.2286,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:20:16.650000",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075533,
+        "pnl": 0.00025057081148000633,
+        "pnl_pct": 79.2286,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:20:46.746238",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075533,
+        "pnl": 0.00025057081148000633,
+        "pnl_pct": 79.2286,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:21:15.319203",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075551,
+        "pnl": 0.0002517743950078232,
+        "pnl_pct": 79.6092,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:23:13.474415",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075551,
+        "pnl": 0.0002517743950078232,
+        "pnl_pct": 79.6092,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:23:39.011527",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075608,
+        "pnl": 0.0002555857428459121,
+        "pnl_pct": 80.8143,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:24:05.848183",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075608,
+        "pnl": 0.0002555857428459121,
+        "pnl_pct": 80.8143,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:24:37.990069",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075608,
+        "pnl": 0.0002555857428459121,
+        "pnl_pct": 80.8143,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:25:08.958151",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075633,
+        "pnl": 0.00025725738663454826,
+        "pnl_pct": 81.3429,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:25:37.986698",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075633,
+        "pnl": 0.00025725738663454826,
+        "pnl_pct": 81.3429,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:26:08.022531",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075633,
+        "pnl": 0.00025725738663454826,
+        "pnl_pct": 81.3429,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:27:10.088737",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075603,
+        "pnl": 0.0002552514140881856,
+        "pnl_pct": 80.7086,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:27:24.554813",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075603,
+        "pnl": 0.0002552514140881856,
+        "pnl_pct": 80.7086,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:27:41.237799",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075603,
+        "pnl": 0.0002552514140881856,
+        "pnl_pct": 80.7086,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:28:08.071808",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075599,
+        "pnl": 0.00025498395108200365,
+        "pnl_pct": 80.624,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:28:38.063815",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075599,
+        "pnl": 0.00025498395108200365,
+        "pnl_pct": 80.624,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:29:09.825973",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075557,
+        "pnl": 0.0002521755895170961,
+        "pnl_pct": 79.736,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:29:37.404448",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075557,
+        "pnl": 0.0002521755895170961,
+        "pnl_pct": 79.736,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:30:05.855928",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075557,
+        "pnl": 0.0002521755895170961,
+        "pnl_pct": 79.736,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:30:38.792221",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075549,
+        "pnl": 0.0002516406635047331,
+        "pnl_pct": 79.5669,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:31:08.107249",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075549,
+        "pnl": 0.0002516406635047331,
+        "pnl_pct": 79.5669,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:31:37.790549",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075549,
+        "pnl": 0.0002516406635047331,
+        "pnl_pct": 79.5669,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:32:09.410953",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075579,
+        "pnl": 0.0002536466360510949,
+        "pnl_pct": 80.2012,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:32:38.074094",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075579,
+        "pnl": 0.0002536466360510949,
+        "pnl_pct": 80.2012,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:33:08.199340",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075579,
+        "pnl": 0.0002536466360510949,
+        "pnl_pct": 80.2012,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:33:39.236148",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075602,
+        "pnl": 0.0002551845483366401,
+        "pnl_pct": 80.6874,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:34:08.139376",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075602,
+        "pnl": 0.0002551845483366401,
+        "pnl_pct": 80.6874,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:34:38.195710",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075602,
+        "pnl": 0.0002551845483366401,
+        "pnl_pct": 80.6874,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:35:09.413114",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075628,
+        "pnl": 0.00025692305787682084,
+        "pnl_pct": 81.2371,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:35:38.398996",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075628,
+        "pnl": 0.00025692305787682084,
+        "pnl_pct": 81.2371,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:36:08.435121",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075628,
+        "pnl": 0.00025692305787682084,
+        "pnl_pct": 81.2371,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:36:39.396241",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075657,
+        "pnl": 0.00025886216467163804,
+        "pnl_pct": 81.8503,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:37:08.393754",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075657,
+        "pnl": 0.00025886216467163804,
+        "pnl_pct": 81.8503,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:37:35.856168",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075657,
+        "pnl": 0.00025886216467163804,
+        "pnl_pct": 81.8503,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:38:09.331395",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075731,
+        "pnl": 0.0002638102302859992,
+        "pnl_pct": 83.4148,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:38:38.391390",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075731,
+        "pnl": 0.0002638102302859992,
+        "pnl_pct": 83.4148,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:39:08.371715",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075731,
+        "pnl": 0.0002638102302859992,
+        "pnl_pct": 83.4148,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:39:39.331807",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075717,
+        "pnl": 0.00026287410976436336,
+        "pnl_pct": 83.1188,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:40:08.310968",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075717,
+        "pnl": 0.00026287410976436336,
+        "pnl_pct": 83.1188,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:40:38.292208",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075717,
+        "pnl": 0.00026287410976436336,
+        "pnl_pct": 83.1188,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:41:06.997809",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075723,
+        "pnl": 0.0002632753042736353,
+        "pnl_pct": 83.2457,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:41:38.277471",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075723,
+        "pnl": 0.0002632753042736353,
+        "pnl_pct": 83.2457,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:49:02.479439",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075861,
+        "pnl": 0.00027250277798690286,
+        "pnl_pct": 86.1633,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:49:44.902484",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075861,
+        "pnl": 0.00027250277798690286,
+        "pnl_pct": 86.1633,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:49:56.838488",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075894,
+        "pnl": 0.000274709347787902,
+        "pnl_pct": 86.861,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:50:26.789135",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075894,
+        "pnl": 0.000274709347787902,
+        "pnl_pct": 86.861,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:50:57.857594",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075908,
+        "pnl": 0.00027564546830953783,
+        "pnl_pct": 87.157,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:51:24.234389",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075908,
+        "pnl": 0.00027564546830953783,
+        "pnl_pct": 87.157,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:51:58.440780",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075923,
+        "pnl": 0.0002766484545827192,
+        "pnl_pct": 87.4742,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:52:26.778849",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075923,
+        "pnl": 0.0002766484545827192,
+        "pnl_pct": 87.4742,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:52:56.966944",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075923,
+        "pnl": 0.0002766484545827192,
+        "pnl_pct": 87.4742,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:55:25.834236",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075968,
+        "pnl": 0.00027965741340226223,
+        "pnl_pct": 88.4256,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:55:51.924067",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075968,
+        "pnl": 0.00027965741340226223,
+        "pnl_pct": 88.4256,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:56:21.962832",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075968,
+        "pnl": 0.00027965741340226223,
+        "pnl_pct": 88.4256,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:56:52.873056",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.07595,
+        "pnl": 0.0002784538298744454,
+        "pnl_pct": 88.045,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:57:19.234134",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.07595,
+        "pnl": 0.0002784538298744454,
+        "pnl_pct": 88.045,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:57:51.963636",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.07595,
+        "pnl": 0.0002784538298744454,
+        "pnl_pct": 88.045,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:58:22.914147",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075935,
+        "pnl": 0.00027745084360126403,
+        "pnl_pct": 87.7279,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:58:49.314771",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075935,
+        "pnl": 0.00027745084360126403,
+        "pnl_pct": 87.7279,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T17:59:20.730357",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075935,
+        "pnl": 0.00027745084360126403,
+        "pnl_pct": 87.7279,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T18:00:19.063421",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075905,
+        "pnl": 0.0002754448710549014,
+        "pnl_pct": 87.0936,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T18:10:03.268934",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.07599,
+        "pnl": 0.00028112845993626194,
+        "pnl_pct": 88.8907,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T18:10:28.907506",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.07599,
+        "pnl": 0.00028112845993626194,
+        "pnl_pct": 88.8907,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T18:10:58.943273",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.07599,
+        "pnl": 0.00028112845993626194,
+        "pnl_pct": 88.8907,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T18:11:58.708930",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.076014,
+        "pnl": 0.0002827332379733517,
+        "pnl_pct": 89.3981,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T18:12:30.018574",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.076014,
+        "pnl": 0.0002827332379733517,
+        "pnl_pct": 89.3981,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T18:12:59.072768",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.076017,
+        "pnl": 0.0002829338352279882,
+        "pnl_pct": 89.4616,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T18:13:29.141160",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.076017,
+        "pnl": 0.0002829338352279882,
+        "pnl_pct": 89.4616,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T18:13:59.876003",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075972,
+        "pnl": 0.00027992487640844416,
+        "pnl_pct": 88.5102,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T18:14:29.211818",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075972,
+        "pnl": 0.00027992487640844416,
+        "pnl_pct": 88.5102,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T23:21:02.349574",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.07547,
+        "pnl": 0.0002463582691326445,
+        "pnl_pct": 77.8966,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T23:21:06.571407",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.07547,
+        "pnl": 0.0002463582691326445,
+        "pnl_pct": 77.8966,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T23:21:14.230733",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.07547,
+        "pnl": 0.0002463582691326445,
+        "pnl_pct": 77.8966,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T23:22:31.226331",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075485,
+        "pnl": 0.00024736125540582586,
+        "pnl_pct": 78.2138,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T23:22:46.165175",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075485,
+        "pnl": 0.00024736125540582586,
+        "pnl_pct": 78.2138,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T23:24:13.996820",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.075485,
+        "pnl": 0.00024736125540582586,
+        "pnl_pct": 78.2138,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T23:24:16.117681",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.07551,
+        "pnl": 0.0002490328991944611,
+        "pnl_pct": 78.7423,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T23:24:39.302559",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.07551,
+        "pnl": 0.0002490328991944611,
+        "pnl_pct": 78.7423,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T23:24:44.946626",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.07551,
+        "pnl": 0.0002490328991944611,
+        "pnl_pct": 78.7423,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-21T23:24:46.147779",
+        "close_pct": 50.0,
+        "close_size": 0.0048,
+        "remaining_size": 0.0048,
+        "exit_price": 0.07551,
+        "pnl": 0.0002490328991944611,
+        "pnl_pct": 78.7423,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      }
+    ]
   }
 ]

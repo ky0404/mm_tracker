@@ -5,10 +5,46 @@ MMTracker Scanner - 全市场代币候选列表
 
 import requests
 import logging
-from typing import List, Dict, Any
-from datetime import datetime, timedelta
+import os
+from typing import List, Dict, Any, Optional
+from datetime import datetime
 
 logger = logging.getLogger(__name__)
+
+
+def get_scanner_proxies() -> Optional[Dict]:
+    import os
+    # 优先使用环境变量中的代理
+    proxy = os.getenv("ALL_PROXY") or os.getenv("HTTPS_PROXY") or os.getenv("https_proxy") or os.getenv("http_proxy") or os.getenv("HTTP_PROXY")
+    if proxy:
+        # 如果是 socks5，转换为 requests 可以用的格式
+        if proxy.startswith("socks5://"):
+            try:
+                import requests_toolbelt.socks
+                return {'http': proxy, 'https': proxy}
+            except ImportError:
+                pass
+        return {'http': proxy, 'https': proxy}
+    
+    # 候选代理列表 - 同时尝试 HTTP 和 SOCKS5
+    proxy_candidates = [
+        'http://172.18.48.1:10810', 
+        'http://172.18.144.1:10810',
+        'socks5://172.18.48.1:10810',
+        'socks5://172.18.144.1:10810',
+    ]
+    
+    session = requests.Session()
+    for p in proxy_candidates:
+        try:
+            proxies_dict = {'http': p, 'https': p}
+            resp = session.get("https://api.ipify.org?format=json", proxies=proxies_dict, timeout=3)
+            if resp.status_code == 200:
+                logger.info(f"[Scanner] 自动发现可用代理: {p}")
+                return proxies_dict
+        except:
+            continue
+    return None
 
 
 def get_okx_universe() -> List[Dict[str, Any]]:
@@ -24,7 +60,7 @@ def get_okx_universe() -> List[Dict[str, Any]]:
     instruments = {}
     try:
         inst_url = "https://www.okx.com/api/v5/public/instruments"
-        inst_resp = requests.get(inst_url, params={"instType": "SWAP"}, timeout=10)
+        inst_resp = requests.get(inst_url, params={"instType": "SWAP"}, timeout=10, proxies=get_scanner_proxies())
         if inst_resp.status_code == 200:
             inst_data = inst_resp.json()
             for inst in inst_data.get("data", []):
@@ -41,7 +77,7 @@ def get_okx_universe() -> List[Dict[str, Any]]:
         url = "https://www.okx.com/api/v5/market/tickers"
         params = {"instType": "SWAP"}
         
-        resp = requests.get(url, params=params, timeout=10)
+        resp = requests.get(url, params=params, timeout=10, proxies=get_scanner_proxies())
         
         if resp.status_code != 200:
             print(f"[Universe] ✗ OKX HTTP {resp.status_code}")
@@ -126,7 +162,7 @@ def get_gecko_new_pools() -> List[Dict[str, Any]]:
     
     for chain, url in networks:
         try:
-            resp = requests.get(url, params={"page": "1"}, timeout=10)
+            resp = requests.get(url, params={"page": "1"}, timeout=10, proxies=get_scanner_proxies())
             
             if resp.status_code != 200:
                 continue

@@ -14,8 +14,17 @@ import json
 import time
 import logging
 import argparse
-from datetime import datetime, timedelta
+import pandas as pd
+from datetime import datetime, timedelta, timezone
 from typing import Dict, Any, List, Optional
+
+# 导入交易数据库
+try:
+    from trading.trade_db import TradeDB, init_db
+    _TRADE_DB_AVAILABLE = True
+except ImportError:
+    _TRADE_DB_AVAILABLE = False
+    print("[AutoPilot] ⚠️ TradeDB 不可用，使用JSON记录")
 
 logging.basicConfig(
     level=logging.INFO,
@@ -59,6 +68,10 @@ class AutoPilot:
         self.running = False
         self.cycle_count = 0
         
+        # 日内杠杆模式
+        self.strategy_mode = 'default'
+        self.intraday_strategy = None
+        
         # 缓存市场价格
         self.prices = {}
         
@@ -70,12 +83,12 @@ class AutoPilot:
         from trading.freqtrade_integrator import create_integrator
         self.freqtrade_integrator = create_integrator(self.params)
         
-        # 初始化时清除旧的卡死仓位
-        if result_logger:
-            stuck = [t for t in result_logger.trades if t.get("type") == "ENTRY"]
-            if stuck:
-                print(f"[AutoPilot] 发现 {len(stuck)} 个卡死仓位，自动重置")
-                result_logger.force_close_all_entries()
+        # 初始化时不自动重置仓位 - 由PositionMonitor从数据库加载
+        # if result_logger:
+        #     stuck = [t for t in result_logger.trades if t.get("type") == "ENTRY"]
+        #     if stuck:
+        #         print(f"[AutoPilot] 发现 {len(stuck)} 个卡死仓位，自动重置")
+        #         result_logger.force_close_all_entries()
 
     def _load_params(self) -> Dict[str, Any]:
         """加载参数"""
@@ -100,7 +113,24 @@ class AutoPilot:
         """
         7条件框架 + 5阶段判定扫描
         仅筛选"拉升启动期"代币
+        
+        支持两种模式:
+        - default: 现货市场扫描 (OKX API)
+        - intraday: 期货市场扫描 (历史数据 + 实时信号)
         """
+        # Kill Switch 检查
+        import os
+        pause_file = os.path.join(os.path.dirname(os.path.dirname(__file__)), "PAUSE_TRADING")
+        if os.path.exists(pause_file):
+            logger.warning("[AutoPilot] ⚠️ 检测到 PAUSE_TRADING 文件，本周期跳过交易")
+            logger.warning("[AutoPilot] 恢复交易: rm PAUSE_TRADING")
+            return []
+        
+        # 日内杠杆模式 - 使用期货历史数据
+        if hasattr(self, 'strategy_mode') and self.strategy_mode == 'intraday':
+            return self._scan_intraday_market(max_tokens)
+        
+        # 默认模式 - 现货市场扫描
         from scanner.universe import get_full_universe
         from scanner.fast_filter import run_fast_filter
         from signals.calculator import judge_manipulation_stage
@@ -167,9 +197,44 @@ class AutoPilot:
         # 排序并返回
         high_confidence.sort(key=lambda x: (x["confidence"], x["triggered"]), reverse=True)
         
+        # ===== NFI指标分析 (对Top 5候选) =====
+        try:
+            from fetchers.multi_tf import analyze_1d, analyze_4h
+            
+            logger.info(f"\n📊 NFI核心指标分析 (Top 5):")
+            for i, c in enumerate(high_confidence[:5]):
+                token = c['token']
+                try:
+                    d1 = analyze_1d(token)
+                    h4 = analyze_4h(token)
+                    
+                    d1_cti = d1.get('current_cti', 0) if d1.get('valid') else 0
+                    d1_ewo = d1.get('current_ewo', 0) if d1.get('valid') else 0
+                    h4_cti = h4.get('current_cti', 0) if h4.get('valid') else 0
+                    h4_ewo = h4.get('current_ewo', 0) if h4.get('valid') else 0
+                    h4_rsi = h4.get('current_rsi', 0) if h4.get('valid') else 0
+                    h4_wr = h4.get('current_wr', 0) if h4.get('valid') else 0
+                    
+                    cti_emoji = "🟢" if h4_cti > 0 else "🔴"
+                    ewo_emoji = "🟢" if h4_ewo > 0 else "🔴"
+                    rsi_emoji = "🟢" if 30 < h4_rsi < 70 else "🔴"
+                    wr_emoji = "🟢" if h4_wr < -60 else "🟡"
+                    
+                    logger.info(f"  {i+1}. {token:8} CTI:{h4_cti:>5.1f}{cti_emoji} EWO:{h4_ewo:>6.1f}{ewo_emoji} RSI:{h4_rsi:>5.0f}{rsi_emoji} Wr:{h4_wr:>6.1f}{wr_emoji}")
+                    
+                    c['nfi_indicators'] = {
+                        'd1_cti': d1_cti, 'd1_ewo': d1_ewo,
+                        'h4_cti': h4_cti, 'h4_ewo': h4_ewo,
+                        'h4_rsi': h4_rsi, 'h4_wr': h4_wr
+                    }
+                except Exception as e:
+                    logger.warning(f"  {token} NFI指标获取失败: {str(e)[:30]}")
+        except Exception as e:
+            logger.warning(f"[NFI] 指标分析跳过: {str(e)[:50]}")
+        
         result_tokens = [c["token"] for c in high_confidence]
         
-        logger.info(f"[扫描] 高置信度候选: {len(result_tokens)}个")
+        logger.info(f"\n[扫描] 高置信度候选: {len(result_tokens)}个")
         for c in high_confidence[:3]:
             logger.info(f"  - {c['token']}: {c['stage']}, 置信度{c['confidence']:.0%}")
         
@@ -193,6 +258,7 @@ class AutoPilot:
         
         # === NFI-style Surface Analysis (多时间框架面分析) ===
         # 使用新的4层分析: 4H(gatekeeper) → 1H(momentum) → 15M(entry)
+        # 添加错误计数，避免重复失败
         try:
             from fetchers.multi_tf import multi_tf_surface_analysis
             tf_analysis = multi_tf_surface_analysis(token, is_major)
@@ -200,10 +266,11 @@ class AutoPilot:
             analysis_1h = tf_analysis.get("layers", {}).get("1h", {})
             analysis_15m = tf_analysis.get("layers", {}).get("15m", {})
         except Exception as e:
-            logger.error(f"[MultiTF] {token} 多时间框架分析失败: {e}")
+            logger.warning(f"[MultiTF] {token} 分析失败，跳过: {str(e)[:50]}")
+            # 失败时不阻断交易，继续后续流程
             tf_analysis = {
-                "decision": "skip",
-                "reason": f"MultiTF分析异常: {e}",
+                "decision": "continue",
+                "reason": "MultiTF分析异常，已跳过",
                 "layers": {"4h": {}, "1h": {}, "15m": {}}
             }
             analysis_4h = {}
@@ -289,6 +356,32 @@ class AutoPilot:
         except:
             funding_rate = 0
             funding_trend = "flat"
+        
+        # ===== NFI核心指标记录 =====
+        nfi_indicators = {}
+        try:
+            from fetchers.multi_tf import analyze_1d, analyze_4h
+            d1 = analyze_1d(token)
+            h4 = analyze_4h(token)
+            
+            if d1.get('valid'):
+                nfi_indicators['1d'] = {
+                    'rsi': d1.get('current_rsi', 0),
+                    'cti': d1.get('current_cti', 0),
+                    'ewo': d1.get('current_ewo', 0),
+                    'wr': d1.get('current_wr', 0)
+                }
+            if h4.get('valid'):
+                nfi_indicators['4h'] = {
+                    'rsi': h4.get('current_rsi', 0),
+                    'cti': h4.get('current_cti', 0),
+                    'ewo': h4.get('current_ewo', 0),
+                    'wr': h4.get('current_wr', 0),
+                    'aligned': h4.get('aligned', False)
+                }
+                logger.info(f"[NFI] {token} 4H: RSI={h4.get('current_rsi',0):.0f} CTI={h4.get('current_cti',0):.1f} EWO={h4.get('current_ewo',0):.1f}")
+        except Exception as e:
+            pass  # NFI失败不阻断交易
         
         # 获取OI数据（判断是否有真实仓位进入）
         try:
@@ -393,6 +486,7 @@ class AutoPilot:
             "sweep_status": sweep_status,
             "sweep_bonus": sweep_bonus,
             "dynamic_sl_pct": analysis_4h.get("dynamic_sl_pct", 3.0) if analysis_4h.get("valid") else 3.0,
+            "nfi_indicators": nfi_indicators,
             "market_context": {
                 "phase_detected": "4h_aligned" if analysis_4h.get("aligned") else "4h_not_aligned",
                 "price_change_1h_pct": momentum.get("price_change_1h_pct", 0),
@@ -405,9 +499,72 @@ class AutoPilot:
 
     def should_entry(self, analysis_result: Dict[str, Any]) -> bool:
         """
-        7条件框架 + 5阶段模式决策
+        7条件框架 + 5阶段模式决策 + 严格趋势确认
         如果已通过5阶段判定(拉升启动期)，则简化判断
+        
+        修复: 日内杠杆模式必须使用21信号工厂二次确认 + 趋势确认
         """
+        token = analysis_result.get("symbol", "")
+        
+        # 日内杠杆模式 - 21信号工厂严格确认
+        if hasattr(self, 'strategy_mode') and self.strategy_mode == 'intraday':
+            if analysis_result.get("skip", False):
+                logger.info(f"[日内决策] ❌ {token} 被标记跳过")
+                return False
+            
+            score = analysis_result.get("score", {})
+            triggered = score.get("triggered_count", 0)
+            total_score = score.get("total_score", 0)
+            grade = score.get("grade", "WATCH")
+            signal_direction = score.get("direction", "long")
+            
+            # ===== 新增: 趋势确认 (EMA多头排列) =====
+            analysis_4h = analysis_result.get("analysis_4h", {})
+            analysis_1h = analysis_result.get("analysis_1h", {})
+            
+            # 检查4H趋势是否与信号方向一致
+            trend_4h = analysis_4h.get("trend", "neutral")
+            trend_1h = analysis_1h.get("trend", "neutral")
+            
+            # 趋势一致检查
+            trend_aligned = False
+            if signal_direction == "long":
+                trend_aligned = (trend_4h == "bullish" or trend_1h == "bullish")
+            elif signal_direction == "short":
+                trend_aligned = (trend_4h == "bearish" or trend_1h == "bearish")
+            else:
+                trend_aligned = True  # 中性信号不限制
+            
+            # ===== 新增: RSI动量确认 =====
+            rsi_4h = analysis_4h.get("current_rsi", 50)
+            rsi_momentum_ok = True
+            if signal_direction == "long":
+                # 做多时RSI应在30-70之间，不宜过高(超买)
+                rsi_momentum_ok = 30 <= rsi_4h <= 75
+            elif signal_direction == "short":
+                # 做空时RSI应在30-70之间，不宜过低(超卖)
+                rsi_momentum_ok = 25 <= rsi_4h <= 70
+            
+            # 21信号工厂二次确认条件:
+            # 1. 触发信号数量 >= 2
+            # 2. 总分数 >= 7
+            # 3. 等级必须是 STRONG_BUY 或 BUY，不接受 WATCH
+            # 4. 趋势方向与信号方向一致
+            # 5. RSI动量条件满足
+            if triggered >= 2 and total_score >= 7 and grade in ["STRONG_BUY", "BUY"]:
+                if not trend_aligned:
+                    logger.info(f"[日内决策] ❌ {token} 趋势不匹配: 信号方向={signal_direction}, 4H趋势={trend_4h}, 1H趋势={trend_1h}")
+                    return False
+                if not rsi_momentum_ok:
+                    logger.info(f"[日内决策] ❌ {token} RSI不理想: 4H RSI={rsi_4h}, 方向={signal_direction}")
+                    return False
+                
+                logger.info(f"[日内决策] ✅ {token} 入场: 信号={triggered}个, 分数={total_score}, 方向={signal_direction}, 4H趋势={trend_4h}, RSI={rsi_4h}")
+                return True
+            else:
+                logger.info(f"[日内决策] ❌ {token} 未通过21信号工厂: 信号={triggered}个, 分数={total_score}, 等级={grade}")
+                return False
+        
         # 如果被跳过（资金费率过高等原因），直接返回False
         if analysis_result.get("skip", False):
             return False
@@ -501,10 +658,85 @@ class AutoPilot:
     def execute_entry(self, token: str, analysis_result: Dict[str, Any]) -> bool:
         """
         执行入场 - 使用限价单 + Freqtrade策略优化
+        
+        日内杠杆模式: 使用3-5x杠杆
         """
         if not self.trader or not self.result_logger:
             logger.error("[执行] trader 或 result_logger 未初始化")
             return False
+        
+        # ===== 新增: 重复入场检查 =====
+        # 检查是否已在OKX持仓该币种
+        try:
+            current_positions = self.trader.get_position(token) if hasattr(self.trader, 'get_position') else None
+            if current_positions and len(current_positions) > 0:
+                logger.warning(f"[入场拒绝] {token} 已在持仓中，跳过重复入场")
+                return False
+            
+            # 检查本地数据库是否有open记录
+            from trading.trade_db import TradeDB
+            db = TradeDB()
+            open_trades = db.get_open_positions()
+            if any(t.get('token') == token for t in open_trades):
+                logger.warning(f"[入场拒绝] {token} 本地已有open记录，跳过")
+                return False
+        except Exception as e:
+            logger.warning(f"[入场检查] 重复检测失败: {e}, 继续执行")
+        
+        # ===== 新增: 根据信号方向决定做多还是做空 =====
+        score = analysis_result.get("score", {})
+        signal_direction = score.get("direction", "long")  # 默认做多
+        
+        # 如果是OKX模拟盘限制只能做多，记录但继续执行
+        if signal_direction == "short":
+            logger.info(f"[做空信号] {token} 检测到做空信号: {score.get('short_signals', [])}")
+            # 注意: OKX模拟盘可能只支持现货做多，这里记录但不执行
+            # 暂时强制改为做多，待OKX支持做空后取消
+            logger.warning(f"[方向限制] OKX模拟盘可能不支持做空，强制使用做多")
+            signal_direction = "long"
+        
+        # 根据方向设置side
+        trade_side = "buy" if signal_direction == "long" else "sell"
+        logger.info(f"[交易方向] {token}: {signal_direction} (side={trade_side})")
+        
+        # ===== 新增: 区分主流币 vs 山寨币策略 =====
+        # 主流币: BTC, ETH, SOL, BNB, XRP, ADA, DOGE 等
+        MAINSTREAM_TOKENS = ["BTC", "ETH", "SOL", "BNB", "XRP", "ADA", "DOGE", "AVAX", "DOT", "MATIC"]
+        is_mainstream = token in MAINSTREAM_TOKENS
+        
+        if is_mainstream:
+            # 主流币: 中期持有，回调买入
+            default_target = 15  # 15%止盈
+            default_stop = 3     # 3%止损
+            hold_style = "mainstream"
+            logger.info(f"[币种策略] {token} 主流币: 目标{default_target}%, 止损{default_stop}%")
+        else:
+            # 山寨币: 短平快，信号强才入场
+            default_target = 20  # 20%止盈（更高）
+            default_stop = 2.5   # 2.5%止损（更严格）
+            hold_style = "altcoin"
+            logger.info(f"[币种策略] {token} 山寨币: 目标{default_target}%, 止损{default_stop}%")
+        
+        # 根据信号强度调整目标
+        triggered = score.get("triggered_count", 0)
+        if triggered >= 5:  # 信号非常强
+            default_target *= 1.3  # 提高目标
+            logger.info(f"[信号增强] {token} 信号强({triggered}个), 目标提升至 {default_target}%")
+        
+        # 存储目标到market_context供后续退场使用
+        if "market_context" not in locals():
+            market_context = {}
+        market_context["hold_style"] = hold_style
+        market_context["target_pct"] = default_target
+        market_context["stop_loss_pct"] = default_stop
+        market_context["is_mainstream"] = is_mainstream
+        
+        # ===== 后续代码使用 trade_side 而不是硬编码 "buy" =====
+        leverage = 1
+        if hasattr(self, 'strategy_mode') and self.strategy_mode == 'intraday':
+            if self.intraday_strategy:
+                leverage = self.intraday_strategy.leverage
+                logger.info(f"[日内杠杆] 入场 {token}, 杠杆: {leverage}x")
         
         # ===== 新增: 时间段交易控制 =====
         can_trade, reason = self.freqtrade_integrator.hour_strategy.can_trade()
@@ -518,22 +750,36 @@ class AutoPilot:
             logger.error(f"[入场失败] {token} 无有效价格: {price}")
             return False
         
-        # 获取仓位大小 - 使用可用余额或固定888U
-        available = self.trader.get_balance()
-        usdt_balance = 888.0  # 默认固定888U
-        try:
-            if available and isinstance(available, dict):
-                details = available.get('details', [])
-                usdt_list = [d for d in details if d.get('ccy') == 'USDT']
-                if usdt_list:
-                    usdt_balance = float(usdt_list[0].get('availBal', 888.0))
-        except Exception as e:
-            logger.error(f"[余额查询] 解析失败，使用默认888U: {e}")
+        # 获取仓位大小 - 使用模拟盘资金，不受真实资金限制
+        simulated_capital = self.params.get("risk_management", {}).get("simulated_capital", 79373.7)
+        capital = self.params.get("risk_management", {}).get("capital", 300.0)
+        leverage = self.params.get("risk_management", {}).get("leverage", 3.0)
+        position_ratio = self.params.get("risk_management", {}).get("position_ratio", 0.33)
+        max_position = self.params.get("risk_management", {}).get("max_position_size", 2000.0)
         
-        position_size = min(self.params.get("risk_management", {}).get("fixed_position_size", 888.0), usdt_balance)
+        # 使用模拟盘资金计算仓位 (不再受真实300U限制)
+        # 目标仓位 = 模拟资金 * 仓位比例 * 杠杆
+        target_position_size = simulated_capital * position_ratio * leverage / simulated_capital * 888
+        target_position_size = min(target_position_size, max_position)
         
+        # 最终仓位使用固定值或根据信号强度调整
+        position_size = target_position_size
+        
+        # 如果信号非常强 (7+ 信号), 可以用更大仓位
+        score = analysis_result.get("score", {})
+        triggered = score.get("triggered_count", 0)
+        if triggered >= 5:
+            position_size = position_size * 1.2  # 信号强时增加20%仓位
+        elif triggered >= 7:
+            position_size = position_size * 1.5  # 信号非常强时增加50%仓位
+        
+        # 模拟盘余额充足，直接使用计算出的仓位
+        usdt_balance = simulated_capital
+        
+        logger.info(f"[仓位计算] 信号强度: {triggered}个, 模拟资金: ${simulated_capital:.0f}, 杠杆: {leverage}x, 最终仓位: ${position_size:.0f}")
+
         if position_size < 10:
-            logger.error(f"[入场失败] USDT余额不足: {usdt_balance}")
+            logger.error(f"[入场失败] 仓位太小: {position_size}")
             return False
         
         # ===== 新增: 使用Freqtrade集成器计算最佳挂单价 =====
@@ -543,21 +789,22 @@ class AutoPilot:
             bid_price = price_data.get("bid", price * 0.999)
             ask_price = price_data.get("ask", price * 1.001)
             
-            # 计算最佳挂单价
+            # 计算最佳挂单价，但使用市价单确保成交
             entry_price = self.freqtrade_integrator.get_entry_price(token, bid_price, ask_price)
-            order_type = "limit"
-            logger.info(f"[挂单价优化] {token} 市价: ${price:.4f}, 挂单价: ${entry_price:.4f}, 节省: {(price - entry_price) / price * 100:.2f}%")
+            # 使用市价单确保成交，避免限价单失败
+            order_type = "market"
+            logger.info(f"[市价单] {token} 市价: ${price:.4f}, 使用market单确保成交")
         except:
-            entry_price = price * 0.995  # 默认挂单在市价下方0.5%
-            order_type = "limit"
-            logger.warning(f"[挂单价] {token} 使用默认挂单价: ${entry_price:.4f}")
+            entry_price = price  # 市价单不需要指定价格
+            order_type = "market"
+            logger.warning(f"[市价单] {token} 使用market单确保成交")
         
         # 下单 - 使用限价单
         # OKXTestnetTrader 期望的格式: DOGE-USDT
         symbol = f"{token}-USDT"
         
         # 使用限价单: (symbol, side, size, price, order_type)
-        result = self.trader.place_order(symbol, "buy", position_size, entry_price, order_type)
+        result = self.trader.place_order(symbol, trade_side, position_size, entry_price, order_type)
         
         if result.get("code") == "0":
             score = analysis_result.get("score", {})
@@ -593,7 +840,24 @@ class AutoPilot:
                 "offset_pct": round((price - entry_price) / price * 100, 2) if price > 0 else 0,
             }
             
-            # 记录交易 - 使用增强版
+            # 先同步到 TradeDB 并获取正确的 trade_id
+            trade_db_id = None
+            if _TRADE_DB_AVAILABLE:
+                try:
+                    signal_name = entry_signals[0]['name'] if entry_signals else 'unknown'
+                    trade_db_id = TradeDB.record_entry(
+                        token=token,
+                        side=trade_side,
+                        price=price,
+                        quantity=position_size,
+                        signal_name=signal_name,
+                        signal_score=score.get("total_score", 0),
+                    )
+                    logger.info(f"[TradeDB] 入场记录成功, trade_id={trade_db_id}")
+                except Exception as e:
+                    logger.warning(f"[TradeDB] 入场记录失败: {e}")
+            
+            # 记录交易 - 使用增强版，包含 trade_db_id
             self.result_logger.log_entry(
                 token=token,
                 signals=entry_signals,
@@ -602,6 +866,7 @@ class AutoPilot:
                 entry_signals_count=len(entry_signals),
                 position_size=position_size,
                 market_context=market_context,
+                trade_db_id=trade_db_id,  # 传入 trade_db_id
             )
             
             logger.info(f"[入场] {token} @ ${price}, 仓位: {position_size}, 信号: {len(entry_signals)}")
@@ -625,37 +890,57 @@ class AutoPilot:
         # 先从 result_logger 获取未平仓交易
         unfinished = self.result_logger.get_unfinished_trades()
         
-        # 获取这些代币的当前价格
+        # 过滤掉已平仓的持仓（防止重复处理）
+        if hasattr(self.position_monitor, '_closed_positions'):
+            closed_set = self.position_monitor._closed_positions
+            unfinished = [t for t in unfinished if t.get("token") not in closed_set]
+        
+        if not unfinished:
+            return []
+        
+        # 只处理不在_closed_positions中的交易
         from fetchers.price_api import fetch_price_and_change
         
         prices = {}
         for trade in unfinished:
             token = trade["token"]
+            # 跳过已平仓的代币
+            if token in closed_set:
+                continue
             try:
                 price_result = fetch_price_and_change(token)
                 if price_result.get("price") and price_result["price"] > 0:
                     prices[token] = price_result["price"]
-                    logger.info(f"[价格更新] {token}: ${prices[token]:.4f}")
+                    # 只在实际持仓变化时打印价格
+                    logger.debug(f"[价格更新] {token}: ${prices[token]:.4f}")
                 else:
                     prices[token] = trade.get("entry_price", 0)
             except Exception as e:
-                logger.warning(f"[价格获取失败] {token}: {e}")
                 prices[token] = trade.get("entry_price", 0)
         
         # 更新 self.prices
         self.prices.update(prices)
         
         # ===== Freqtrade 风格: 综合退出判断 =====
-        # 使用 EnhancedExitManager 进行自定义退出检查
+        # 只对真正持仓的交易进行检查和日志
+        exit_signals = []
         for trade in unfinished:
             token = trade["token"]
+            # 跳过已平仓的代币
+            if token in closed_set:
+                continue
+            
             current_price = prices.get(token)
             if not current_price:
                 continue
             
+            # 计算当前利润
+            entry_price = trade.get("entry_price", current_price)
+            profit_pct = (current_price - entry_price) / entry_price * 100 if entry_price > 0 else 0
+            
             # 构建 trade_data
             trade_data = {
-                "entry_price": trade.get("entry_price", current_price),
+                "entry_price": entry_price,
                 "entry_time": trade.get("entry_time", datetime.now() - timedelta(hours=1)),
                 "rsi": trade.get("market_context", {}).get("rsi", 50),
                 "bb_upper": trade.get("market_context", {}).get("bb_upper"),
@@ -665,37 +950,40 @@ class AutoPilot:
             exit_result = self.exit_manager.should_exit(
                 pair=token,
                 trade_data=trade_data,
-                current_time=datetime.now(),
+                current_time=datetime.now(timezone.utc),
                 current_price=current_price,
             )
             
-            # 如果应该退出，添加到平仓队列
+            # 如果应该退出，记录信号
             if exit_result["should_exit"]:
-                logger.info(f"[Freqtrade Exit] {token} 触发 {exit_result['exit_reason']}")
-                # 这里会由 position_monitor 处理实际平仓
+                exit_signals.append((token, exit_result['exit_reason'], profit_pct))
             
-            # ===== 新增: Freqtrade策略集成器的持仓管理 =====
+            # ===== Freqtrade策略集成器的持仓管理 =====
             try:
                 entry_price = trade.get("entry_price", current_price)
                 entry_time_str = trade.get("timestamp", "")
-                entry_time = datetime.fromisoformat(entry_time_str.replace("Z", "+00:00")) if entry_time_str else datetime.now()
-                profit_pct = (current_price - entry_price) / entry_price * 100 if entry_price > 0 else 0
                 
-                # 获取4H数据用于紧急逃生检查
-                klines_4h = fetch_price_and_change(token)  # 简化获取
+                # 使用统一的解析函数
+                from trading.position_monitor import parse_entry_timestamp
+                entry_time = parse_entry_timestamp(entry_time_str) if entry_time_str else datetime.now()
                 
                 should_exit_ft, exit_reason_ft = self.freqtrade_integrator.during_position_management(
                     token=token,
                     entry_price=entry_price,
                     current_price=current_price,
                     entry_time=entry_time,
-                    closes_4h=[],  # 简化
+                    closes_4h=[],
                 )
                 
                 if should_exit_ft:
-                    logger.info(f"[Freqtrade持仓管理] {token} 触发退出: {exit_reason_ft}, 利润: {profit_pct:.2f}%")
-            except Exception as e:
+                    exit_signals.append((token, exit_reason_ft, profit_pct))
+            except Exception:
                 pass
+        
+        # 批量打印退出信号（如果有）
+        if exit_signals:
+            for token, reason, pnl in exit_signals:
+                logger.info(f"[Exit Signal] {token}: {reason}, PnL: {pnl:.2f}%")
         
         # 检查持仓
         closed = self.position_monitor.check_positions(self.prices)
@@ -848,6 +1136,167 @@ class AutoPilot:
             "active_positions": active_positions,
             "params": self.params,
         }
+    
+    def _scan_intraday_market(self, max_tokens: int = 20) -> List[str]:
+        """
+        日内杠杆市场扫描 - 基于OKX实时K线 + 21信号工厂二次确认
+        返回符合日内动量信号的代币列表
+        
+        修复: 不再使用历史回测数据，直接用OKX API获取实时K线
+        """
+        import pandas as pd
+        from fetchers.multi_tf import fetch_okx_candles
+        from scanner.universe import get_full_universe
+        
+        logger.info("[日内杠杆] 扫描市场 (OKX实时K线)...")
+        
+        # Step 1: 获取全市场代币
+        universe = get_full_universe()
+        logger.info(f"[日内杠杆] 全市场代币: {len(universe)}个")
+        
+        # Step 2: 获取24h涨幅榜，筛选活跃代币
+        from scanner.fast_filter import run_fast_filter
+        candidates = run_fast_filter(universe, enable_gain_tracker=True, enable_technical=True)
+        
+        if not candidates:
+            logger.warning("[日内杠杆] 无候选代币")
+            return []
+        
+        logger.info(f"[日内杠杆] 候选代币: {len(candidates)}个")
+        
+        # Step 3: 逐个获取实时K线并用21信号工厂评估
+        valid_candidates = []
+        
+        for item in candidates[:min(len(candidates), max_tokens * 3)]:
+            token = item.get('symbol') if isinstance(item, dict) else item
+            if not token:
+                continue
+            
+            try:
+                # 获取多时间框架K线
+                klines_1h = fetch_okx_candles(token, "1H", limit=100)
+                klines_4h = fetch_okx_candles(token, "4H", limit=100)
+                klines_15m = fetch_okx_candles(token, "15m", limit=100)
+                
+                if klines_1h is None or len(klines_1h) < 20:
+                    continue
+                
+                # 生成日内动量信号 (使用实时K线)
+                if self.intraday_strategy:
+                    klines_1h = self.intraday_strategy.generate_signals(klines_1h, token)
+                    last_row = klines_1h.iloc[-1]
+                    base_signal_count = last_row.get('signal_count', 0)
+                else:
+                    base_signal_count = 0
+                
+                # 21信号工厂二次确认 (关键!)
+                if self.intraday_strategy and self.intraday_strategy.SignalFactory:
+                    signal_result = self._evaluate_with_21_signals(token, klines_1h, klines_4h, klines_15m)
+                    sf_score = signal_result.get('total_score', 0)
+                    sf_triggered = signal_result.get('triggered_count', 0)
+                    sf_grade = signal_result.get('grade', 'WATCH')
+                    
+                    # 入场条件: 基础信号>=1 且 21信号工厂>=2个信号触发 且 分数>=7
+                    if base_signal_count >= 1 and sf_triggered >= 2 and sf_score >= 7:
+                        valid_candidates.append({
+                            'token': token,
+                            'base_signal_count': base_signal_count,
+                            'sf_triggered': sf_triggered,
+                            'sf_score': sf_score,
+                            'sf_grade': sf_grade,
+                            'last_price': float(last_row.get('close', 0)),
+                            'volume': float(last_row.get('volume', 0))
+                        })
+                        logger.info(f"[日内杠杆] ✅ {token}: 基础信号={base_signal_count}, 21信号={sf_triggered}个, 分数={sf_score}, 等级={sf_grade}")
+                else:
+                    # 如果21信号工厂不可用，使用基础信号
+                    if base_signal_count >= 2:
+                        valid_candidates.append({
+                            'token': token,
+                            'base_signal_count': base_signal_count,
+                            'sf_triggered': base_signal_count,
+                            'sf_score': base_signal_count * 2,
+                            'sf_grade': 'WATCH',
+                            'last_price': float(last_row.get('close', 0)),
+                            'volume': float(last_row.get('volume', 0))
+                        })
+                
+            except Exception as e:
+                logger.warning(f"[日内杠杆] {token} 扫描失败: {e}")
+                continue
+        
+        # 按21信号工厂分数排序
+        valid_candidates.sort(key=lambda x: x['sf_score'], reverse=True)
+        
+        top_candidates = [c['token'] for c in valid_candidates[:max_tokens]]
+        
+        logger.info(f"[日内杠杆] 找到 {len(top_candidates)} 个高置信候选: {top_candidates[:5]}...")
+        
+        return top_candidates
+    
+    def _evaluate_with_21_signals(self, symbol: str, df_1h: pd.DataFrame, df_4h: pd.DataFrame = None, df_15m: pd.DataFrame = None) -> dict:
+        """
+        使用21信号工厂评估代币 - 实时K线分析
+        """
+        from fetchers.price_api import fetch_price_and_change, fetch_funding_rate_history
+        from fetchers.multi_tf import analyze_1d, analyze_4h, analyze_1h_surface, analyze_15m
+        
+        try:
+            # 获取价格数据
+            price_data = fetch_price_and_change(symbol)
+            current_price = price_data.get('price', 0) if price_data else 0
+            
+            if current_price <= 0:
+                return {"triggered_count": 0, "total_score": 0, "grade": "WATCH"}
+            
+            # 计算RSI
+            if df_1h is not None and len(df_1h) > 14:
+                close = df_1h['close']
+                delta = close.diff()
+                gain = delta.where(delta > 0, 0).rolling(14).mean()
+                loss = (-delta.where(delta < 0, 0)).rolling(14).mean()
+                rs = gain / (loss + 1e-10)
+                rsi = 100 - (100 / (1 + rs))
+                current_rsi = rsi.iloc[-1] if len(rsi) > 0 else 50
+            else:
+                current_rsi = 50
+            
+            # 获取资金费率
+            funding_data = fetch_funding_rate_history(symbol)
+            funding_rate = funding_data.get('current_rate', 0) if funding_data else 0
+            
+            # 获取多时间框架分析
+            analysis_4h = analyze_4h(symbol) if df_4h is None else {"valid": False}
+            analysis_1h = analyze_1h_surface(symbol) if df_1h is None else {"valid": False}
+            analysis_15m = analyze_15m(symbol) if df_15m is None else {"valid": False}
+            
+            # 构建信号数据 (符合21信号工厂格式)
+            signal_data = {
+                "analysis_4h": analysis_4h,
+                "analysis_1h": analysis_1h,
+                "analysis_15m": analysis_15m,
+                "momentum": "bullish" if current_rsi < 60 else "bearish",
+                "funding_rate": funding_rate,
+                "stage_result": "拉升启动期",
+                "price": current_price,
+                "sweep_status": {},
+                "tf_analysis": {"decision": "enter"},
+            }
+            
+            # 21信号工厂评估
+            signal_results = self.intraday_strategy.SignalFactory.scan_all(symbol, signal_data)
+            score_result = self.intraday_strategy.SignalFactory.calculate_total_score(signal_results)
+            
+            return {
+                "triggered_count": score_result.get("triggered_count", 0),
+                "total_score": score_result.get("total_score", 0),
+                "grade": score_result.get("grade", "WATCH"),
+                "signals": score_result.get("triggered_signals", [])
+            }
+            
+        except Exception as e:
+            logger.warning(f"[21信号工厂] {symbol} 评估失败: {e}")
+            return {"triggered_count": 0, "total_score": 0, "grade": "WATCH"}
 
 
 def create_autopilot(sim_mode: bool = True) -> AutoPilot:
