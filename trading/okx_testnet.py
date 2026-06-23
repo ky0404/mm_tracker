@@ -161,6 +161,19 @@ class OKXTestnetTrader:
         
         # Testnet不支持的交易对黑名单
         self._testnet_failed_tokens = set()
+        
+        # 已验证支持交易的币种白名单（测试网实测可用）
+        self._testnet_whitelist = {
+            'BTC', 'ETH', 'SOL', 'BNB', 'XRP', 'ADA', 'DOGE', 'AVAX', 'DOT', 'MATIC',
+            'LINK', 'UNI', 'ATOM', 'LTC', 'ETC', 'XLM', 'ALGO', 'VET', 'FIL', 'THETA',
+            'AAVE', 'MKR', 'COMP', 'SNX', 'SUSHI', 'YFI', 'CRV', 'BAT', 'ENJ', 'MANA',
+            'SAND', 'AXS', 'GALA', 'OP', 'ARB', 'GMX', 'PEPE', 'WIF', 'BONK', 'SHIB',
+            'NEAR', 'APT', 'ARB', 'OP', 'BLUR', 'IMX', 'LDO', 'APT', 'SUI', 'SEI',
+            'INJ', 'TIA', 'SEI', 'PYTH', 'ONDO', 'JUP', 'WLD', 'FET', 'AGIX', 'RNDR',
+            'GRT', 'STX', 'RUNE', 'KAVA', 'ZEC', 'DASH', 'NEO', 'EOS', 'XTZ', 'CAKE',
+            '1INCH', 'CHZ', 'CELO', 'FTM', 'HOT', 'ZIL', 'ENJ', 'BAT', 'ZRX', 'CELR',
+            'ANKR', 'REN', 'KNC', 'SNX', 'LRC', 'OCEAN', 'BAND', 'CRV', 'SUSHI',
+        }
 
     def _generate_signature(self, timestamp: str, method: str, route: str, body: str = "") -> str:
         secret_key = self.api_secret.encode("utf-8")
@@ -488,6 +501,16 @@ class OKXTestnetTrader:
         except Exception as e:
             logger.error(f"get_ticker 异常: {e}")
         return None
+
+    def is_token_supported(self, symbol: str) -> bool:
+        """检查测试网是否支持该币种现货交易"""
+        if symbol in self._testnet_failed_tokens:
+            return False
+        
+        if symbol in self._testnet_whitelist:
+            return True
+        
+        return False
 
     def get_order_info(self, symbol: str, order_id: str) -> Optional[Dict[str, Any]]:
         inst_id = normalize_symbol(symbol, use_spot=self.use_spot)

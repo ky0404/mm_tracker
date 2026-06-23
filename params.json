@@ -1,0 +1,121 @@
+{
+  "signal_weights": {
+    "===== 4H层原有信号 =====": "",
+    "4h_ema_bullish": 2.0,
+    "4h_rsi_recovering": 1.5,
+    "4h_vol_expanding": 1.5,
+    "===== 4H层 NFI风格信号 =====": "",
+    "4h_ema_trend_rising": 2.5,
+    "4h_rsi_oversold_recovery": 2.0,
+    "4h_golden_cross": 1.5,
+    "===== 1H层原有信号 =====": "",
+    "momentum_price_1h": 2.5,
+    "momentum_volume_1h": 2.0,
+    "signal_2_funding_turn_positive": 1.5,
+    "signal_3_oi_accumulation": 1.5,
+    "===== 1H层 NFI风格信号 =====": "",
+    "1h_ema_trend_rising": 2.0,
+    "1h_rsi_not_overbought": 1.5,
+    "1h_ema_cross_up": 1.5,
+    "===== 15M层原有信号 =====": "",
+    "15m_engulfing": 1.5,
+    "15m_breakout": 1.5,
+    "15m_vol_confirm": 1.0,
+    "===== 15M层 NFI风格信号 =====": "",
+    "15m_ema_trend_up": 1.5,
+    "15m_rsi_oversold_recovery": 2.0,
+    "15m_vol_surge": 1.5,
+    "===== 静态信号 =====": "",
+    "signal_1_integer_consolidation": 1.0,
+    "signal_7_new_futures": 0.5,
+    "signal_11_early_warning": 0.5,
+    "post_sweep_entry": 1.5
+  },
+  "nfi_protection_params": {
+    "description": "NFI风格买入保护参数 (调优后)",
+    "lookback_periods": {
+      "ema_trend": 3,
+      "rsi_recovery": 2,
+      "sma_rising": 28
+    },
+    "ema_periods": [8, 20, 50, 200],
+    "rsi_periods": [4, 14, 84],
+    "safe_dips": {
+      "threshold_0": 0.05,
+      "threshold_2": 0.12,
+      "threshold_12": 0.30,
+      "threshold_144": 0.50
+    },
+    "safe_pump": {
+      "threshold_6h": 0.50,
+      "threshold_24h": 1.0,
+      "threshold_48h": 2.0
+    },
+    "sma200_lookback": 28,
+    "sma200_1h_lookback": 50
+  },
+  "dca_config": {
+    "description": "NFI风格 DCA/加仓配置",
+    "mode_0_standard": {
+      "max_rebuy_orders": 4,
+      "thresholds": [-0.04, -0.06, -0.09, -0.12],
+      "multiplier": 0.15
+    },
+    "mode_1_conservative": {
+      "max_rebuy_orders": 2,
+      "thresholds": [-0.06, -0.12],
+      "multiplier": 0.30
+    },
+    "mode_2_rapid": {
+      "max_rebuy_orders": 4,
+      "thresholds": [-0.03, -0.04, -0.06, -0.09],
+      "multiplier": 0.15
+    },
+    "btc_safety_check": true,
+    "price_stability_check": true
+  },
+  "dynamic_exit": {
+    "description": "Freqtrade 风格动态止盈止损配置",
+    "order_types": {
+      "entry": "limit",
+      "exit": "limit",
+      "stoploss": "limit",
+      "stoploss_on_exchange": false
+    },
+    "order_time_in_force": {
+      "entry": "GTC",
+      "exit": "GTC"
+    },
+    "trailing_stop": true,
+    "trailing_stop_positive": 0.05,
+    "trailing_stop_positive_offset": 0.02,
+    "trailing_only_offset_is_reached": false,
+    "use_custom_stoploss": true,
+    "stoploss": 0.03,
+    "stoploss_from_profit": {
+      "0.10": -0.02,
+      "0.20": -0.03,
+      "0.30": -0.05
+    },
+    "use_custom_roi": true,
+    "minimal_roi": {
+      "0": 0.30,
+      "30": 0.15,
+      "60": 0.08,
+      "120": 0.05
+    },
+    "use_custom_exit": true,
+    "custom_exit_conditions": {
+      "rsi_overbought": 75,
+      "bb_upper_touch": true,
+      "divergence": true,
+      "time_based_exit": 240
+    }
+  },
+  "edge_config": {
+    "description": "Edge资金管理配置",
+    "enabled": false,
+    "capital_per_pair": 100,
+    "max_risk_per_trade": 0.02
+  }
+}

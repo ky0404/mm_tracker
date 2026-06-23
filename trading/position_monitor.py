@@ -157,6 +157,15 @@ class PositionMonitor:
         self.result_logger = result_logger
         self.params = params or {}
         
+        # 尝试使用中央状态管理器
+        self._state_manager = None
+        try:
+            from core.state_manager import get_state
+            self._state_manager = get_state()
+            print("[PositionMonitor] ✅ 已接入中央状态管理器")
+        except ImportError:
+            print("[PositionMonitor] ⚠️ 中央状态管理器不可用，使用传统模式")
+        
         # 冷却机制：记录最近平仓的token，防止OKX数据延迟导致重复平仓
         self._recently_closed = {}  # {token: timestamp}
         self._close_cooldown_seconds = 600  # 10分钟内不重复平仓
@@ -165,11 +174,27 @@ class PositionMonitor:
         self._closed_positions = set()  # 已成功平仓的 token 集合
         self._load_closed_positions()  # 从文件加载历史平仓记录
         
-        # 优先从OKX Testnet API获取实时持仓
-        open_positions = []
+        # 优先从 CentralStateManager 获取持仓
+        if self._state_manager:
+            open_positions = []
+            state_positions = self._state_manager.get_all_positions()
+            for token, pos in state_positions.items():
+                open_positions.append({
+                    'token': pos.token,
+                    'entry_price': pos.entry_price,
+                    'quantity': pos.size_usd,
+                    'current_price': self._state_manager.get_price(token, max_age=300) or pos.entry_price,
+                    'created_at': datetime.fromtimestamp(pos.entry_time).isoformat(),
+                    'source': 'StateManager'
+                })
+            if open_positions:
+                print(f"[PositionMonitor] 从StateManager加载 {len(open_positions)} 个持仓")
+        else:
+            # StateManager 没有持仓
+            pass
         
-        # 方法1: 从OKX API获取实时持仓（最准确）
-        if hasattr(self.trader, 'get_balance'):
+        # 回退到原有逻辑: OKX API (当StateManager无持仓时)
+        if not open_positions and hasattr(self.trader, 'get_balance'):
             try:
                 balance = self.trader.get_balance()
                 if balance and 'details' in balance:
@@ -251,6 +276,46 @@ class PositionMonitor:
             
             self.result_logger.save()
             logger.info(f"[PositionMonitor] 同步完成")
+        
+        # ===== 新增: 同步到 CentralStateManager =====
+        if self._state_manager:
+            try:
+                # 检查 StateManager 是否为空
+                if self._state_manager.get_position_count() == 0 and open_positions:
+                    # 同步到 StateManager
+                    for pos in open_positions:
+                        if pos.get('source') == 'StateManager':
+                            continue  # 已经是 StateManager 的
+                        
+                        token = pos.get('token', '')
+                        entry_price = pos.get('entry_price', 0)
+                        quantity = pos.get('quantity', 0)
+                        
+                        if token and entry_price > 0 and quantity > 0:
+                            try:
+                                # 检查是否已在 StateManager 中
+                                if not self._state_manager.has_position(token):
+                                    # 估算 size_usd (使用 entry_price * quantity)
+                                    size_usd = entry_price * quantity
+                                    
+                                    self._state_manager.open_position(
+                                        token=token,
+                                        entry_price=entry_price,
+                                        size_usd=size_usd,
+                                        side='long',
+                                        signals=['sync_from_okx'],
+                                        score=0
+                                    )
+                                    logger.info(f"[StateManager] 同步持仓: {token} @ ${entry_price}")
+                            except ValueError as e:
+                                # 已有持仓，跳过
+                                pass
+                            except Exception as e:
+                                logger.warning(f"[StateManager] 同步失败 {token}: {e}")
+                    
+                    logger.info(f"[StateManager] 完成 {len(open_positions)} 个持仓同步")
+            except Exception as e:
+                logger.warning(f"[StateManager] 同步错误: {e}")
         
         # 从strategy_params.json加载默认参数
         default_params = {}
@@ -414,37 +479,85 @@ class PositionMonitor:
         else:
             self._consecutive_losses = 0
 
-    def check_positions(self, prices: Dict[str, float]) -> List[Dict[str, Any]]:
+    def get_position_count(self) -> int:
+        """获取当前持仓数量"""
+        if self.result_logger:
+            unfinished = self.result_logger.get_unfinished_trades()
+            return len(unfinished)
+        return 0
+    
+    def get_open_positions(self) -> List[Dict[str, Any]]:
+        """获取所有开放持仓"""
+        if self.result_logger:
+            return self.result_logger.get_unfinished_trades()
+        return []
+    
+    def check_positions(self, prices: Dict[str, float] = None) -> List[Dict[str, Any]]:
         """
         检查所有持仓，处理 SL/TP/追踪止损/ROI/超时/资金费率/强平预警
         核心逻辑来自Freqtrade freqtradebot.py 的 should_exit 方法
         """
         from fetchers.price_api import fetch_funding_rate_history
         
+        if prices is None:
+            prices = {}
+        
         closed_trades = []
         partial_closed = []
         
-        # 获取 unfinished trades 和已确认平仓的token
-        unfinished = self.result_logger.get_unfinished_trades()
+        # 优先从 StateManager 获取持仓（单一数据源，不需要过滤）
+        if self._state_manager:
+            state_positions = self._state_manager.get_all_positions()
+            unfinished = []
+            for token, pos in state_positions.items():
+                unfinished.append({
+                    "token": pos.token,
+                    "entry_price": pos.entry_price,
+                    "position_size": pos.size_usd,
+                    "timestamp": datetime.fromtimestamp(pos.entry_time).isoformat(),
+                    "signals": pos.signals,
+                    "score": pos.score,
+                    "take_profit_pct": pos.take_profit_pct,
+                    "stop_loss_pct": pos.stop_loss_pct,
+                })
+        else:
+            # 回退到 result_logger（需要过滤已平仓）
+            unfinished = self.result_logger.get_unfinished_trades()
+            filtered_unfinished = []
+            for trade in unfinished:
+                token = trade["token"]
+                if token in self._closed_positions:
+                    continue
+                filtered_unfinished.append(trade)
+            unfinished = filtered_unfinished
         
-        # ========== 0. 过滤掉已确认平仓的持仓 ==========
-        # 防止 OKX API 数据延迟导致的重复平仓问题
-        filtered_unfinished = []
-        for trade in unfinished:
-            token = trade["token"]
-            if token in self._closed_positions:
-                logger.debug(f"[已平仓过滤] {token} 已在_closed_positions中，跳过检查")
-                continue
-            filtered_unfinished.append(trade)
-        
-        unfinished = filtered_unfinished
+        # 只有从 result_logger 获取数据时才需要过滤已平仓
+        # 从 StateManager 获取的数据已经是最新状态，无需过滤
+        if not self._state_manager:
+            filtered_unfinished = []
+            for trade in unfinished:
+                token = trade["token"]
+                if token in self._closed_positions:
+                    continue
+                filtered_unfinished.append(trade)
+            unfinished = filtered_unfinished
         
         for trade in unfinished:
             token = trade["token"]
             entry_price = trade.get("entry_price", 0)
             position_size = trade.get("position_size", 0)
-            # 兼容旧记录：没有index则用token作为唯一标识
-            trade_index = trade.get("index") or trade.get("trade_index") or token
+            # 兼容旧记录：没有index则尝试查找或使用-1（部分平仓需要int index）
+            raw_index = trade.get("index") or trade.get("trade_index")
+            if raw_index is None or isinstance(raw_index, str):
+                # 从 result_logger 查找对应 trade 的 index
+                trade_index = -1  # 默认值，表示未找到
+                if self.result_logger:
+                    for i, t in enumerate(self.result_logger.trades):
+                        if t.get("token") == token:
+                            trade_index = i
+                            break
+            else:
+                trade_index = raw_index
             entry_time_str = trade.get("timestamp", "") or trade.get("entry_timestamp", "")
             
             # 获取入场时的信号数量（用于动态止盈）
@@ -456,8 +569,15 @@ class PositionMonitor:
             if token not in self._signal_counts:
                 self._signal_counts[token] = entry_signals_count
             
-            current_price = prices.get(token, entry_price)
-            if current_price <= 0:
+            # 优先使用传入的价格，否则从 StateManager 获取
+            current_price = prices.get(token)
+            if current_price is None or current_price <= 0:
+                if self._state_manager:
+                    current_price = self._state_manager.get_price(token)
+                else:
+                    current_price = entry_price
+            
+            if current_price is None or current_price <= 0:
                 current_price = entry_price
             
             # 计算收益率
@@ -467,8 +587,26 @@ class PositionMonitor:
             market_context = trade.get("market_context", {})
             hold_style = market_context.get("hold_style", "altcoin")  # 默认山寨币策略
             is_mainstream = market_context.get("is_mainstream", False)
-            custom_target = market_context.get("target_pct", 20)  # 默认20%
-            custom_stop = market_context.get("stop_loss_pct", 2.5)  # 默认2.5%
+            
+            # 优先使用 StateManager 的动态止盈止损，否则使用 market_context
+            custom_target = trade.get("take_profit_pct") or market_context.get("target_pct", 20)
+            custom_stop = trade.get("stop_loss_pct") or market_context.get("stop_loss_pct", 2.5)
+            
+            # 初始化 exit_reason
+            exit_reason = None
+            exit_type = None
+            
+            # ===== 新增: 动态止盈止损检查（基于信号分数）=====
+            tp_pct = trade.get("take_profit_pct")
+            sl_pct = trade.get("stop_loss_pct")
+            if tp_pct and profit_pct >= tp_pct:
+                exit_reason = "TAKE_PROFIT"
+                exit_type = ExitType.ROI
+                logger.info(f"[动态止盈] {token} 收益率{profit_pct:.2f}% >= 目标{tp_pct}%")
+            elif sl_pct and sl_pct > 0 and profit_pct <= -sl_pct:
+                exit_reason = "STOP_LOSS"
+                exit_type = ExitType.STOP_LOSS
+                logger.info(f"[动态止损] {token} 亏损{profit_pct:.2f}% <= 止损{sl_pct}%")
             
             # 根据主流/山寨调整持仓时间
             if is_mainstream:
@@ -480,8 +618,6 @@ class PositionMonitor:
             
             # ========== 0. 强平预警检查 (修复) ==========
             # 检查距离强平线的距离，3-5倍杠杆需要特别关注
-            exit_reason = None
-            exit_type = None
             exit_price = current_price
             reduce_ratio = 0
             
@@ -998,23 +1134,37 @@ class PositionMonitor:
         return None
 
     def get_active_positions(self) -> List[Dict[str, Any]]:
-        """获取当前活跃仓位"""
-        unfinished = self.result_logger.get_unfinished_trades()
+        """获取当前活跃仓位 - 优先从StateManager获取"""
         active = []
         
-        for trade in unfinished:
-            active.append({
-                "token": trade["token"],
-                "entry_price": trade.get("entry_price", 0),
-                "position_size": trade.get("position_size", 0),
-                "signals": trade.get("signals", []),
-                "timestamp": trade.get("timestamp", ""),
-                "profit_pct": self._calculate_profit(
-                    trade.get("entry_price", 0),
-                    trade.get("current_price", trade.get("entry_price", 0))
-                ),
-                "hold_minutes": self._calculate_hold_minutes(trade.get("timestamp", "")),
-            })
+        # 优先从 StateManager 获取
+        if self._state_manager:
+            state_positions = self._state_manager.get_all_positions()
+            for token, pos in state_positions.items():
+                hold_hours = (datetime.now(UTC).timestamp() - pos.entry_time) / 3600
+                active.append({
+                    "token": pos.token,
+                    "entry_price": pos.entry_price,
+                    "position_size": pos.size_usd,
+                    "signals": pos.signals,
+                    "timestamp": datetime.fromtimestamp(pos.entry_time).isoformat(),
+                    "hold_hours": hold_hours,
+                    "source": "StateManager"
+                })
+        
+        # 如果 StateManager 为空，回退到 result_logger
+        if not active and self.result_logger:
+            unfinished = self.result_logger.get_unfinished_trades()
+            for trade in unfinished:
+                active.append({
+                    "token": trade["token"],
+                    "entry_price": trade.get("entry_price", 0),
+                    "position_size": trade.get("position_size", 0),
+                    "signals": trade.get("signals", []),
+                    "timestamp": trade.get("timestamp", ""),
+                    "hold_hours": self._calculate_hold_minutes(trade.get("timestamp", "")) / 60,
+                    "source": "result_logger"
+                })
         
         return active
 

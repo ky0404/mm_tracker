@@ -1,0 +1,185 @@
+{
+  "updated_at": "2026-06-21T21:10:58.612216",
+  "version": "3.0_optimized_for_300u",
+  "note": "针对300U本金、3-5倍杠杆、山寨币日内交易优化",
+  "auto_pilot": {
+    "momentum_mode": false,
+    "optimization_interval_trades": 20,
+    "max_hold_minutes": 2100,
+    "entry_triggered_min": 2,
+    "entry_score_min": 7,
+    "entry_grade_required": ["STRONG_BUY", "BUY"]
+  },
+  "risk_management": {
+    "capital": 300.0,
+    "simulated_capital": 79373.7,
+    "leverage": 3.0,
+    "leverage_min": 3.0,
+    "leverage_max": 5.0,
+    "stop_loss_pct": 0,
+    "soft_stop_loss_pct": -0.15,
+    "take_profit_pct": 0.2,
+    "default_position_size": 888,
+    "max_position_size": 2000.0,
+    "position_ratio": 0.33,
+    "max_hold_minutes": 120,
+    "max_open_positions": 999,
+    "liquidation_buffer_pct": 0.20,
+    "liquidation_warning_pct": 0.15,
+    "trailing_stop": true,
+    "trailing_stop_positive": 0.02,
+    "trailing_stop_offset": 0.04,
+    "minimal_roi": {
+      "0": 0.2,
+      "30": 0.15,
+      "60": 0.1
+    }
+  },
+  "exit_signals": {
+    "max_hold_minutes": 120,
+    "dynamic_exit_enabled": true,
+    "partial_take_profit": true,
+    "partial_tp_pct": 0.05,
+    "partial_tp_ratio": 0.5,
+    "trend_trailing_pct": 0.05,
+    "trend_reversal_threshold": 0.08,
+    "min_hold_for_trend": 30,
+    "dynamic_tp_by_signals": {
+      "7": 0.5,
+      "6": 0.35,
+      "5": 0.25,
+      "4": 0.20,
+      "3": 0.15,
+      "2": 0.10,
+      "1": 0.08,
+      "0": 0.05
+    },
+    "dynamic_sl_by_signals": {
+      "7": -0.20,
+      "6": -0.18,
+      "5": -0.15,
+      "4": -0.12,
+      "3": -0.10,
+      "2": -0.08,
+      "1": -0.05,
+      "0": -0.03
+    }
+  },
+  "signal_stats": {
+    "total_trades": 17,
+    "win_rate": 40.0,
+    "current_pnl": -1940.1,
+    "win_rate_by_signal": {
+      "manual_sell_all": {
+        "win_rate": 0.8181818181818182,
+        "total": 11,
+        "wins": 9,
+        "losses": 2,
+        "avg_pnl": 36.15017042490852
+      },
+      "signal_2_funding_turn_positive": {
+        "win_rate": 1.0,
+        "total": 1,
+        "wins": 1,
+        "losses": 0,
+        "avg_pnl": 4.0999999999999925
+      },
+      "spot_position": {
+        "win_rate": 0.6666666666666666,
+        "total": 6,
+        "wins": 4,
+        "losses": 2,
+        "avg_pnl": 58.74514577899894
+      }
+    },
+    "last_optimization": "2026-06-21T21:10:58.612201"
+  },
+  "signal_weights": {
+    "signal_7_new_futures": 0.0,
+    "manual_sell_all": 2.0,
+    "signal_11_early_warning": 0.0,
+    "signal_9_social_sentiment": 0.0,
+    "signal_4_volume_spike": 2.0,
+    "signal_5_dex_buy_pressure": 2.0,
+    "signal_10_breakout": 2.5
+  },
+  "screener": {
+    "price_min": 0.001,
+    "price_max": 10.0,
+    "volume_min_usd": 500000,
+    "change_24h_min": 3.0,
+    "enable_spike_scan": true,
+    "spike_threshold_pct": 10.0
+  },
+  "learning_stats": {
+    "last_optimized": "2026-06-20T21:50:00.000000",
+    "total_trades_analyzed": 25,
+    "current_win_rate": 0.4,
+    "optimization_count": 0
+  },
+  "exit_params": {
+    "stop_loss_pct": 0,
+    "soft_stop_loss_pct": -0.15,
+    "take_profit_pct": 0.2,
+    "default_position_size": 888.0,
+    "max_position_size": 2000.0,
+    "max_hold_minutes": 120,
+    "max_open_positions": 999,
+    "position_ratio": 0.33,
+    "trailing_stop": true,
+    "trailing_stop_positive": 0.02,
+    "trailing_stop_offset": 0.04,
+    "minimal_roi": {
+      "0": 0.20,
+      "30": 0.15,
+      "60": 0.12,
+      "120": 0.20
+    },
+    "liquidation_buffer_pct": 0.20,
+    "liquidation_warning_pct": 0.15,
+    "dynamic_tp_by_signals": {
+      "7": 0.50,
+      "6": 0.35,
+      "5": 0.25,
+      "4": 0.20,
+      "3": 0.15,
+      "2": 0.10,
+      "1": 0.08,
+      "0": 0.05
+    },
+    "dynamic_sl_by_signals": {
+      "7": -0.20,
+      "6": -0.18,
+      "5": -0.15,
+      "4": -0.12,
+      "3": -0.10,
+      "2": -0.08,
+      "1": -0.05,
+      "0": -0.03
+    },
+    "partial_tp_pct": 0.05
+  },
+  "partial_take_profit": true,
+  "long_short_mode": {
+    "enabled": true,
+    "prefer_long": true,
+    "trend_based_direction": true
+  },
+  "protected_params": {
+    "max_open_positions": {
+      "min": 1,
+      "max": 999,
+      "default": 999
+    },
+    "max_hold_minutes": {
+      "min": 60,
+      "max": 240,
+      "default": 120
+    }
+  },
+  "http": {
+    "proxy": "http://172.18.48.1:10810",
+    "timeout": 15,
+    "max_retries": 3
+  }
+}

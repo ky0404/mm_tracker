@@ -16,6 +16,9 @@ import logging
 import argparse
 import pandas as pd
 from datetime import datetime, timedelta, timezone
+
+# 统一使用 UTC 时间
+_UTC = timezone.utc
 from typing import Dict, Any, List, Optional
 
 # 导入交易数据库
@@ -25,6 +28,14 @@ try:
 except ImportError:
     _TRADE_DB_AVAILABLE = False
     print("[AutoPilot] ⚠️ TradeDB 不可用，使用JSON记录")
+
+# 导入中央状态管理器
+try:
+    from core.state_manager import get_state
+    _STATE_MANAGER_AVAILABLE = True
+except ImportError:
+    _STATE_MANAGER_AVAILABLE = False
+    print("[AutoPilot] ⚠️ CentralStateManager 不可用")
 
 logging.basicConfig(
     level=logging.INFO,
@@ -74,6 +85,15 @@ class AutoPilot:
         
         # 缓存市场价格
         self.prices = {}
+        
+        # 初始化统一缓存层（解决多fetcher缓存不共享问题）
+        try:
+            from core.fetcher_wrapper import init_fetcher_cache, get_cache_stats
+            init_fetcher_cache()
+            cache_stats = get_cache_stats()
+            logger.info(f"[AutoPilot] 数据缓存初始化: {cache_stats.get('total', 0)} 条")
+        except Exception as e:
+            logger.warning(f"[AutoPilot] 缓存初始化失败: {e}")
         
         # Freqtrade 风格动态退出管理器
         from trading.dynamic_exit import get_exit_manager
@@ -545,13 +565,18 @@ class AutoPilot:
                 # 做空时RSI应在30-70之间，不宜过低(超卖)
                 rsi_momentum_ok = 25 <= rsi_4h <= 70
             
-            # 21信号工厂二次确认条件:
-            # 1. 触发信号数量 >= 2
-            # 2. 总分数 >= 7
-            # 3. 等级必须是 STRONG_BUY 或 BUY，不接受 WATCH
+            # 21信号工厂二次确认条件（从配置读取）:
+            # 1. 触发信号数量 >= min_triggered
+            # 2. 总分数 >= min_score
+            # 3. 等级必须是 required_grades
             # 4. 趋势方向与信号方向一致
             # 5. RSI动量条件满足
-            if triggered >= 2 and total_score >= 7 and grade in ["STRONG_BUY", "BUY"]:
+            entry_config = self.params.get("auto_pilot", {})
+            min_triggered = entry_config.get("entry_triggered_min", 2)
+            min_score = entry_config.get("entry_score_min", 7)
+            required_grades = entry_config.get("entry_grade_required", ["STRONG_BUY", "BUY"])
+            
+            if triggered >= min_triggered and total_score >= min_score and grade in required_grades:
                 if not trend_aligned:
                     logger.info(f"[日内决策] ❌ {token} 趋势不匹配: 信号方向={signal_direction}, 4H趋势={trend_4h}, 1H趋势={trend_1h}")
                     return False
@@ -562,14 +587,28 @@ class AutoPilot:
                 logger.info(f"[日内决策] ✅ {token} 入场: 信号={triggered}个, 分数={total_score}, 方向={signal_direction}, 4H趋势={trend_4h}, RSI={rsi_4h}")
                 return True
             else:
-                logger.info(f"[日内决策] ❌ {token} 未通过21信号工厂: 信号={triggered}个, 分数={total_score}, 等级={grade}")
+                logger.info(f"[日内决策] ❌ {token} 未通过21信号工厂: 信号={triggered}个(需{min_triggered}+), 分数={total_score}(需{min_score}+), 等级={grade}")
                 return False
         
         # 如果被跳过（资金费率过高等原因），直接返回False
         if analysis_result.get("skip", False):
             return False
         
-        # 检查是否已经有这个币的仓位
+        # ===== 新增: StateManager 持仓检查 =====
+        token = analysis_result.get("symbol", "")
+        if _STATE_MANAGER_AVAILABLE:
+            try:
+                state = get_state()
+                if state.has_position(token):
+                    logger.info(f"[决策] {token} 已有持仓(StateManager)，跳过")
+                    return False
+                if not state.can_open_position():
+                    logger.info(f"[决策] 已达最大持仓数，跳过扫描")
+                    return False
+            except Exception as e:
+                logger.warning(f"[StateManager检查] 失败: {e}")
+        
+        # 检查是否已经有这个币的仓位 (回退检查)
         token = analysis_result.get("symbol", "")
         if self.position_monitor:
             active = self.position_monitor.get_active_positions()
@@ -595,9 +634,9 @@ class AutoPilot:
             pair=token,
             side="long",
             current_price=price,
-            proposed_rate=price,  # 使用市价
+            proposed_rate=price,
             amount=position_size,
-            current_time=datetime.now(),
+            current_time=datetime.now(_UTC),
             entry_tag=score.get("entry_signals", [{}])[0].get("name") if score.get("entry_signals") else None,
         )
         
@@ -803,6 +842,17 @@ class AutoPilot:
         # OKXTestnetTrader 期望的格式: DOGE-USDT
         symbol = f"{token}-USDT"
         
+        # ===== 新增: 检查测试网是否支持该币种 =====
+        if hasattr(self.trader, 'is_token_supported'):
+            is_supported = self.trader.is_token_supported(token)
+            if not is_supported:
+                logger.warning(f"[入场跳过] {token} 在OKX测试网不支持交易(仅支持合约，现货不可交易)")
+                # 记录统计信息
+                self._testnet_unsupported = getattr(self, '_testnet_unsupported', [])
+                self._testnet_unsupported.append(token)
+                return False
+            logger.info(f"[入场检查] {token} 测试网支持交易 ✓")
+        
         # 使用限价单: (symbol, side, size, price, order_type)
         result = self.trader.place_order(symbol, trade_side, position_size, entry_price, order_type)
         
@@ -820,7 +870,7 @@ class AutoPilot:
             dynamic_sl = max(1.5, min(5.0, dynamic_sl))  # 限制范围
             
             market_context = {
-                "hour_of_day": datetime.now().hour,
+                "hour_of_day": datetime.now(timezone.utc).hour,
                 "funding_rate": analysis_result.get("funding_rate", 0),
                 "oi_change_1h_pct": ctx.get("oi_change_1h_pct", 0),
                 "price_change_1h_pct": momentum.get("price_change_1h_pct", 0),
@@ -868,6 +918,26 @@ class AutoPilot:
                 market_context=market_context,
                 trade_db_id=trade_db_id,  # 传入 trade_db_id
             )
+            
+            # ===== 新增: 记录到 CentralStateManager =====
+            if _STATE_MANAGER_AVAILABLE:
+                try:
+                    state = get_state()
+                    # 确定交易方向
+                    side = "long" if trade_side == "buy" else "short"
+                    
+                    trade_id = state.open_position(
+                        token=token,
+                        entry_price=price,
+                        size_usd=position_size,
+                        side=side,
+                        signals=[s.get("name", "unknown") for s in entry_signals],
+                        score=score.get("total_score", 0),
+                        trade_id=trade_db_id
+                    )
+                    logger.info(f"[StateManager] 开仓记录成功: {token}, trade_id={trade_id}")
+                except Exception as e:
+                    logger.warning(f"[StateManager] 开仓记录失败: {e}")
             
             logger.info(f"[入场] {token} @ ${price}, 仓位: {position_size}, 信号: {len(entry_signals)}")
             
@@ -939,9 +1009,16 @@ class AutoPilot:
             profit_pct = (current_price - entry_price) / entry_price * 100 if entry_price > 0 else 0
             
             # 构建 trade_data
+            entry_time = trade.get("entry_time")
+            if entry_time is None:
+                entry_time = datetime.now(timezone.utc) - timedelta(hours=1)
+            elif isinstance(entry_time, str):
+                from trading.position_monitor import parse_entry_timestamp
+                entry_time = parse_entry_timestamp(entry_time) or datetime.now(timezone.utc) - timedelta(hours=1)
+            
             trade_data = {
                 "entry_price": entry_price,
-                "entry_time": trade.get("entry_time", datetime.now() - timedelta(hours=1)),
+                "entry_time": entry_time,
                 "rsi": trade.get("market_context", {}).get("rsi", 50),
                 "bb_upper": trade.get("market_context", {}).get("bb_upper"),
             }
@@ -965,7 +1042,7 @@ class AutoPilot:
                 
                 # 使用统一的解析函数
                 from trading.position_monitor import parse_entry_timestamp
-                entry_time = parse_entry_timestamp(entry_time_str) if entry_time_str else datetime.now()
+                entry_time = parse_entry_timestamp(entry_time_str) if entry_time_str else datetime.now(_UTC)
                 
                 should_exit_ft, exit_reason_ft = self.freqtrade_integrator.during_position_management(
                     token=token,
@@ -988,6 +1065,25 @@ class AutoPilot:
         # 检查持仓
         closed = self.position_monitor.check_positions(self.prices)
         
+        # ===== 新增: 同步平仓记录到 CentralStateManager =====
+        if _STATE_MANAGER_AVAILABLE and closed:
+            try:
+                state = get_state()
+                for c in closed:
+                    token = c.get("token")
+                    exit_price = c.get("current_price", 0)
+                    exit_reason = c.get("exit_reason", "unknown")
+                    
+                    result = state.close_position(
+                        token=token,
+                        exit_price=exit_price,
+                        exit_reason=exit_reason
+                    )
+                    if result:
+                        logger.info(f"[StateManager] 平仓记录: {token}, PnL={result.get('pnl_usd', 0):.2f}U")
+            except Exception as e:
+                logger.warning(f"[StateManager] 平仓记录失败: {e}")
+        
         return closed
 
     def run_cycle(self) -> Dict[str, Any]:
@@ -1001,6 +1097,15 @@ class AutoPilot:
         logger.info(f"🔄 扫描周期 #{self.cycle_count}")
         logger.info(f"{'='*60}")
         
+        # 缓存统计（每10个周期报告一次）
+        try:
+            from core.fetcher_wrapper import get_cache_stats
+            if self.cycle_count % 10 == 0:
+                cache_stats = get_cache_stats()
+                logger.info(f"[缓存] 内存:{cache_stats.get('total',0)}条, 有效:{cache_stats.get('valid',0)}条, 过期:{cache_stats.get('expired',0)}条")
+        except:
+            pass
+        
         results = {
             "cycle": self.cycle_count,
             "scanned": 0,
@@ -1009,7 +1114,17 @@ class AutoPilot:
             "exits": 0,
             "errors": [],
         }
-        
+
+        # ===== 新增: OKX 同步（每10个周期同步一次）=====
+        if _STATE_MANAGER_AVAILABLE and self.trader and self.cycle_count % 10 == 0:
+            try:
+                state = get_state()
+                sync_result = state.sync_from_okx(self.trader)
+                if sync_result.get("synced"):
+                    logger.info(f"[OKX同步] 持仓: {sync_result.get('okx_positions', [])}, 过期: {sync_result.get('stale_positions', [])}")
+            except Exception as e:
+                logger.warning(f"[OKX同步] 失败: {e}")
+
         # 1. 重新加载参数（支持动态更新）
         self.reload_params()
         
@@ -1051,7 +1166,9 @@ class AutoPilot:
                         entry_count += 1
                         results["signals_triggered"] += 1
             except Exception as e:
+                import traceback
                 logger.error(f"[分析] {token} 失败: {e}")
+                logger.error(f"[分析] {token} 堆栈: {traceback.format_exc()[:500]}")
                 results["errors"].append(f"{token}: {e}")
         
         results["entries"] = entry_count
@@ -1164,6 +1281,31 @@ class AutoPilot:
         
         logger.info(f"[日内杠杆] 候选代币: {len(candidates)}个")
         
+        # ====== Step 2.5: 显示第一道筛选(技术分析)结果 ======
+        logger.info("")
+        logger.info("=" * 60)
+        logger.info("📊 第一道筛选: 技术分析评分 (Top候选)")
+        logger.info("=" * 60)
+        for i, item in enumerate(candidates[:15]):
+            token = item.get('symbol', '')
+            tech_score = item.get('tech_score', 0)
+            change_24h = item.get('change_24h_pct', 0)
+            volume = item.get('volume_usd_24h', 0)
+            volume_str = f"${volume/1e6:.1f}M" if volume > 1e6 else f"${volume/1e3:.0f}K"
+            
+            # 技术评分等级
+            if tech_score >= 10:
+                star = "🚀"
+            elif tech_score >= 7:
+                star = "✅"
+            elif tech_score >= 4:
+                star = "⚠️"
+            else:
+                star = "❌"
+            
+            logger.info(f"  {star} {token:8} 技术:{tech_score:2}/20  24h:{change_24h:+6.1f}%  量:{volume_str}")
+        logger.info("=" * 60)
+        
         # Step 3: 逐个获取实时K线并用21信号工厂评估
         valid_candidates = []
         
@@ -1173,10 +1315,10 @@ class AutoPilot:
                 continue
             
             try:
-                # 获取多时间框架K线
-                klines_1h = fetch_okx_candles(token, "1H", limit=100)
-                klines_4h = fetch_okx_candles(token, "4H", limit=100)
-                klines_15m = fetch_okx_candles(token, "15m", limit=100)
+                # 获取多时间框架K线 (30天历史数据)
+                klines_1h = fetch_okx_candles(token, "1H", limit=720)
+                klines_4h = fetch_okx_candles(token, "4H", limit=360)
+                klines_15m = fetch_okx_candles(token, "15m", limit=672)
                 
                 if klines_1h is None or len(klines_1h) < 20:
                     continue
@@ -1263,12 +1405,12 @@ class AutoPilot:
             
             # 获取资金费率
             funding_data = fetch_funding_rate_history(symbol)
-            funding_rate = funding_data.get('current_rate', 0) if funding_data else 0
+            funding_rate = funding_data.get('latest_rate', 0) if funding_data else 0
             
             # 获取多时间框架分析
-            analysis_4h = analyze_4h(symbol) if df_4h is None else {"valid": False}
-            analysis_1h = analyze_1h_surface(symbol) if df_1h is None else {"valid": False}
-            analysis_15m = analyze_15m(symbol) if df_15m is None else {"valid": False}
+            analysis_4h = analyze_4h(symbol) if df_4h is not None else {"valid": False}
+            analysis_1h = analyze_1h_surface(symbol) if df_1h is not None else {"valid": False}
+            analysis_15m = analyze_15m(symbol) if df_15m is not None else {"valid": False}
             
             # 构建信号数据 (符合21信号工厂格式)
             signal_data = {
@@ -1300,40 +1442,31 @@ class AutoPilot:
 
 
 def create_autopilot(sim_mode: bool = True) -> AutoPilot:
-    """创建自动驾驶仪"""
+    """创建自动驾驶仪 - 使用统一配置加载"""
     from trading.result_logger import ResultLogger
     from trading.position_monitor import PositionMonitor
     from trading.parameter_optimizer import ParameterOptimizer
     
-    # 加载配置
-    config_file = "config/testnet_config.json"
-    try:
-        with open(config_file, "r") as f:
-            config = json.load(f)
-        # 兼容两种配置格式: okx 或 okx_testnet
-        okx_cfg = config.get("okx") or config.get("okx_testnet", {})
-        api_key = okx_cfg.get("api_key")
-        api_secret = okx_cfg.get("api_secret")
-        passphrase = okx_cfg.get("passphrase")
-    except:
-        api_key = None
-        api_secret = None
-        passphrase = None
+    # 使用统一配置加载器
+    from utils.config_loader import get_config, get_okx_credentials
     
-    # 初始化交易器 - 直接使用真实OKX API
+    config = get_config()
+    okx_creds = get_okx_credentials()
+    
+    # 初始化交易器 - 使用模拟盘
     from trading.okx_testnet import OKXTestnetTrader
-    trader = OKXTestnetTrader(api_key, api_secret, passphrase, testnet=True)
+    trader = OKXTestnetTrader(
+        okx_creds.get("api_key"),
+        okx_creds.get("api_secret"),
+        okx_creds.get("passphrase"),
+        testnet=True  # 固定使用模拟盘
+    )
     print(f"[Trader] OKX 模拟盘已连接 (真实API)")
     
     result_logger = ResultLogger()
     
-    risk_params = {}
-    try:
-        with open("config/strategy_params.json", "r") as f:
-            params = json.load(f)
-            risk_params = params.get("risk_management", {})
-    except:
-        pass
+    # 使用统一的风险参数
+    risk_params = config.get("risk_management", {})
     
     position_monitor = PositionMonitor(trader, result_logger, risk_params)
     

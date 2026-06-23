@@ -1,3 +1,4 @@
+# DEPRECATED: 使用 trading/result_logger.py + core/state_manager.py 替代
 """
 MMTracker 交易闭环数据库
 =======================

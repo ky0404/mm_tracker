@@ -147,6 +147,7 @@ class ResultLogger:
         self.save()
 
     def get_stats(self) -> Dict[str, Any]:
+        """获取交易统计"""
         finished = self.get_finished_trades()
         if not finished:
             return {
@@ -156,11 +157,18 @@ class ResultLogger:
                 "win_rate": 0.0,
                 "avg_pnl": 0.0,
                 "total_pnl": 0.0,
+                "open_count": 0,
+                "open_positions": [],
             }
 
         wins = [t for t in finished if t.get("win", False)]
         losses = [t for t in finished if not t.get("win", True)]
         pnls = [t.get("pnl", 0) for t in finished if t.get("pnl") is not None]
+        
+        # 计算未平仓数量
+        unfinished = self.get_unfinished_trades()
+        open_count = len(unfinished)
+        open_positions = [t.get("token") for t in unfinished]
 
         return {
             "total_trades": len(finished),
@@ -169,4 +177,6 @@ class ResultLogger:
             "win_rate": len(wins) / len(finished) if finished else 0.0,
             "avg_pnl": sum(pnls) / len(pnls) if pnls else 0.0,
             "total_pnl": sum(pnls),
+            "open_count": open_count,
+            "open_positions": open_positions,
         }

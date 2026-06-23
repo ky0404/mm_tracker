@@ -57,63 +57,48 @@ class MMTrackerFactory:
         self._init_components()
     
     def _init_components(self):
-        """初始化组件"""
-        # 交易器
+        """初始化组件 - 统一使用OKX模拟盘"""
         try:
             from trading.okx_testnet import OKXTestnetTrader
-            testnet = not self.config.get("use_real", False)
             self.trader = OKXTestnetTrader(
                 api_key=self.config.get("api_key", ""),
                 api_secret=self.config.get("api_secret", ""),
                 passphrase=self.config.get("passphrase", ""),
-                testnet=testnet
+                testnet=True  # 固定使用模拟盘
             )
+            print(f"✅ 交易器初始化: OKX 模拟盘")
         except Exception as e:
             print(f"⚠️ 交易器初始化失败: {e}")
     
     def scan_market(self, top_n: int = 20) -> list:
-        """市场扫描"""
+        """市场扫描 - 统一使用 fast_filter 逻辑"""
         from scanner.universe import get_full_universe
         from scanner.fast_filter import run_fast_filter
-        from signals.calculator import judge_manipulation_stage
         
         print(f"\n{'='*60}")
-        print("🔍 MMTracker 市场扫描")
+        print("🔍 MMTracker 市场扫描 (统一数据源)")
         print(f"{'='*60}")
         
         # Step 1: 获取全市场代币
         universe = get_full_universe()
         print(f"📊 全市场代币: {len(universe)}个")
         
-        # Step 2: 画像筛选
-        filtered = run_fast_filter(universe)
-        print(f"📊 画像筛选后: {len(filtered)}个候选")
+        # Step 2: 使用统一的 fast_filter (包含涨幅漏斗 + 技术分析)
+        filtered = run_fast_filter(universe, enable_gain_tracker=True, enable_technical=True)
+        print(f"📊 技术分析后: {len(filtered)}个候选")
         
-        # Step 3: 5阶段判定
-        results = []
-        for item in filtered[:top_n]:
-            token = item.get('symbol') if isinstance(item, dict) else item
-            if not token:
-                continue
-            try:
-                stage_result = judge_manipulation_stage(
-                    {}, {}, {}, None, None  # 简化版
-                )
-                stage = stage_result.get("stage", "静默积累期")
-                confidence = stage_result.get("confidence", 0)
-                
-                if confidence >= 0.4:
-                    results.append({
-                        "token": token,
-                        "stage": stage,
-                        "confidence": confidence
-                    })
-                    print(f"  ✅ {token}: {stage}, 置信度{confidence:.0%}")
-            except:
-                continue
+        # 按技术评分排序
+        filtered.sort(key=lambda x: x.get('tech_score', 0), reverse=True)
         
-        results.sort(key=lambda x: x["confidence"], reverse=True)
-        return results[:top_n]
+        # 输出 Top 结果
+        print(f"\n📈 Top {min(top_n, len(filtered))} 候选代币:")
+        for i, item in enumerate(filtered[:top_n], 1):
+            symbol = item.get('symbol', 'N/A')
+            change = item.get('change_24h_pct', 0)
+            tech_score = item.get('tech_score', 0)
+            print(f"  {i:2}. {symbol:8} 涨幅:{change:+6.1f}%  技术分:{tech_score}/20")
+        
+        return filtered[:top_n]
     
     def analyze_token(self, symbol: str) -> dict:
         """单币深度分析"""
@@ -211,19 +196,25 @@ class MMTrackerFactory:
             } if current_price > 0 else None
         }
     
-    def run_autopilot(self, symbol: str = None, cycles: int = None):
-        """自动驾驶模式"""
-        from trading.auto_pilot import create_autopilot
+    def run_autopilot(self, cycles: int = None, interval: int = 300):
+        """自动驾驶模式 - 全自动交易闭环"""
+        from core.bot_loop import run_bot
+        from core.state_manager import get_state
         
         print(f"\n{'='*60}")
-        print("🚀 启动自动驾驶模式")
+        print("🚀 全自动交易闭环 (信号→持仓→优化)")
         print(f"{'='*60}")
+        print(f"   扫描间隔: {interval}秒")
+        print(f"   监控间隔: 30秒")
         
-        # create_autopilot 不接受参数，直接调用
-        self.autopilot = create_autopilot(sim_mode=True)
+        state = get_state()
         
-        # 运行交易循环 - 使用 start() 方法
-        self.autopilot.start(max_cycles=cycles, interval=60)
+        use_real = getattr(self, 'use_real', False)
+        run_bot(
+            scan_interval=interval,
+            monitor_interval=30,
+            use_real=use_real
+        )
     
     def close_all_positions(self):
         """一键平仓所有OKX真实持仓"""
@@ -283,7 +274,7 @@ class MMTrackerFactory:
             print(f"失败代币: {', '.join(failed)}")
     
     def check_status(self):
-        """查看状态 - 读取OKX真实持仓"""
+        """查看状态 - 统一从StateManager读取"""
         from trading.okx_testnet import OKXTestnetTrader
         
         cfg = load_config()
@@ -295,54 +286,73 @@ class MMTrackerFactory:
         )
         
         balance = trader.get_balance()
-        if not balance or 'details' not in balance:
-            print('❌ 无法获取余额')
-            return
-        
-        details = balance['details']
         
         print(f"\n{'='*60}")
-        print("📊 OKX 真实持仓")
+        print("📊 MMTracker 持仓状态 (统一数据源)")
         print(f"{'='*60}")
         
+        # USDT 余额
         usdt_balance = 0
+        if balance and 'details' in balance:
+            for d in balance['details']:
+                if d.get('ccy') == 'USDT':
+                    usdt_balance = float(d.get('availBal', 0))
+                    print(f"  💰 USDT: ${usdt_balance:,.2f}")
+                    break
+        
+        # 优先从 StateManager 获取持仓
         positions = []
-        for d in details:
-            ccy = d.get('ccy', '')
-            avail = float(d.get('availBal', 0))
-            eq = float(d.get('eq', 0))
-            eq_usd = float(d.get('eqUsd', 0))
-            
-            if ccy == 'USDT':
-                usdt_balance = avail
-                print(f"  💰 USDT: ${avail:,.2f}")
-            elif eq > 0.01:
-                avgPx = float(d.get('accAvgPx', 0)) if d.get('accAvgPx') else 0
-                positions.append({'token': ccy, 'amount': eq, 'avg_price': avgPx, 'usd_value': eq_usd})
-                print(f"  📦 {ccy}: {eq:.4f} ≈ ${eq_usd:.2f}")
+        try:
+            from core.state_manager import get_state
+            state = get_state()
+            state_positions = state.get_all_positions()
+            for token, pos in state_positions.items():
+                # 估算当前价值
+                try:
+                    current_price = state.get_price(token, max_age=300) or pos.entry_price
+                    usd_value = pos.size_usd * (current_price / pos.entry_price) if pos.entry_price > 0 else 0
+                except:
+                    usd_value = pos.size_usd
+                positions.append({
+                    'token': token,
+                    'amount': pos.size_usd,
+                    'avg_price': pos.entry_price,
+                    'usd_value': usd_value
+                })
+                print(f"  📦 {token}: 入场价 ${pos.entry_price:.4f}, 仓位 ${pos.size_usd:.2f}")
+        except Exception as e:
+            print(f"  ⚠️ StateManager 读取失败: {e}")
+            # 回退到 OKX API
+            if balance and 'details' in balance:
+                for d in balance['details']:
+                    ccy = d.get('ccy', '')
+                    eq = float(d.get('eq', 0))
+                    eq_usd = float(d.get('eqUsd', 0))
+                    if eq > 0.01 and ccy != 'USDT':
+                        avgPx = float(d.get('accAvgPx', 0)) if d.get('accAvgPx') else 0
+                        positions.append({'token': ccy, 'amount': eq, 'avg_price': avgPx, 'usd_value': eq_usd})
+                        print(f"  📦 {ccy}: {eq:.4f} ≈ ${eq_usd:.2f}")
         
         print(f"\n  总资产: ${usdt_balance + sum(p['usd_value'] for p in positions):,.2f}")
         print(f"  持仓数量: {len(positions)}个")
 
 
 def main():
-    parser = argparse.ArgumentParser(description="MMTracker 统一入口")
+    parser = argparse.ArgumentParser(description="MMTracker 统一入口 (模拟盘模式)")
     subparsers = parser.add_subparsers(dest="command", help="命令")
     
-    # scan 命令
+    # scan 命令 - 市场扫描
     scan_parser = subparsers.add_parser("scan", help="市场扫描")
     scan_parser.add_argument("--top", "-n", type=int, default=20, help="扫描数量")
     
-    # analyze 命令
+    # analyze 命令 - 单币分析
     analyze_parser = subparsers.add_parser("analyze", help="单币分析")
     analyze_parser.add_argument("symbol", type=str, help="代币符号，如 BTC")
-    analyze_parser.add_argument("--leverage", "-l", type=int, default=3, help="杠杆倍数")
     
-    # trade 命令
-    trade_parser = subparsers.add_parser("trade", help="自动驾驶交易")
-    trade_parser.add_argument("--symbol", "-s", type=str, default=None, help="交易指定代币")
-    trade_parser.add_argument("--cycles", "-c", type=int, default=None, help="运行周期数")
-    trade_parser.add_argument("--real", action="store_true", help="使用真实账户")
+    # auto 命令 - 全自动交易闭环 (信号→持仓→优化)
+    auto_parser = subparsers.add_parser("auto", help="全自动交易闭环")
+    auto_parser.add_argument("--cycles", "-c", type=int, default=None, help="运行周期数")
+    auto_parser.add_argument("--interval", "-i", type=int, default=300, help="扫描间隔(秒)")
     
     # close 命令 - 一键平仓
     subparsers.add_parser("close", help="一键平仓所有持仓")
@@ -387,29 +397,17 @@ def main():
     id_parser.add_argument("--target", "-t", type=float, default=10.0, help="目标收益%")
     id_parser.add_argument("--stop", type=float, default=3.0, help="止损%")
     
-    # daemon 命令 - 24小时全天候自动驾驶
-    daemon_parser = subparsers.add_parser("daemon", help="24小时全天候自动驾驶(守护进程)")
+    # daemon 命令 - 24小时全天候自动驾驶 (简化版，等同于 auto)
+    daemon_parser = subparsers.add_parser("daemon", help="24小时自动驾驶(同auto命令)")
     daemon_parser.add_argument("--interval", "-i", type=int, default=300, help="扫描间隔(秒)")
     daemon_parser.add_argument("--cycles", "-c", type=int, default=None, help="运行周期数(默认无限)")
-    daemon_parser.add_argument("--real", action="store_true", help="使用真实账户")
     
-    # bot 命令 - 新架构 BotCore
-    bot_parser = subparsers.add_parser("bot", help="BotCore 机器人管理")
-    bot_sub = bot_parser.add_subparsers(dest="bot_command", help="子命令")
+    # optimize 命令 - 元参数优化
+    subparsers.add_parser("optimize", help="元参数优化(自动学习)")
     
-    bot_start = bot_sub.add_parser("start", help="启动机器人(新架构)")
-    bot_start.add_argument("--interval", "-i", type=int, default=300, help="扫描间隔(秒)")
-    bot_start.add_argument("--monitor", "-m", type=int, default=30, help="监控间隔(秒)")
-    bot_start.add_argument("--real", action="store_true", help="使用真实账户")
-    bot_start.add_argument("--strategy", "-s", type=str, default="default", 
-                          choices=["default", "intraday"], help="策略模式: default=21信号, intraday=日内杠杆")
-    bot_start.add_argument("--leverage", "-l", type=float, default=3.0, help="杠杆倍数(默认3x)")
-    bot_start.add_argument("--target", "-t", type=float, default=12.0, help="目标收益%(默认12%)")
-    bot_start.add_argument("--stop", type=float, default=3.0, help="止损%(默认3%)")
-    bot_start.add_argument("--coins", type=str, default='AVAX,ETH,DOGE,XRP', help="交易币种(逗号分隔)")
-    
-    bot_sub.add_parser("stop", help="停止机器人")
-    bot_sub.add_parser("status", help="查看机器人状态")
+    # backtest 命令 - 快速回测
+    bt_parser = subparsers.add_parser("backtest", help="快速回测验证")
+    bt_parser.add_argument("symbol", type=str, nargs="?", default="BTC", help="代币符号")
     
     args = parser.parse_args()
     
@@ -427,9 +425,11 @@ def main():
         else:
             print(f"✅ 分析完成")
             
-    elif args.command == "trade":
-        factory.config["use_real"] = args.real
-        factory.run_autopilot(symbol=args.symbol, cycles=args.cycles)
+    elif args.command in ("trade", "auto", "daemon"):
+        # 统一为 auto 命令处理
+        if args.command == "trade":
+            print("⚠️ 'trade' 命令已废弃，使用 'auto' 或 'daemon' 代替")
+        factory.run_autopilot(cycles=args.cycles, interval=args.interval)
         
     elif args.command == "status":
         factory.check_status()
@@ -437,27 +437,16 @@ def main():
     elif args.command == "close":
         factory.close_all_positions()
         
-    elif args.command == "test":
-        result = factory.analyze_token(args.symbol)
-        print(f"\n✅ 测试完成: {result.get('symbol', 'N/A')}")
-    
-    elif args.command == "cycle":
+    elif args.command == "optimize":
         from trading.parameter_optimizer import ParameterOptimizer
         from trading.result_logger import ResultLogger
         
         print(f"\n{'='*60}")
-        print("🔄 内循环分析 - 基于真实盈亏优化量化因子")
+        print("🔄 元参数优化")
         print(f"{'='*60}")
         
-        # 分析
         logger = ResultLogger()
         optimizer = ParameterOptimizer(logger, "config/strategy_params.json")
-        analysis = optimizer.analyze_trades()
-        
-        print(f"\n📊 总交易: {analysis.get('total_trades', 0)}笔")
-        print(f"📊 总体胜率: {analysis.get('overall_win_rate', 0)*100:.1f}%")
-        
-        # 优化
         result = optimizer.optimize(force=True)
         
         if result.get('optimized'):
@@ -466,410 +455,38 @@ def main():
                 print(f"  • {adj}")
         else:
             print(f"\n⚠️ 跳过优化: {result.get('reason', '未知原因')}")
-        
-        # 加载代币筛选配置
-        if os.path.exists('config/token_screening.json'):
-            with open('config/token_screening.json') as f:
-                screening = json.load(f)
-            
-            print(f"\n📊 代币筛选配置:")
-            bl = screening.get('blacklist', [])
-            wl = screening.get('whitelist', [])
-            print(f"  黑名单 ({len(bl)}个): {[t['token'] for t in bl]}")
-            print(f"  白名单 ({len(wl)}个): {[t['token'] for t in wl]}")
-        
-        print(f"\n{'='*60}")
-        print("✅ 内循环分析完成")
-        print("="*60)
-    
-    elif args.command == "monitor":
-        import requests
-        from datetime import datetime
-        
-        print(f"\n{'='*60}")
-        print("🛡️ 全局代币监控中心")
-        print(f"{'='*60}")
-        
-        # 获取实时数据
-        resp = requests.get('https://www.okx.com/api/v5/market/tickers?instType=SPOT')
-        data = resp.json()
-        
-        tokens_data = []
-        if data.get('code') == '0':
-            for t in data['data']:
-                inst = t.get('instId', '')
-                if inst.endswith('-USDT'):
-                    symbol = inst.replace('-USDT', '')
-                    last = float(t.get('last', 0))
-                    open_24h = float(t.get('open24h', 0))
-                    high_24h = float(t.get('high24h', 0))
-                    low_24h = float(t.get('low24h', 0))
-                    vol24h = float(t.get('vol24h', 0))
-                    
-                    if open_24h > 0:
-                        pct_change = (last - open_24h) / open_24h * 100
-                        range_pct = (high_24h - low_24h) / low_24h * 100
-                    else:
-                        pct_change = 0
-                        range_pct = 0
-                    
-                    tokens_data.append({
-                        'symbol': symbol,
-                        'price': last,
-                        'pct_change': pct_change,
-                        'range_pct': range_pct,
-                        'vol24h': vol24h
-                    })
-        
-        print(f"\n📊 OKX现货总数: {len(tokens_data)}个")
-        
-        # 今日涨幅榜
-        tokens_data.sort(key=lambda x: x['pct_change'], reverse=True)
-        
-        print(f"\n{'='*60}")
-        print("🔥 今日涨幅榜 Top 20")
-        print("="*60)
-        for t in tokens_data[:20]:
-            emoji = '🚀' if t['pct_change'] > 10 else '📈' if t['pct_change'] > 5 else ''
-            print(f"  {emoji} {t['symbol']:8} {t['pct_change']:>+7.2f}%  \${t['price']}")
-        
-        print(f"\n{'='*60}")
-        print("💎 潜在暴涨候选 (成交量100万-1亿)")
-        print("="*60)
-        
-        candidates = [t for t in tokens_data 
-                      if 1e6 < t['vol24h'] < 1e8 and t['pct_change'] > 2]
-        candidates.sort(key=lambda x: (x['pct_change'], t['vol24h']), reverse=True)
-        
-        for t in candidates[:15]:
-            vol_m = t['vol24h'] / 1e6
-            print(f"  💎 {t['symbol']:8} +{t['pct_change']:>5.2f}%  24h: {vol_m:>5.1f}M")
-        
-        # 读取历史交易
-        if os.path.exists('trading/live_trades.json'):
-            with open('trading/live_trades.json') as f:
-                trades = json.load(f)
-            
-            traded = set(t.get('token') for t in trades if t.get('token'))
-            
-            print(f"\n{'='*60}")
-            print("🎯 历史交易代币今日表现")
-            print("="*60)
-            
-            for t in tokens_data:
-                if t['symbol'] in traded:
-                    emoji = '🟢' if t['pct_change'] > 0 else '🔴'
-                    print(f"  {emoji} {t['symbol']:8} {t['pct_change']:>+7.2f}%")
-        
-        print(f"\n{'='*60}")
-        print("✅ 监控完成 - 运行 'run.py analyze <SYMBOL>' 分析具体代币")
-        print("="*60)
-    
-    elif args.command == "scan2":
-        from scanner.universe import get_full_universe
-        from scanner.fast_filter import run_fast_filter
-        from scanner.technical_analyzer import TechnicalAnalyzer
-        from fetchers.multi_tf import multi_tf_surface_analysis, analyze_1d, analyze_4h
-        
-        print(f"\n{'='*60}")
-        print("🔬 完整技术分析扫描 (NFI Style)")
-        print(f"{'='*60}")
-        
-        print("\n[1] 获取全市场代币...")
-        universe = get_full_universe()
-        print(f"    全市场代币: {len(universe)}个")
-        
-        print("\n[2] 执行增强扫描 (涨幅漏斗+趋势+技术分析)...")
-        results = run_fast_filter(universe, enable_gain_tracker=True, enable_technical=True)
-        
-        print(f"\n{'='*60}")
-        print("📊 扫描结果 Top 10 (NFI指标)")
-        print("="*60)
-        
-        for i, c in enumerate(results[:10], 1):
-            symbol = c['symbol']
-            tech_score = c.get('tech_score', 0)
-            change = c.get('change_24h_pct', 0)
-            combined = c.get('combined_score', 0)
-            
-            emoji = '🚀' if tech_score >= 10 else '📈' if tech_score >= 6 else '⚠️'
-            
-            nfi_info = ""
-            try:
-                d1 = analyze_1d(symbol)
-                h4 = analyze_4h(symbol)
-                if d1.get('valid') and h4.get('valid'):
-                    d1_cti = d1.get('current_cti', 0)
-                    d1_ewo = d1.get('current_ewo', 0)
-                    h4_cti = h4.get('current_cti', 0)
-                    h4_ewo = h4.get('current_ewo', 0)
-                    h4_rsi = h4.get('current_rsi', 0)
-                    nfi_info = f" | CTI:{d1_cti:.1f}/{h4_cti:.1f} EWO:{d1_ewo:.1f}/{h4_ewo:.1f} RSI:{h4_rsi:.0f}"
-            except:
-                pass
-            
-            print(f"{i:2}. {emoji} {symbol:8} 技术:{tech_score:2}/20  24h:{change:+6.1f}%  综合:{combined:.1f}{nfi_info}")
-        
-        print(f"\n{'='*60}")
-        print("📈 NFI核心指标说明")
-        print("="*60)
-        print("  CTI (Commodity Trading Index): 替代MACD, >0看涨")
-        print("  EWO (Elliot Wave Oscillator): 动量指标, >0看涨")  
-        print("  Williams %R: 超买超卖, <-80超卖, >-20超买")
-        print("  HMA (Hull MA): 趋势指标, 向上看涨")
-        
-        print(f"\n✅ 扫描完成! 共 {len(results)} 个候选")
-        print("💡 建议: 运行 'python run.py analyze <SYMBOL>' 深入分析")
-    
-    elif args.command == "check":
-        import requests
-        from datetime import datetime, timezone
-        
-        print(f"\n{'='*60}")
-        print("🔍 检查历史预测准确度")
-        print(f"{'='*60}")
-        
-        # 加载历史预测
-        try:
-            with open('logs/prediction_history.json', 'r') as f:
-                history = json.load(f)
-        except:
-            print("❌ 无历史预测记录")
-            return
-        
-        if not history:
-            print("❌ 无历史预测记录")
-            return
-        
-        # 获取最新预测
-        latest = history[-1]
-        scan_time = latest['timestamp']
-        candidates = latest['candidates']
-        
-        print(f"\n📅 扫描时间: {scan_time}")
-        print(f"📊 推荐代币: {len(candidates)} 个")
-        
-        # 获取当前价格
-        print(f"\n{'='*60}")
-        print("📈 预测 vs 实际表现")
-        print("="*60)
-        
-        resp = requests.get('https://www.okx.com/api/v5/market/tickers?instType=SPOT', timeout=10)
-        data = resp.json()
-        
-        current_prices = {}
-        if data.get('code') == '0':
-            for t in data['data']:
-                inst = t.get('instId', '')
-                if inst.endswith('-USDT'):
-                    symbol = inst.replace('-USDT', '')
-                    current_prices[symbol] = float(t.get('last', 0))
-        
-        # 对比
-        for c in candidates:
-            symbol = c['symbol']
-            old_price = c['price']
-            current_price = current_prices.get(symbol, 0)
-            
-            if current_price > 0:
-                change = (current_price - old_price) / old_price * 100
-                emoji = '✅' if change > 0 else '❌'
-                print(f"{emoji} {symbol:8} 当时:${old_price:.6f} → 现在:${current_price:.6f}  ({change:+.2f}%)")
-            else:
-                print(f"❓ {symbol}: 无法获取当前价格")
-        
-        print(f"\n💡 运行 'python run.py scan2' 获取新预测")
-    
-    elif args.command == "daemon":
-        from trading.auto_pilot import create_autopilot
-        import time
-        
-        print(f"\n{'='*60}")
-        print("🤖 24小时全天候自动驾驶 (守护进程模式)")
-        print(f"{'='*60}")
-        
-        print(f"\n📋 运行参数:")
-        print(f"   扫描间隔: {args.interval}秒 ({args.interval/60:.1f}分钟)")
-        print(f"   最大周期: {args.cycles if args.cycles else '无限'}")
-        print(f"   交易模式: {'真实账户' if args.real else '测试网'}")
-        
-        # 使用现有的create_autopilot
-        print(f"\n🚀 初始化自动驾驶仪...")
-        autopilot = create_autopilot(sim_mode=not args.real)
-        print(f"✅ 自动驾驶仪已启动")
-        
-        # 使用interval参数
-        print(f"\n🔄 开始自动交易循环 (按Ctrl+C停止)...")
-        print(f"{'='*60}")
-        
-        # 直接调用start方法，传入interval
-        autopilot.start(max_cycles=args.cycles, interval=args.interval)
-    
-    elif args.command == "bot":
-        from core.bot_core import start_bot, stop_bot, get_bot
-        
-        if args.bot_command == "start":
-            config = {
-                'scan_interval': args.interval,
-                'monitor_interval': args.monitor,
-                'use_real': args.real,
-                'strategy_mode': args.strategy,
-                'leverage': args.leverage,
-                'target_return': args.target / 100,
-                'stop_loss': args.stop / 100,
-                'coins': args.coins.split(',') if hasattr(args, 'coins') else ['AVAX', 'ETH', 'DOGE', 'XRP']
-            }
-            print(f"\n{'='*60}")
-            print("🤖 启动 BotCore 机器人 (新架构)")
-            print(f"{'='*60}")
-            print(f"   扫描间隔: {args.interval}秒")
-            print(f"   监控间隔: {args.monitor}秒")
-            print(f"   交易模式: {'真实账户' if args.real else '测试网'}")
-            print(f"   策略: {args.strategy}")
-            if args.strategy == "intraday":
-                print(f"   杠杆: {args.leverage}x")
-                print(f"   目标收益: {args.target}%")
-                print(f"   止损: {args.stop}%")
-            
-            # 启动bot
-            bot = start_bot(config)
-            
-            try:
-                import time
-                while True:
-                    time.sleep(1)
-            except KeyboardInterrupt:
-                print("\n🛑 收到停止信号...")
-                stop_bot()
-                
-        elif args.bot_command == "stop":
-            stop_bot()
-            print("✅ 机器人已停止")
-            
-        elif args.bot_command == "status":
-            bot = get_bot()
-            if not bot.db:
-                bot.initialize()
-            status = bot.status()
-            
-            print(f"\n{'='*50}")
-            print("🤖 MMTracker 状态")
-            print(f"{'='*50}")
-            print(f"  机器人状态: {status['bot_status']}")
-            print(f"  调度器运行: {status['scheduler']['running']}")
-            print(f"  总交易数: {status['trades'].get('total_trades', 0)}")
-            print(f"  胜率: {status['trades'].get('win_rate', 0)*100:.1f}%")
-            print(f"  总盈亏: ${status['trades'].get('total_pnl', 0):.2f}")
-            print(f"{'='*50}")
-        
-        else:
-            bot_parser.print_help()
-    
-    elif args.command == "walkforward":
-        from scripts.walk_forward_validator import WalkForwardValidator, run_enhanced_walk_forward
-        
-        print(f"\n{'='*60}")
-        print("🔬 Walk-Forward 验证 (防过拟合)")
-        print(f"{'='*60}")
-        
-        symbol = args.symbol if hasattr(args, 'symbol') else "BTC"
-        result = run_enhanced_walk_forward(symbol=symbol)
-        
-        if hasattr(result, 'is_overfitting') and result.is_overfitting:
-            print(f"\n⚠️ 过拟合警告: 请降低信号复杂度或增加验证数据")
-        else:
-            print(f"\n✅ 验证通过: 信号具有一定的泛化能力")
-    
-    elif args.command == "optimize":
-        from trading.meta_optimizer import MetaOptimizer
-        
-        print(f"\n{'='*60}")
-        print("🧠 元参数优化 (自动学习)")
-        print(f"{'='*60}")
-        
-        optimizer = MetaOptimizer(min_trades_before_optimize=10)
-        result = optimizer.run()
-        
-        if result.get('optimized'):
-            print(f"\n✅ 优化完成:")
-            for change in result.get('changes', []):
-                print(f"  • {change.get('signal', change.get('type'))}: {change.get('old')} → {change.get('new')}")
-            print(f"\n📊 统计:")
-            print(f"  总交易: {result.get('overall_stats', {}).get('total_trades', 0)}")
-            print(f"  胜率: {result.get('overall_stats', {}).get('win_rate', 0)*100:.1f}%")
-        else:
-            print(f"\n⚠️ 跳过优化: {result.get('reason', '')}")
     
     elif args.command == "backtest":
-        from backtest.engine import BacktestEngine
+        from scripts.nfi_comprehensive_backtest import quick_backtest
         
         print(f"\n{'='*60}")
-        print("📈 快速回测验证")
+        print("📊 快速回测")
         print(f"{'='*60}")
         
-        engine = BacktestEngine()
-        
-        result = engine.run_quick(
-            symbol=args.symbol if hasattr(args, 'symbol') else "BTC",
-            days=90
-        )
-        
-        print(f"\n📊 回测结果:")
-        print(f"  总交易: {result.get('total_trades', 0)}")
-        print(f"  胜率: {result.get('win_rate', 0)*100:.1f}%")
-        print(f"  总盈亏: {result.get('total_pnl', 0):.2f}%")
-        print(f"  Sharpe: {result.get('sharpe', 0):.2f}")
-        print(f"  最大回撤: {result.get('max_drawdown', 0)*100:.1f}%")
-    
-    elif args.command == "intraday":
-        from scripts.intraday_leverage import IntradayLeverageStrategy
-        
-        print(f"\n{'='*60}")
-        print("⚡ 日内杠杆策略回测")
-        print("="*60)
-        print(f"  代币: {args.symbol}")
-        print(f"  杠杆: {args.leverage}x")
-        print(f"  目标收益: {args.target}%")
-        print(f"  止损: {args.stop}%")
-        
-        strategy = IntradayLeverageStrategy(
-            leverage=args.leverage,
-            target_return=args.target / 100,
-            stop_loss=args.stop / 100
-        )
-        
-        result = strategy.run_walk_forward(args.symbol)
-        
-        train = result.get('train', {})
-        test = result.get('test', {})
-        
-        print(f"\n📊 训练集: {train.get('total_trades', 0)}笔, 胜率{train.get('win_rate', 0)*100:.1f}%")
-        print(f"📊 测试集: {test.get('total_trades', 0)}笔, 胜率{test.get('win_rate', 0)*100:.1f}%")
-        print(f"   总收益: {test.get('total_return', 0)*100:.2f}%")
-        print(f"   最佳: {test.get('best_trade', 0)*100:+.2f}%, 最差: {test.get('worst_trade', 0)*100:.2f}%")
-        print(f"\n{'✅ 策略有效' if not result.get('is_overfitting') else '⚠️ 需优化'}")
+        result = quick_backtest(args.symbol)
+        print(f"\n✅ 回测完成")
     
     else:
-        parser.print_help()
-        print(f"\n{'='*60}")
-        print("📖 快速开始:")
-        print(f"  python run.py scan                    # 市场扫描(基础)")
-        print(f"  python run.py scan2                   # 完整技术分析扫描(推荐)")
-        print(f"  python run.py analyze BTC             # 分析BTC")
-        print(f"  python run.py monitor                 # 全局代币监控")
-        print(f"  python run.py cycle                   # 内循环分析")
-        print(f"  python run.py trade --cycles 3        # 自动交易(3轮)")
-        print(f"  python run.py daemon                   # 24小时自动驾驶(守护进程)")
-        print(f"  python run.py daemon --real            # 真实账户自动驾驶")
-        print(f"  python run.py bot start                 # BotCore 新架构(推荐)")
-        print(f"  python run.py bot status                # 查看 BotCore 状态")
-        print(f"  python run.py close                    # 一键平仓")
-        print(f"  python run.py status                   # 查看状态")
-        print(f"  python run.py check                    # 检查预测准确度")
-        print(f"  python run.py walkforward              # Walk-Forward验证(防过拟合)")
-        print(f"  python run.py optimize                 # 元参数优化(自动学习)")
-        print(f"  python run.py backtest BTC             # 快速回测验证")
-        print(f"{'='*60}")
+        # 简洁的帮助信息
+        print("""
+MMTracker 统一入口 (模拟盘模式)
+===============================
+核心命令:
+  python run.py scan                    # 市场扫描 (推荐)
+  python run.py analyze <SYMBOL>        # 单币深度分析
+  python run.py auto                    # 全自动交易闭环
+  python run.py auto -c 10              # 运行10个周期
+  python run.py auto -i 180             # 扫描间隔180秒
+  python run.py status                  # 查看持仓状态 (统一数据源)
+  python run.py close                   # 一键平仓所有持仓
+  python run.py daemon --interval 300   # 24小时自动驾驶 (推荐)
+
+其他命令:
+  python run.py optimize                # 元参数优化
+  python run.py backtest BTC            # 快速回测
+
+数据流: OKX API → StateManager → PositionMonitor → SQLite持久化
+""")
 
 
 if __name__ == "__main__":

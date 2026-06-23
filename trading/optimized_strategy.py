@@ -1,3 +1,4 @@
+# DEPRECATED: 使用 trading/auto_pilot.py 替代，勿直接调用
 """
 优化版策略执行器
 基于回测结果 (2026-06-12) 优化:

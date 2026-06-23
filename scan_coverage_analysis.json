@@ -1,0 +1,49 @@
+{
+  "updated_at": "2026-06-18T11:06:31.333962",
+  "scan_coverage": {
+    "total_tokens": 298,
+    "scanned_tokens": 19,
+    "missed_gainers_10pct": [
+      "XPL",
+      "BIO",
+      "ENA"
+    ],
+    "missed_gainers_5pct": [
+      "ETHFI",
+      "ROBO",
+      "ENJ",
+      "CFG",
+      "ASTER",
+      "ID"
+    ]
+  },
+  "performance_comparison": {
+    "scanned_avg_pct": -2.29,
+    "unscanned_avg_pct": -1.98,
+    "conclusion": "扫描需优化"
+  },
+  "factor_optimization": {
+    "add_gain_monitor": {
+      "condition": "15m涨幅>5%",
+      "action": "自动加入候选池"
+    },
+    "adjust_volume_threshold": {
+      "current": "unknown",
+      "suggested": "100-500U起"
+    },
+    "expand_profile_range": {
+      "current": "小市值+操纵阶段",
+      "suggested": "市值>10M所有代币"
+    },
+    "add_market_independence_factor": {
+      "condition": "大盘跌但币涨",
+      "action": "识别独立行情"
+    }
+  },
+  "action_items": [
+    "1. 优先分析漏网代币: XPL, BIO, ENA, ETHFI",
+    "2. 将漏网代币加入监控列表",
+    "3. 调整扫描器增加涨幅触发条件",
+    "4. 验证调整后的扫描效果"
+  ]
+}

@@ -1,3 +1,4 @@
+# DEPRECATED: 使用 trading/auto_pilot.py 替代，勿直接调用
 """
 实时交易执行器
 整合 OKX API + 优化策略 + 交易执行

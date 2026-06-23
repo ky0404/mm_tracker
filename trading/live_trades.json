@@ -218,21 +218,43 @@
   },
   {
     "index": 37,
-    "type": "ENTRY",
+    "type": "EXIT",
     "token": "OP",
     "entry_price": 0.109659107435373,
     "position_size": 33362.02721518,
     "timestamp": "2026-06-20T16:43:33.828962",
     "entry_price_original": 0.109659107435373,
     "source": "DB",
-    "exit_price": 0.1031,
-    "pnl": -1995.5033912269148,
-    "pnl_pct": -5.9814,
-    "hold_minutes": 0,
+    "exit_price": 0.10089,
+    "pnl": -292.55520091175134,
+    "pnl_pct": -7.9967,
+    "hold_minutes": 3946,
     "win": false,
-    "exit_timestamp": "2026-06-20T16:43:40.054679",
-    "exit_reason": "STOP_LOSS",
-    "status": "closed"
+    "exit_timestamp": "2026-06-23T10:30:06.521945",
+    "exit_reason": "MAX_HOLD_TIME",
+    "status": "closed",
+    "partial_closes": [
+      {
+        "timestamp": "2026-06-22T22:19:58.932716",
+        "close_pct": 50.0,
+        "close_size": 1829.2250633256308,
+        "remaining_size": 1829.2250633256308,
+        "exit_price": 0.12,
+        "pnl": 172.49656958516928,
+        "pnl_pct": 85.9941,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-22T22:43:16.910875",
+        "close_pct": 50.0,
+        "close_size": 1829.2250633256308,
+        "remaining_size": 1829.2250633256308,
+        "exit_price": 0.11514206280714165,
+        "pnl": 91.46125316628164,
+        "pnl_pct": 45.5958,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      }
+    ]
   },
   {
     "index": 58,
@@ -322,7 +344,7 @@
   },
   {
     "index": 20,
-    "type": "ENTRY",
+    "type": "EXIT",
     "token": "MANA",
     "timestamp": "2026-06-20T16:57:38.594138",
     "entry_time": "2026-06-20T16:57:38.594138",
@@ -362,14 +384,36 @@
       "order_type": "limit",
       "offset_pct": 0.6
     },
-    "exit_price": 0.0717856285028022,
-    "pnl": 0.0,
-    "pnl_pct": 0.0,
-    "hold_minutes": 1254,
+    "exit_price": 0.0728,
+    "pnl": -5.951999999999958e-06,
+    "pnl_pct": 1.4131,
+    "hold_minutes": 3932,
     "win": false,
     "exit_reason": "MAX_HOLD_TIME",
-    "exit_timestamp": "2026-06-21T13:52:03.809696",
-    "status": "closed"
+    "exit_timestamp": "2026-06-23T10:30:09.082103",
+    "status": "closed",
+    "partial_closes": [
+      {
+        "timestamp": "2026-06-22T22:20:00.224367",
+        "close_pct": 50.0,
+        "close_size": 0.000352416,
+        "remaining_size": 0.000352416,
+        "exit_price": 0.078,
+        "pnl": 2.1984000000000005e-05,
+        "pnl_pct": 86.8988,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      },
+      {
+        "timestamp": "2026-06-22T22:43:19.389026",
+        "close_pct": 50.0,
+        "close_size": 0.000352416,
+        "remaining_size": 0.000352416,
+        "exit_price": 0.077091,
+        "pnl": 1.7620800000000036e-05,
+        "pnl_pct": 69.6518,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      }
+    ]
   },
   {
     "index": 97,
@@ -385,16 +429,33 @@
   },
   {
     "index": 34,
-    "type": "ENTRY",
+    "type": "EXIT",
     "token": "2Z",
     "entry_price": 0.0742,
     "position_size": 0.0096,
     "timestamp": "2026-06-20T16:13:56.897564",
     "entry_price_original": 0.0742025730584468,
     "source": "OKX_API",
-    "exit_reason": "stuck_position_cleanup",
-    "exit_timestamp": "2026-06-20T22:13:52.225584",
-    "status": "closed"
+    "exit_reason": "LIQUIDATION_DANGER",
+    "exit_timestamp": "2026-06-23T10:39:27.848276",
+    "status": "closed",
+    "partial_closes": [
+      {
+        "timestamp": "2026-06-22T22:43:18.139655",
+        "close_pct": 50.0,
+        "close_size": 2.1206648285710337,
+        "remaining_size": 2.1206648285710337,
+        "exit_price": 463.8954312499137,
+        "pnl": 0.10603324142855189,
+        "pnl_pct": 67.3854,
+        "reason": "TAKE_PROFIT_HALF_TARGET_5%"
+      }
+    ],
+    "exit_price": 0.07178,
+    "pnl": -4.240640569142068,
+    "pnl_pct": -3.2615,
+    "hold_minutes": 3985,
+    "win": false
   },
   {
     "index": 36,

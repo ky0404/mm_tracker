@@ -1,0 +1,575 @@
+[
+  {
+    "timestamp": "2026-06-15T18:23:09.720323",
+    "trade_count": 16,
+    "changes": [
+      {
+        "type": "hold_time_adjust",
+        "old": 240,
+        "new": 0,
+        "reason": "获胜均持0分钟"
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-06-15T18:36:37.859150",
+    "trade_count": 21,
+    "changes": [
+      {
+        "type": "hold_time_adjust",
+        "old": 1440,
+        "new": 0,
+        "reason": "获胜均持0分钟"
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-06-15T20:14:23.770172",
+    "trade_count": 21,
+    "changes": [
+      {
+        "type": "weight_decrease",
+        "signal": "signal_7_new_futures",
+        "old": 0.5,
+        "new": 0.4,
+        "reason": "胜率20% (<40%)"
+      },
+      {
+        "type": "weight_increase",
+        "signal": "manual_sell_all",
+        "old": 1.0,
+        "new": 1.1,
+        "reason": "胜率90% (>65%)"
+      },
+      {
+        "type": "hold_time_adjust",
+        "old": 1440,
+        "new": 0,
+        "reason": "获胜均持0分钟"
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-06-15T20:18:14.008058",
+    "trade_count": 16,
+    "changes": [
+      {
+        "type": "weight_decrease",
+        "signal": "signal_7_new_futures",
+        "old": 0.4,
+        "new": 0.30000000000000004,
+        "reason": "胜率20% (<40%)"
+      },
+      {
+        "type": "weight_increase",
+        "signal": "manual_sell_all",
+        "old": 1.1,
+        "new": 1.2000000000000002,
+        "reason": "胜率90% (>65%)"
+      },
+      {
+        "type": "hold_time_adjust",
+        "old": 1440,
+        "new": 0,
+        "reason": "获胜均持0分钟"
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-06-17T13:20:45.849260",
+    "trade_count": 23,
+    "changes": [
+      {
+        "type": "weight_decrease",
+        "signal": "signal_7_new_futures",
+        "old": 0.0,
+        "new": 0.3,
+        "reason": "胜率20% (<40%)"
+      },
+      {
+        "type": "weight_increase",
+        "signal": "manual_sell_all",
+        "old": 1.0,
+        "new": 1.1,
+        "reason": "胜率76% (>65%)"
+      },
+      {
+        "type": "hold_time_adjust",
+        "old": 240,
+        "new": 438,
+        "reason": "获胜均持292分钟"
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-06-17T13:21:56.429432",
+    "trade_count": 23,
+    "changes": [
+      {
+        "type": "weight_increase",
+        "signal": "manual_sell_all",
+        "old": 1.1,
+        "new": 1.2,
+        "reason": "胜率76% (>65%)"
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-06-17T15:32:35.671168",
+    "trade_count": 23,
+    "changes": [
+      {
+        "type": "weight_increase",
+        "signal": "manual_sell_all",
+        "old": 1.2,
+        "new": 1.3,
+        "reason": "胜率76% (>65%)"
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-06-17T23:20:19.875797",
+    "trade_count": 23,
+    "changes": [
+      {
+        "type": "weight_increase",
+        "signal": "manual_sell_all",
+        "old": 1.3,
+        "new": 1.4,
+        "reason": "胜率76% (>65%)"
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-06-18T10:20:09.778437",
+    "trade_count": 23,
+    "changes": [
+      {
+        "type": "weight_increase",
+        "signal": "manual_sell_all",
+        "old": 1.4,
+        "new": 1.5,
+        "reason": "胜率76% (>65%)"
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-06-18T10:22:32.147568",
+    "trade_count": 23,
+    "changes": [
+      {
+        "type": "weight_increase",
+        "signal": "manual_sell_all",
+        "old": 1.5,
+        "new": 1.6,
+        "reason": "胜率76% (>65%)"
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-06-18T10:24:16.587539",
+    "trade_count": 23,
+    "changes": [
+      {
+        "type": "weight_increase",
+        "signal": "manual_sell_all",
+        "old": 1.6,
+        "new": 1.7,
+        "reason": "胜率76% (>65%)"
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-06-18T14:25:05.502840",
+    "trade_count": 23,
+    "changes": [
+      {
+        "type": "weight_decrease",
+        "signal": "signal_7_new_futures",
+        "old": 1.0,
+        "new": 0.9,
+        "reason": "胜率20% (<40%)"
+      },
+      {
+        "type": "weight_increase",
+        "signal": "manual_sell_all",
+        "old": 1.0,
+        "new": 1.1,
+        "reason": "胜率76% (>65%)"
+      },
+      {
+        "type": "hold_time_adjust",
+        "old": 240,
+        "new": 438,
+        "reason": "获胜均持292分钟"
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-06-18T14:43:21.439983",
+    "trade_count": 23,
+    "changes": [
+      {
+        "type": "weight_decrease",
+        "signal": "signal_7_new_futures",
+        "old": 0.9,
+        "new": 0.8,
+        "reason": "胜率20% (<40%)"
+      },
+      {
+        "type": "weight_increase",
+        "signal": "manual_sell_all",
+        "old": 1.1,
+        "new": 1.2,
+        "reason": "胜率76% (>65%)"
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-06-18T15:00:37.929006",
+    "trade_count": 23,
+    "changes": [
+      {
+        "type": "weight_decrease",
+        "signal": "signal_7_new_futures",
+        "old": 0.8,
+        "new": 0.7,
+        "reason": "胜率20% (<40%)"
+      },
+      {
+        "type": "weight_increase",
+        "signal": "manual_sell_all",
+        "old": 1.2,
+        "new": 1.3,
+        "reason": "胜率76% (>65%)"
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-06-18T15:16:09.936430",
+    "trade_count": 23,
+    "changes": [
+      {
+        "type": "weight_decrease",
+        "signal": "signal_7_new_futures",
+        "old": 0.7,
+        "new": 0.6,
+        "reason": "胜率20% (<40%)"
+      },
+      {
+        "type": "weight_increase",
+        "signal": "manual_sell_all",
+        "old": 1.3,
+        "new": 1.4,
+        "reason": "胜率76% (>65%)"
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-06-18T15:42:16.873477",
+    "trade_count": 23,
+    "changes": [
+      {
+        "type": "weight_decrease",
+        "signal": "signal_7_new_futures",
+        "old": 0.6,
+        "new": 0.5,
+        "reason": "胜率20% (<40%)"
+      },
+      {
+        "type": "weight_increase",
+        "signal": "manual_sell_all",
+        "old": 1.4,
+        "new": 1.5,
+        "reason": "胜率76% (>65%)"
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-06-18T15:56:33.872886",
+    "trade_count": 23,
+    "changes": [
+      {
+        "type": "weight_decrease",
+        "signal": "signal_7_new_futures",
+        "old": 0.5,
+        "new": 0.4,
+        "reason": "胜率20% (<40%)"
+      },
+      {
+        "type": "weight_increase",
+        "signal": "manual_sell_all",
+        "old": 1.5,
+        "new": 1.6,
+        "reason": "胜率76% (>65%)"
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-06-18T16:11:26.357371",
+    "trade_count": 23,
+    "changes": [
+      {
+        "type": "weight_decrease",
+        "signal": "signal_7_new_futures",
+        "old": 0.4,
+        "new": 0.3,
+        "reason": "胜率20% (<40%)"
+      },
+      {
+        "type": "weight_increase",
+        "signal": "manual_sell_all",
+        "old": 1.6,
+        "new": 1.7,
+        "reason": "胜率76% (>65%)"
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-06-18T16:27:08.465361",
+    "trade_count": 23,
+    "changes": [
+      {
+        "type": "weight_increase",
+        "signal": "manual_sell_all",
+        "old": 1.7,
+        "new": 1.8,
+        "reason": "胜率76% (>65%)"
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-06-18T16:41:40.173149",
+    "trade_count": 23,
+    "changes": [
+      {
+        "type": "weight_increase",
+        "signal": "manual_sell_all",
+        "old": 1.8,
+        "new": 1.9,
+        "reason": "胜率76% (>65%)"
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-06-18T16:56:27.570084",
+    "trade_count": 23,
+    "changes": [
+      {
+        "type": "weight_increase",
+        "signal": "manual_sell_all",
+        "old": 1.9,
+        "new": 2.0,
+        "reason": "胜率76% (>65%)"
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-06-18T17:11:41.010592",
+    "trade_count": 23,
+    "changes": [
+      {
+        "type": "weight_increase",
+        "signal": "manual_sell_all",
+        "old": 2.0,
+        "new": 2.1,
+        "reason": "胜率76% (>65%)"
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-06-18T17:28:40.873514",
+    "trade_count": 23,
+    "changes": [
+      {
+        "type": "weight_increase",
+        "signal": "manual_sell_all",
+        "old": 2.1,
+        "new": 2.2,
+        "reason": "胜率76% (>65%)"
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-06-18T17:38:57.472171",
+    "trade_count": 23,
+    "changes": [
+      {
+        "type": "weight_increase",
+        "signal": "manual_sell_all",
+        "old": 2.2,
+        "new": 2.3,
+        "reason": "胜率76% (>65%)"
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-06-18T17:43:09.046244",
+    "trade_count": 23,
+    "changes": [
+      {
+        "type": "weight_increase",
+        "signal": "manual_sell_all",
+        "old": 2.2,
+        "new": 2.3,
+        "reason": "胜率76% (>65%)"
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-06-18T17:56:50.142620",
+    "trade_count": 23,
+    "changes": [
+      {
+        "type": "weight_increase",
+        "signal": "manual_sell_all",
+        "old": 2.3,
+        "new": 2.4,
+        "reason": "胜率76% (>65%)"
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-06-18T17:58:52.522268",
+    "trade_count": 23,
+    "changes": [
+      {
+        "type": "weight_increase",
+        "signal": "manual_sell_all",
+        "old": 2.3,
+        "new": 2.4,
+        "reason": "胜率76% (>65%)"
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-06-18T17:59:44.282498",
+    "trade_count": 23,
+    "changes": [
+      {
+        "type": "weight_increase",
+        "signal": "manual_sell_all",
+        "old": 2.4,
+        "new": 2.5,
+        "reason": "胜率76% (>65%)"
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-06-18T18:01:22.130939",
+    "trade_count": 23,
+    "changes": [
+      {
+        "type": "weight_increase",
+        "signal": "manual_sell_all",
+        "old": 2.5,
+        "new": 2.6,
+        "reason": "胜率76% (>65%)"
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-06-18T18:16:12.041922",
+    "trade_count": 23,
+    "changes": [
+      {
+        "type": "weight_increase",
+        "signal": "manual_sell_all",
+        "old": 2.4,
+        "new": 2.5,
+        "reason": "胜率76% (>65%)"
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-06-18T18:19:12.336949",
+    "trade_count": 23,
+    "changes": [
+      {
+        "type": "weight_increase",
+        "signal": "manual_sell_all",
+        "old": 2.5,
+        "new": 2.6,
+        "reason": "胜率76% (>65%)"
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-06-18T18:31:22.305539",
+    "trade_count": 23,
+    "changes": [
+      {
+        "type": "weight_increase",
+        "signal": "manual_sell_all",
+        "old": 2.5,
+        "new": 2.6,
+        "reason": "胜率76% (>65%)"
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-06-18T18:47:27.412904",
+    "trade_count": 23,
+    "changes": [
+      {
+        "type": "weight_increase",
+        "signal": "manual_sell_all",
+        "old": 2.6,
+        "new": 2.7,
+        "reason": "胜率76% (>65%)"
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-06-18T18:58:12.014909",
+    "trade_count": 23,
+    "changes": [
+      {
+        "type": "weight_increase",
+        "signal": "manual_sell_all",
+        "old": 2.7,
+        "new": 2.8,
+        "reason": "胜率76% (>65%)"
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-06-18T19:02:03.156093",
+    "trade_count": 23,
+    "changes": [
+      {
+        "type": "weight_increase",
+        "signal": "manual_sell_all",
+        "old": 2.7,
+        "new": 2.8,
+        "reason": "胜率76% (>65%)"
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-06-18T19:17:42.281442",
+    "trade_count": 23,
+    "changes": [
+      {
+        "type": "weight_increase",
+        "signal": "manual_sell_all",
+        "old": 2.8,
+        "new": 2.9,
+        "reason": "胜率76% (>65%)"
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-06-18T19:33:37.449416",
+    "trade_count": 23,
+    "changes": [
+      {
+        "type": "weight_increase",
+        "signal": "manual_sell_all",
+        "old": 2.9,
+        "new": 3.0,
+        "reason": "胜率76% (>65%)"
+      }
+    ]
+  }
+]

@@ -1,0 +1,61 @@
+{
+  "updated_at": "2026-06-18T10:56:50.891344",
+  "total_trades": 23,
+  "blacklist": [
+    {
+      "token": "SOL",
+      "pnl": -130.66,
+      "win_rate": 50.0,
+      "trades": 2,
+      "reason": "连续亏损或胜率过低"
+    },
+    {
+      "token": "OKB",
+      "pnl": -48.1,
+      "win_rate": 50.0,
+      "trades": 2,
+      "reason": "连续亏损或胜率过低"
+    },
+    {
+      "token": "WCT",
+      "pnl": -9.64,
+      "win_rate": 0.0,
+      "trades": 2,
+      "reason": "连续亏损或胜率过低"
+    },
+    {
+      "token": "OP",
+      "pnl": -88.19,
+      "win_rate": 0.0,
+      "trades": 1,
+      "reason": "连续亏损或胜率过低"
+    }
+  ],
+  "whitelist": [
+    {
+      "token": "BTC",
+      "pnl": 294.06,
+      "win_rate": 100.0,
+      "trades": 2,
+      "reason": "高胜率高盈利"
+    },
+    {
+      "token": "ETH",
+      "pnl": 69.82,
+      "win_rate": 100.0,
+      "trades": 2,
+      "reason": "高胜率高盈利"
+    },
+    {
+      "token": "NEAR",
+      "pnl": 42.98,
+      "win_rate": 100.0,
+      "trades": 1,
+      "reason": "高胜率高盈利"
+    }
+  ],
+  "summary": {
+    "total_pnl": 138.29,
+    "win_rate": 65.2
+  }
+}

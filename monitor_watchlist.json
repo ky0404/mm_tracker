@@ -1,0 +1,26 @@
+{
+  "updated_at": "2026-06-18T11:06:31.337097",
+  "priority_watch": [
+    "XPL",
+    "BIO",
+    "ENA",
+    "ETHFI",
+    "ROBO",
+    "ASTER"
+  ],
+  "medium_priority": [
+    "ID",
+    "CFG",
+    "ENJ",
+    "MEGA"
+  ],
+  "historical_tracked": [
+    "BTC",
+    "ETH",
+    "NEAR",
+    "ZRO",
+    "LIT",
+    "KAITO",
+    "DOGE"
+  ]
+}
