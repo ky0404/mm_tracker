@@ -147,7 +147,7 @@ class ResultLogger:
         self.save()
 
     def get_stats(self) -> Dict[str, Any]:
-        """获取交易统计"""
+        """获取交易统计（包含所有交易）"""
         finished = self.get_finished_trades()
         if not finished:
             return {
@@ -159,6 +159,7 @@ class ResultLogger:
                 "total_pnl": 0.0,
                 "open_count": 0,
                 "open_positions": [],
+                "system_trades_only": False,
             }
 
         wins = [t for t in finished if t.get("win", False)]
@@ -179,4 +180,41 @@ class ResultLogger:
             "total_pnl": sum(pnls),
             "open_count": open_count,
             "open_positions": open_positions,
+            "system_trades_only": False,
+        }
+    
+    def get_system_stats(self) -> Dict[str, Any]:
+        """获取系统自动交易的统计（过滤手动操作）"""
+        excluded_reasons = {"SELL_ALL", "SPOT_CLOSED", "manual_reset", "stuck_position_cleanup"}
+        
+        finished = self.get_finished_trades()
+        system_trades = [
+            t for t in finished
+            if t.get("exit_reason") not in excluded_reasons
+            and t.get("signals", []) not in [["manual_sell_all"], ["spot_position"], ["manual_sell_all", "spot_position"], ["spot_position", "manual_sell_all"]]
+        ]
+        
+        if not system_trades:
+            return {
+                "system_total_trades": 0,
+                "system_win_count": 0,
+                "system_loss_count": 0,
+                "system_win_rate": 0.0,
+                "system_total_pnl": 0.0,
+                "system_avg_pnl": 0.0,
+                "note": "系统自动交易数量不足"
+            }
+        
+        wins = [t for t in system_trades if t.get("win", False)]
+        losses = [t for t in system_trades if not t.get("win", True)]
+        pnls = [t.get("pnl", 0) for t in system_trades if t.get("pnl") is not None]
+        
+        return {
+            "system_total_trades": len(system_trades),
+            "system_win_count": len(wins),
+            "system_loss_count": len(losses),
+            "system_win_rate": len(wins) / len(system_trades) if system_trades else 0.0,
+            "system_total_pnl": sum(pnls) if pnls else 0.0,
+            "system_avg_pnl": sum(pnls) / len(pnls) if pnls else 0.0,
+            "note": "仅统计系统自动触发的交易（已过滤手动操作）"
         }

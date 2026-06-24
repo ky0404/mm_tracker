@@ -437,7 +437,7 @@
     "entry_price_original": 0.0742025730584468,
     "source": "OKX_API",
     "exit_reason": "LIQUIDATION_DANGER",
-    "exit_timestamp": "2026-06-23T10:39:27.848276",
+    "exit_timestamp": "2026-06-23T13:13:49.210676",
     "status": "closed",
     "partial_closes": [
       {
@@ -451,10 +451,10 @@
         "reason": "TAKE_PROFIT_HALF_TARGET_5%"
       }
     ],
-    "exit_price": 0.07178,
-    "pnl": -4.240640569142068,
-    "pnl_pct": -3.2615,
-    "hold_minutes": 3985,
+    "exit_price": 0.07025,
+    "pnl": -4.240655257142068,
+    "pnl_pct": -5.3235,
+    "hold_minutes": 4139,
     "win": false
   },
   {

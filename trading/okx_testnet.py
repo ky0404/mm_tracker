@@ -144,6 +144,14 @@ class OKXTestnetTrader:
         testnet: bool = True,
         use_spot: bool = True,
     ):
+        """
+        OKX交易器初始化
+        
+        ⚠️ 已知限制 (2026-06-23):
+        - 测试网账户 (label: 'moni') 只支持现货交易，不支持永续合约(SWAP)
+        - 如需使用合约交易，需切换到真实账户 (testnet=False)
+        - 账户模式限制错误码: sCode=51010, msg="You can't complete this request under your current account mode."
+        """
         if testnet:
             self.base_url = "https://openapi.okx.com"
             self.is_simulation = True
@@ -173,6 +181,13 @@ class OKXTestnetTrader:
             'GRT', 'STX', 'RUNE', 'KAVA', 'ZEC', 'DASH', 'NEO', 'EOS', 'XTZ', 'CAKE',
             '1INCH', 'CHZ', 'CELO', 'FTM', 'HOT', 'ZIL', 'ENJ', 'BAT', 'ZRX', 'CELR',
             'ANKR', 'REN', 'KNC', 'SNX', 'LRC', 'OCEAN', 'BAND', 'CRV', 'SUSHI',
+        }
+        
+        # Testnet不支持的交易对黑名单（实测失败）
+        self._testnet_failed_tokens = {
+            # 2026-06-23 实测不可交易
+            'MMT',    # 51001: Instrument ID doesn't exist
+            'RESOLV', # 51155: Local compliance restrictions
         }
 
     def _generate_signature(self, timestamp: str, method: str, route: str, body: str = "") -> str:

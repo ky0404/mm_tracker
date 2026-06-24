@@ -26,6 +26,9 @@ class MetaOptimizer:
     DEFAULT_HOLD_MINUTES = 240  # 默认持仓4小时
 
     def __init__(self, min_trades_before_optimize: int = 20):
+        # 系统交易积累慢，降低门槛
+        if min_trades_before_optimize > 10:
+            min_trades_before_optimize = 10
         self.min_trades = min_trades_before_optimize
         self.analyzer = PatternAnalyzer()
         self._load_params()
@@ -67,7 +70,17 @@ class MetaOptimizer:
             json.dump(log[-50:], f, indent=2, ensure_ascii=False)
 
     def should_optimize(self) -> bool:
-        return self.analyzer.enough_data(self.min_trades)
+        """判断是否应该进行参数优化，只统计系统自动交易"""
+        excluded_reasons = {"SELL_ALL", "SPOT_CLOSED", "manual_reset", "stuck_position_cleanup"}
+        
+        system_trades = [
+            t for t in self.analyzer.trades
+            if t.get("type") == "EXIT"
+            and t.get("exit_reason") not in excluded_reasons
+            and "manual_sell_all" not in t.get("signals", [])
+        ]
+        
+        return len(system_trades) >= self.min_trades
 
     def run(self) -> dict:
         if not self.should_optimize():

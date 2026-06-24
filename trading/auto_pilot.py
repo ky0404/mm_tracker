@@ -264,12 +264,22 @@ class AutoPilot:
         """
         动量模式分析 - 使用OKX实时数据，不依赖CoinGecko
         新增：4H多时间框架分析作为"门卫"
+        
+        ⚠️ 已知限制 (2026-06-23):
+        - OKX并非所有代币都有SWAP合约，如ID/SD在OKX上没有永续合约
+        - 此时 get_okx_price() 返回 None，导致 token 被跳过
+        - 这是OKX数据问题，非代码bug
+        - 部分代币可从CoinGecko获取价格，但当前策略优先OKX
         """
         from fetchers.momentum import get_hourly_momentum, get_okx_price
         from fetchers.price_api import fetch_funding_rate_history, fetch_oi_history
         
         price = get_okx_price(token)
         if not price:
+            # ⚠️ 跳过原因可能是:
+            # 1. OKX没有该币的SWAP合约 (如ID/SD)
+            # 2. 网络问题
+            # 3. API限流
             return {"symbol": token, "price": 0, "skip": True, "reason": "无法获取价格"}
         
         # ===== 第一层：4H面分析（判断大方向是否对）=====
@@ -1445,7 +1455,6 @@ def create_autopilot(sim_mode: bool = True) -> AutoPilot:
     """创建自动驾驶仪 - 使用统一配置加载"""
     from trading.result_logger import ResultLogger
     from trading.position_monitor import PositionMonitor
-    from trading.parameter_optimizer import ParameterOptimizer
     
     # 使用统一配置加载器
     from utils.config_loader import get_config, get_okx_credentials
@@ -1454,6 +1463,10 @@ def create_autopilot(sim_mode: bool = True) -> AutoPilot:
     okx_creds = get_okx_credentials()
     
     # 初始化交易器 - 使用模拟盘
+    # ⚠️ 注意 (2026-06-23):
+    # - 当前使用 testnet=True (模拟盘)
+    # - 测试网账户只支持现货，不支持永续合约
+    # - 如需合约交易，需改用 testnet=False (真实账户)
     from trading.okx_testnet import OKXTestnetTrader
     trader = OKXTestnetTrader(
         okx_creds.get("api_key"),
@@ -1470,9 +1483,15 @@ def create_autopilot(sim_mode: bool = True) -> AutoPilot:
     
     position_monitor = PositionMonitor(trader, result_logger, risk_params)
     
-    # 使用 MetaOptimizer 进行自学习优化
-    from trading.meta_optimizer import MetaOptimizer
-    optimizer = MetaOptimizer(min_trades_before_optimize=20)
+    # 使用增强版参数优化器（统一入口）
+    try:
+        from trading.parameter_optimizer import ParameterOptimizer as EnhancedParameterOptimizer
+        optimizer = EnhancedParameterOptimizer(result_logger, "config/strategy_params.json")
+        logger.info("[优化器] 使用增强版 ParameterOptimizer (支持统计显著性 + 置信度权重)")
+    except ImportError:
+        from trading.meta_optimizer import MetaOptimizer
+        optimizer = MetaOptimizer(min_trades_before_optimize=20)
+        logger.info("[优化器] 回退到基础 MetaOptimizer")
     
     autopilot = AutoPilot(
         trader=trader,
